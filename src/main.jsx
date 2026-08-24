@@ -22,6 +22,20 @@ import {
 } from 'lucide-react';
 import './styles.css';
 
+const HERO_VIDEO_SPEED = 0.45;
+
+function useSlowVideo(speed = HERO_VIDEO_SPEED) {
+  const ref = React.useRef(null);
+
+  React.useEffect(() => {
+    if (ref.current) {
+      ref.current.playbackRate = speed;
+    }
+  }, [speed]);
+
+  return ref;
+}
+
 const services = [
   {
     icon: Activity,
@@ -77,12 +91,13 @@ const slots = ['08:30', '10:00', '12:30', '15:00', '17:30', '19:00'];
 function App() {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [selectedSlot, setSelectedSlot] = React.useState('10:00');
+  const heroVideoRef = useSlowVideo();
 
-  const navItems = ['Inicio', 'Servicios', 'Sobre nosotros', 'Contacto'];
+  const navItems = ['Inicio', 'Quienes somos', 'Servicios', 'Nuestro centro', 'Alianzas estratégicas', 'Experiencias'];
 
   return (
-    <main className="min-h-screen bg-stone-50 text-ink">
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-graphite/90 text-white backdrop-blur-xl">
+    <main className="min-h-screen bg-graphite text-white font-sans">
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-graphiteDark/95 text-white backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <a href="#inicio" className="flex items-center gap-3">
             <img src="/assets/logo-icon.jpg" alt="" className="h-10 w-10 rounded-md object-cover" />
@@ -115,16 +130,16 @@ function App() {
       </header>
 
       {menuOpen && (
-        <div className="fixed inset-0 z-[60] bg-graphite text-white md:hidden">
+        <div className="fixed inset-0 z-[60] bg-[#15181b] text-white md:hidden">
           <div className="flex items-center justify-between px-5 py-4">
             <span className="text-sm font-semibold uppercase">José Oviedo Kinesiología</span>
             <button aria-label="Cerrar menu" className="rounded-md border border-white/15 p-2" onClick={() => setMenuOpen(false)}>
               <X size={20} />
             </button>
           </div>
-          <nav className="grid gap-1 px-5 pt-6 text-2xl font-semibold">
+          <nav className="grid gap-3 px-5 pt-6 text-2xl font-semibold">
             {[...navItems, 'Turnos'].map((item) => (
-              <a key={item} href={`#${slug(item)}`} className="border-b border-white/10 py-4" onClick={() => setMenuOpen(false)}>
+              <a key={item} href={`#${slug(item)}`} className="rounded-md border border-white/10 bg-white/8 px-4 py-4 text-white shadow-sm transition hover:bg-white/14" onClick={() => setMenuOpen(false)}>
                 {item}
               </a>
             ))}
@@ -134,8 +149,9 @@ function App() {
 
       <section id="inicio" className="relative overflow-hidden bg-graphite pt-24 text-white">
         <div className="absolute inset-0">
-          <img src="/assets/centro-gimnasio.jpg" alt="" className="h-full w-full object-cover opacity-34" />
+          <video ref={heroVideoRef} className="hero-video h-full w-full object-cover" src="/assets/centro2.mp4" autoPlay muted loop playsInline preload="metadata" aria-hidden="true" onLoadedMetadata={(event) => { event.currentTarget.playbackRate = HERO_VIDEO_SPEED; }} />
           <div className="absolute inset-0 bg-gradient-to-r from-graphite via-graphite/82 to-graphite/20" />
+          <div className="hero-video-texture" />
         </div>
         <div className="relative mx-auto grid min-h-[88vh] max-w-7xl items-center gap-10 px-4 pb-16 pt-10 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
           <div className="max-w-3xl">
@@ -172,28 +188,7 @@ function App() {
         </div>
       </section>
 
-      <section id="servicios" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <div>
-            <p className="text-sm font-semibold uppercase text-pulse">Servicios</p>
-            <h2 className="mt-3 max-w-2xl text-4xl font-semibold tracking-normal text-graphite">Tratamientos orientados a movimiento, dolor y rendimiento.</h2>
-          </div>
-          <p className="max-w-md text-sm leading-7 text-neutral-600">
-            Cada plan combina evaluación clínica, objetivos concretos y progresiones medibles según tu deporte, lesión o rutina diaria.
-          </p>
-        </div>
-        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {services.map(({ icon: Icon, title, text }) => (
-            <article key={title} className="rounded-md border border-line bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
-              <Icon className="text-pulse" size={30} />
-              <h3 className="mt-5 text-xl font-semibold text-graphite">{title}</h3>
-              <p className="mt-3 text-sm leading-7 text-neutral-600">{text}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section id="sobre-nosotros" className="border-y border-line bg-white py-20">
+      <section id="quienes-somos" className="border-y border-white/10 bg-graphite py-20">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8">
           <div className="grid grid-cols-2 gap-3">
             <img src="/assets/gimnasio.jpg" alt="Gimnasio" className="col-span-2 h-72 w-full rounded-md object-cover sm:h-96" />
@@ -201,14 +196,14 @@ function App() {
             <img src="/assets/laboratorio.jpg" alt="laboratorio" className="h-44 w-full rounded-md object-cover" />
           </div>
           <div className="flex flex-col justify-center">
-            <p className="text-sm font-semibold uppercase text-pulse">Sobre nosotros</p>
-            <h2 className="mt-3 text-4xl font-semibold tracking-normal text-graphite">Un centro amplio, técnico y cercano.</h2>
-            <p className="mt-5 text-base leading-8 text-neutral-600">
+            <p className="text-sm font-semibold uppercase text-pulse">Quienes Somos</p>
+            <h2 className="mt-3 text-4xl font-semibold tracking-normal text-white">Un centro amplio, técnico y cercano.</h2>
+            <p className="mt-5 text-base leading-8 text-white/72">
               José Oviedo Kinesiología integra boxes de atención, gimnasio, laboratorio de evaluación y profesionales enfocados en recuperación funcional. El abordaje es moderno, medible y pensado para acompañar desde el diagnóstico hasta la vuelta a la actividad.
             </p>
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
               {['Boxes privados', 'Gimnasio equipado', 'Rutinas supervisadas'].map((item) => (
-                <div key={item} className="rounded-md border border-line bg-stone-50 p-4 text-sm font-semibold text-graphite">
+                <div key={item} className="rounded-md border border-white/10 bg-white/8 p-4 text-sm font-semibold text-white">
                   {item}
                 </div>
               ))}
@@ -217,19 +212,40 @@ function App() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      <section id="servicios" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <div>
+            <p className="text-sm font-semibold uppercase text-pulse">Servicios</p>
+            <h2 className="mt-3 max-w-2xl text-4xl font-semibold tracking-normal text-white">Tratamientos orientados a movimiento, dolor y rendimiento.</h2>
+          </div>
+          <p className="max-w-md text-sm leading-7 text-white/68">
+            Cada plan combina evaluación clínica, objetivos concretos y progresiones medibles según tu deporte, lesión o rutina diaria.
+          </p>
+        </div>
+        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {services.map(({ icon: Icon, title, text }) => (
+            <article key={title} className="rounded-md border border-white/10 bg-white p-6 text-ink shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
+              <Icon className="text-pulse" size={30} />
+              <h3 className="mt-5 text-xl font-semibold text-graphite">{title}</h3>
+              <p className="mt-3 text-sm leading-7 text-neutral-600">{text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="nuestro-centro" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
             <p className="text-sm font-semibold uppercase text-pulse">Nuestro Centro</p>
-            <h2 className="mt-3 text-4xl font-semibold tracking-normal text-graphite">Conocé nuestro espacio de trabajo</h2>
+            <h2 className="mt-3 text-4xl font-semibold tracking-normal text-white">Conocé nuestro espacio de trabajo</h2>
           </div>
-          <p className="max-w-md text-sm leading-7 text-neutral-600">
+          <p className="max-w-md text-sm leading-7 text-white/68">
             Cada ambiente fue diseñado para ofrecer comodidad, seguridad y un tratamiento personalizado.
           </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {gallery.map((item) => (
-            <figure key={item.title} className="group overflow-hidden rounded-md border border-line bg-white">
+            <figure key={item.title} className="group overflow-hidden rounded-md border border-white/10 bg-white text-ink">
               <img src={item.src} alt={item.title} className="h-72 w-full object-cover transition duration-500 group-hover:scale-105" />
               <figcaption className="flex items-center justify-between p-4">
                 <span className="font-semibold text-graphite">{item.title}</span>
@@ -240,7 +256,31 @@ function App() {
         </div>
       </section>
 
-      <section id="turnos" className="bg-graphite py-20 text-white">
+      <section id="alianzas-estrategicas" className="border-y border-white/10 bg-graphiteSoft py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <p className="text-sm font-semibold uppercase text-pulse">Alianzas estratégicas</p>
+          <h2 className="mt-3 max-w-3xl text-4xl font-semibold tracking-normal text-white">Un espacio para sumar instituciones, marcas y profesionales aliados.</h2>
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
+            {['Instituciones', 'Profesionales', 'Marcas'].map((item) => (
+              <article key={item} className="rounded-md border border-white/10 bg-white/8 p-6">
+                <h3 className="text-xl font-semibold text-white">{item}</h3>
+                <p className="mt-3 text-sm leading-7 text-white/68">Contenido pendiente para incorporar próximamente.</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="experiencias" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <div>
+            <p className="text-sm font-semibold uppercase text-pulse">Experiencias</p>
+            <h2 className="mt-3 max-w-3xl text-4xl font-semibold tracking-normal text-white">Historias y vivencias de pacientes del centro.</h2>
+          </div>
+          <p className="max-w-md text-sm leading-7 text-white/68">Sección preparada para sumar testimonios, casos o contenido audiovisual.</p>
+        </div>
+      </section>
+      <section id="turnos" className="bg-graphiteDark py-20 text-white">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
           <div>
            <p className="text-sm font-semibold uppercase tracking-wider text-pulse">
@@ -326,11 +366,11 @@ function App() {
       Contacto
     </p>
 
-    <h2 className="mt-3 text-4xl font-bold text-graphite">
+    <h2 className="mt-3 text-4xl font-bold text-white">
       Estamos para ayudarte.
     </h2>
 
-    <p className="mt-5 max-w-lg text-lg leading-8 text-neutral-600">
+    <p className="mt-5 max-w-lg text-lg leading-8 text-white/72">
       Comunicate con nuestro equipo para solicitar un turno, realizar consultas
       o recibir información sobre nuestros tratamientos.
     </p>
@@ -444,7 +484,7 @@ function App() {
   </div>
 </section>
 
-<footer className="bg-graphite text-white">
+<footer className="bg-graphiteDark text-white">
   <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
 
     {/* Logo */}
