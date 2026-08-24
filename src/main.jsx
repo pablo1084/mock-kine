@@ -87,10 +87,27 @@ const gallery = [
 ];
 
 const slots = ['08:30', '10:00', '12:30', '15:00', '17:30', '19:00'];
+const teamMembers = [
+  { id: 'director', name: 'Dr. José Oviedo', role: 'Director / Kinesiólogo', area: 'Dirección', initials: 'JO', photo: '/assets/equipo/director.jpg', highlight: true, summary: 'Coordina el abordaje integral del centro y acompaña procesos de rehabilitación, readaptación y rendimiento.', bio: 'Director del centro y referente del equipo profesional. Su trabajo integra evaluación funcional, tratamiento kinésico y seguimiento personalizado para que cada paciente avance con objetivos claros y medibles.', certificationsUrl: '/assets/certificaciones-director.pdf' },
+  { id: 'kinesiologo-1', name: 'Kinesiólogo/a 1', role: 'Kinesiología y rehabilitación', area: 'Kinesiología', initials: 'K1', photo: '/assets/equipo/kinesiologo-1.jpg', summary: 'Acompaña procesos de recuperación funcional con seguimiento cercano y progresivo.', bio: 'Profesional del área kinésica orientado/a a la recuperación del movimiento, el control del dolor y la vuelta segura a las actividades de cada paciente.' },
+  { id: 'kinesiologo-2', name: 'Kinesiólogo/a 2', role: 'Kinesiología deportiva', area: 'Kinesiología', initials: 'K2', photo: '/assets/equipo/kinesiologo-2.jpg', summary: 'Trabaja con lesiones deportivas, movilidad y readaptación al esfuerzo.', bio: 'Su enfoque combina evaluación clínica, ejercicios terapéuticos y progresiones de carga para acompañar a personas activas y deportistas.' },
+  { id: 'kinesiologo-3', name: 'Kinesiólogo/a 3', role: 'Rehabilitación física', area: 'Kinesiología', initials: 'K3', photo: '/assets/equipo/kinesiologo-3.jpg', summary: 'Diseña planes de tratamiento para mejorar movilidad, fuerza y autonomía.', bio: 'Acompaña procesos de rehabilitación musculoesquelética con objetivos concretos, controles periódicos y educación para el paciente.' },
+  { id: 'kinesiologo-4', name: 'Kinesiólogo/a 4', role: 'Terapia manual y movimiento', area: 'Kinesiología', initials: 'K4', photo: '/assets/equipo/kinesiologo-4.jpg', summary: 'Integra recursos manuales, ejercicio terapéutico y prevención.', bio: 'Su intervención busca mejorar la calidad del movimiento y reducir molestias mediante un abordaje personalizado y progresivo.' },
+  { id: 'kinesiologo-5', name: 'Kinesiólogo/a 5', role: 'Reeducación funcional', area: 'Kinesiología', initials: 'K5', photo: '/assets/equipo/kinesiologo-5.jpg', summary: 'Acompaña la recuperación de hábitos de movimiento seguros y eficientes.', bio: 'Trabaja en la reeducación de patrones funcionales, fortalecimiento y seguimiento de la evolución de cada paciente.' },
+  { id: 'osteopata', name: 'Osteópata', role: 'Osteopatía', area: 'Salud integral', initials: 'OS', photo: '/assets/equipo/osteopata.jpg', summary: 'Aporta una mirada global sobre movilidad, postura y equilibrio corporal.', bio: 'Desde la osteopatía, acompaña el tratamiento con una evaluación integral orientada a mejorar la función y el bienestar general.' },
+  { id: 'psicologo', name: 'Psicólogo/a', role: 'Psicología', area: 'Salud integral', initials: 'PS', photo: '/assets/equipo/psicologo.jpg', summary: 'Acompaña aspectos emocionales vinculados al proceso de recuperación y bienestar.', bio: 'Brinda un espacio de escucha y acompañamiento para pacientes que atraviesan procesos de dolor, lesión, cambios de hábitos o vuelta a la actividad.' },
+  { id: 'nutricionista', name: 'Nutricionista', role: 'Nutrición', area: 'Salud integral', initials: 'NU', photo: '/assets/equipo/nutricionista.jpg', summary: 'Orienta hábitos alimentarios para potenciar salud, recuperación y rendimiento.', bio: 'Trabaja en estrategias nutricionales personalizadas, integradas a los objetivos clínicos, deportivos y de bienestar de cada paciente.' },
+  { id: 'profesor', name: 'Profesor/a de educación física', role: 'Entrenamiento personalizado', area: 'Entrenamiento', initials: 'EF', photo: '/assets/equipo/profesor-educacion-fisica.jpg', summary: 'Planifica entrenamientos personalizados con control de cargas y objetivos medibles.', bio: 'Acompaña rutinas de fuerza, movilidad y acondicionamiento físico, adaptadas al estado inicial, la evolución y las metas de cada persona.' },
+  { id: 'administracion-1', name: 'Administración 1', role: 'Atención y coordinación', area: 'Administración', initials: 'A1', photo: '/assets/equipo/administracion-1.jpg', summary: 'Organiza turnos, consultas y la comunicación diaria con pacientes.', bio: 'Forma parte del primer contacto con el centro, acompañando la gestión de turnos, orientación inicial y coordinación administrativa.' },
+  { id: 'administracion-2', name: 'Administración 2', role: 'Gestión administrativa', area: 'Administración', initials: 'A2', photo: '/assets/equipo/administracion-2.jpg', summary: 'Acompaña la organización interna y la experiencia de atención.', bio: 'Colabora con la gestión del centro para que cada paciente reciba información clara, seguimiento y una atención ordenada.' },
+];
+
+const teamAreas = ['Dirección', 'Kinesiología', 'Salud integral', 'Entrenamiento', 'Administración'];
 
 function App() {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [selectedSlot, setSelectedSlot] = React.useState('10:00');
+  const [selectedTeamMember, setSelectedTeamMember] = React.useState(null);
   const heroVideoRef = useSlowVideo();
 
   const navItems = ['Inicio', 'Quienes somos', 'Servicios', 'Nuestro centro', 'Alianzas estratégicas', 'Experiencias'];
@@ -174,7 +191,7 @@ function App() {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <img src="/assets/paciente-tapia.jpg" alt="Paciente y equipo del centro" className="h-72 w-full rounded-md object-cover shadow-soft sm:h-96" />
+            <img src="/assets/paciente-tapia.jpeg" alt="Paciente y equipo del centro" className="h-72 w-full rounded-md object-cover shadow-soft sm:h-96" />
             <div className="grid gap-3">
               <img src="/assets/consulta-deportiva.jpg" alt="Consulta deportiva" className="h-36 w-full rounded-md object-cover object-[50%_42%] sm:h-48" />
               <div className="rounded-md border border-white/10 bg-white/10 p-5 backdrop-blur">
@@ -189,29 +206,113 @@ function App() {
       </section>
 
       <section id="quienes-somos" className="border-y border-white/10 bg-graphite py-20">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8">
-          <div className="grid grid-cols-2 gap-3">
-            <img src="/assets/gimnasio.jpg" alt="Gimnasio" className="col-span-2 h-72 w-full rounded-md object-cover sm:h-96" />
-            <img src="/assets/recepcion.jpg" alt="recepcion" className="h-44 w-full rounded-md object-cover" />
-            <img src="/assets/laboratorio.jpg" alt="laboratorio" className="h-44 w-full rounded-md object-cover" />
-          </div>
-          <div className="flex flex-col justify-center">
-            <p className="text-sm font-semibold uppercase text-pulse">Quienes Somos</p>
-            <h2 className="mt-3 text-4xl font-semibold tracking-normal text-white">Un centro amplio, técnico y cercano.</h2>
-            <p className="mt-5 text-base leading-8 text-white/72">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold uppercase text-pulse">Quienes Somos</p>
+              <h2 className="mt-3 max-w-3xl text-4xl font-semibold tracking-normal text-white">Un equipo interdisciplinario para acompañarte en cada etapa.</h2>
+            </div>
+            <p className="text-base leading-8 text-white/72">
               José Oviedo Kinesiología integra boxes de atención, gimnasio, laboratorio de evaluación y profesionales enfocados en recuperación funcional. El abordaje es moderno, medible y pensado para acompañar desde el diagnóstico hasta la vuelta a la actividad.
             </p>
-            <div className="mt-8 grid gap-3 sm:grid-cols-3">
-              {['Boxes privados', 'Gimnasio equipado', 'Rutinas supervisadas'].map((item) => (
-                <div key={item} className="rounded-md border border-white/10 bg-white/8 p-4 text-sm font-semibold text-white">
-                  {item}
+          </div>
+
+          <div className="mt-8 grid gap-3 sm:grid-cols-3">
+            {['Boxes privados', 'Gimnasio equipado', 'Rutinas supervisadas'].map((item) => (
+              <div key={item} className="rounded-md border border-white/10 bg-white/8 p-4 text-sm font-semibold text-white">
+                {item}
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12 grid gap-7">
+            {teamAreas.map((area) => {
+              const members = teamMembers.filter((member) => member.area === area);
+
+              return (
+                <div key={area}>
+                  <div className="mb-4 flex items-center gap-3">
+                    <span className="h-px flex-1 bg-white/10" />
+                    <h3 className="text-sm font-semibold uppercase text-white/70">{area}</h3>
+                    <span className="h-px flex-1 bg-white/10" />
+                  </div>
+
+                  <div className={`grid gap-4 ${area === 'Dirección' ? 'lg:grid-cols-[1fr_1.35fr]' : 'sm:grid-cols-2 lg:grid-cols-4'}`}>
+                    {members.map((member) => (
+                      <button
+                        key={member.id}
+                        type="button"
+                        className={`group overflow-hidden rounded-md border border-white/10 bg-white text-left text-ink shadow-sm transition hover:-translate-y-1 hover:shadow-soft ${member.highlight ? 'lg:grid lg:grid-cols-[0.82fr_1fr]' : ''}`}
+                        onClick={() => setSelectedTeamMember(member)}
+                      >
+                        <div className={`relative bg-graphiteSoft ${member.highlight ? 'min-h-80' : 'aspect-[4/5]'}`}>
+                          <div className="absolute inset-0 flex items-center justify-center text-4xl font-semibold text-white/50">
+                            {member.initials}
+                          </div>
+                          <img
+                            src={member.photo}
+                            alt={member.name}
+                            className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                            onError={(event) => { event.currentTarget.style.display = 'none'; }}
+                          />
+                        </div>
+                        <div className="p-5">
+                          <span className="text-xs font-semibold uppercase text-pulse">{member.role}</span>
+                          <h4 className="mt-2 text-2xl font-semibold text-graphite">{member.name}</h4>
+                          <p className="mt-3 text-sm leading-7 text-neutral-600">{member.summary}</p>
+                          <span className="mt-5 inline-flex text-sm font-semibold text-pulse">Ver presentación</span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              ))}
-            </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
+      {selectedTeamMember && (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-graphiteDark/90 px-4 py-8 backdrop-blur" onClick={() => setSelectedTeamMember(null)}>
+          <article className="grid max-h-[90vh] w-full max-w-4xl overflow-hidden rounded-md border border-white/10 bg-white text-ink shadow-soft md:grid-cols-[0.86fr_1.14fr]" onClick={(event) => event.stopPropagation()}>
+            <div className="relative min-h-80 bg-graphiteSoft">
+              <div className="absolute inset-0 flex items-center justify-center text-5xl font-semibold text-white/50">
+                {selectedTeamMember.initials}
+              </div>
+              <img
+                src={selectedTeamMember.photo}
+                alt={selectedTeamMember.name}
+                className="absolute inset-0 h-full w-full object-cover"
+                onError={(event) => { event.currentTarget.style.display = 'none'; }}
+              />
+            </div>
+            <div className="relative overflow-y-auto p-6 sm:p-8">
+              <button
+                type="button"
+                aria-label="Cerrar presentación"
+                className="absolute right-4 top-4 rounded-md border border-line p-2 text-graphite transition hover:border-pulse hover:text-pulse"
+                onClick={() => setSelectedTeamMember(null)}
+              >
+                <X size={18} />
+              </button>
+              <span className="text-xs font-semibold uppercase text-pulse">{selectedTeamMember.area}</span>
+              <h3 className="mt-3 pr-12 text-3xl font-semibold text-graphite">{selectedTeamMember.name}</h3>
+              <p className="mt-2 text-base font-semibold text-neutral-600">{selectedTeamMember.role}</p>
+              <p className="mt-6 text-base leading-8 text-neutral-600">{selectedTeamMember.bio}</p>
+              {selectedTeamMember.certificationsUrl && (
+                <a
+                  href={selectedTeamMember.certificationsUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-8 inline-flex items-center justify-center rounded-md bg-graphite px-5 py-3 text-sm font-semibold text-white transition hover:bg-pulse"
+                >
+                  Ver certificaciones
+                </a>
+              )}
+            </div>
+          </article>
+        </div>
+      )}
       <section id="servicios" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
