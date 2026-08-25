@@ -1,0 +1,85 @@
+import React from 'react';
+import { FaFacebookF, FaInstagram, FaWhatsapp } from 'react-icons/fa';
+
+export function SiteFooter({ hidden }) {
+  return (
+    <footer className={`${hidden ? 'hidden' : ''} bg-graphiteDark text-white`}>
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
+        <div>
+          <div className="flex items-center gap-3">
+            <img src="/assets/logo-icon.jpg" alt="José Oviedo Kinesiología" className="h-12 w-12 rounded-md object-cover" />
+            <div>
+              <h3 className="text-xl font-bold">José Oviedo</h3>
+              <p className="text-sm text-white/70">Kinesiología</p>
+            </div>
+          </div>
+
+          <p className="mt-5 leading-7 text-white/70">
+            Recuperación, prevención de lesiones y entrenamiento personalizado con un enfoque integral para mejorar tu calidad de vida.
+          </p>
+        </div>
+
+        <div>
+          <h4 className="mb-4 text-lg font-semibold">Navegación</h4>
+          <ul className="space-y-3 text-white/70">
+            <li><a href="#inicio" className="hover:text-pulse">Inicio</a></li>
+            <li><a href="#servicios" className="hover:text-pulse">Servicios</a></li>
+            <li><a href="#quienes-somos" className="hover:text-pulse">Sobre nosotros</a></li>
+            <li><a href="#turnos" className="hover:text-pulse">Turnos Online</a></li>
+            <li><a href="#contacto" className="hover:text-pulse">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="mb-4 text-lg font-semibold">Servicios</h4>
+          <ul className="space-y-3 text-white/70">
+            <li>Kinesiología Deportiva</li>
+            <li>Rehabilitación Física</li>
+            <li>Ondas de Choque</li>
+            <li>Gimnasio Personalizado</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="mb-4 text-lg font-semibold">Seguinos</h4>
+          <div className="flex gap-3">
+            <a
+              href="https://wa.me/549383XXXXXXX"
+              target="_blank"
+              rel="noreferrer"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 transition hover:bg-green-600"
+            >
+              <FaWhatsapp size={22} />
+            </a>
+            <a
+              href="https://instagram.com/tuusuario"
+              target="_blank"
+              rel="noreferrer"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 transition hover:bg-pink-600"
+            >
+              <FaInstagram size={20} />
+            </a>
+            <a
+              href="https://facebook.com/tuusuario"
+              target="_blank"
+              rel="noreferrer"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 transition hover:bg-blue-600"
+            >
+              <FaFacebookF size={20} />
+            </a>
+          </div>
+
+          <p className="mt-5 text-sm leading-6 text-white/70">
+            Seguinos para conocer novedades, consejos de prevención y contenidos sobre salud y rehabilitación.
+          </p>
+        </div>
+      </div>
+
+      <div className="border-t border-white/10">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-6 text-sm text-white/60 sm:flex-row sm:px-6 lg:px-8">
+          <p>© {new Date().getFullYear()} José Oviedo Kinesiología. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </footer>
+  );
+}
