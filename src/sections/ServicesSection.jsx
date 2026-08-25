@@ -164,7 +164,7 @@ export function ServicesSection({ hidden, ivolutionGallery, services, stages, te
                 <div>
                   <p className="text-lg font-semibold text-white">Video MEP ecoguiado</p>
                   <p className="mt-2 text-sm leading-6 text-white/60">
-                    Dejé este bloque listo para insertar el video cuando lo pases.
+                    Bloque listo para insertar video.
                   </p>
                 </div>
               </div>
