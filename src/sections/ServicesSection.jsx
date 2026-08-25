@@ -92,9 +92,9 @@ export function ServicesSection({ hidden, ivolutionGallery, services, stages, te
                 <p className="text-xs font-semibold uppercase text-[#f3c635]">Galería Ivolution Lab</p>
               </div>
             </div>
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="scrollbar-none flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth pb-2 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0">
               {ivolutionGallery.map((item) => (
-                <figure key={item.id} className="relative aspect-[4/3] overflow-hidden rounded-md border border-white/10 bg-white/[0.055]">
+                <figure key={item.id} className="relative aspect-[4/3] min-w-[82%] shrink-0 snap-center overflow-hidden rounded-md border border-white/10 bg-white/[0.055] sm:min-w-[48%] lg:min-w-0">
                   {item.src ? (
                     <img src={item.src} alt={item.label} className="h-full w-full object-cover" />
                   ) : (
