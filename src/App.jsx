@@ -2,7 +2,7 @@ import React from 'react';
 import { SiteFooter } from './components/SiteFooter';
 import { SiteHeader } from './components/SiteHeader';
 import { TeamMemberModal } from './components/TeamMemberModal';
-import { allianceItems, contactCards, gallery, navItems, services, slots, teamAreas, teamMembers } from './data/siteContent';
+import { allianceItems, contactCards, gallery, ivolutionGallery, navItems, services, slots, sportsKinesiologyStages, teamAreas, teamMembers, technologyServices } from './data/siteContent';
 import { useSlowVideo } from './hooks/useSlowVideo';
 import { AboutSection } from './sections/AboutSection';
 import { AlliancesSection } from './sections/AlliancesSection';
@@ -52,7 +52,7 @@ export default function App() {
         onSelectMember={setSelectedTeamMember}
       />
       <TeamMemberModal member={selectedTeamMember} onClose={() => setSelectedTeamMember(null)} />
-      <ServicesSection hidden={showTeamPage} services={services} />
+      <ServicesSection hidden={showTeamPage} ivolutionGallery={ivolutionGallery} services={services} stages={sportsKinesiologyStages} technologyServices={technologyServices} />
       <CenterSection hidden={showTeamPage} gallery={gallery} />
       <AlliancesSection hidden={showTeamPage} items={allianceItems} />
       <ExperiencesSection hidden={showTeamPage} />

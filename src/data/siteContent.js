@@ -4,23 +4,63 @@ export const services = [
   {
     icon: 'activity',
     title: 'Kinesiología deportiva',
-    text: 'Evaluación, tratamiento y readaptación para atletas y personas activas que buscan volver con confianza.',
+    text: 'Abordaje integral para deportistas y personas activas, desde la evaluación inicial hasta la vuelta segura a la actividad.',
   },
   {
     icon: 'shield',
+    title: 'Osteopatía',
+    text: 'Evaluación global de movilidad, postura y función para acompañar el tratamiento desde una mirada integral.',
+  },
+  {
+    icon: 'brain',
+    title: 'Psicología',
+    text: 'Acompañamiento emocional para procesos de lesión, dolor, recuperación, hábitos y retorno a la actividad.',
+  },
+  {
+    icon: 'apple',
+    title: 'Nutrición',
+    text: 'Estrategias alimentarias para potenciar salud, rendimiento, recuperación y objetivos personales.',
+  },
+];
+
+export const sportsKinesiologyStages = [
+  {
+    step: '01',
+    title: 'Evaluación',
+    text: 'Medimos movilidad, fuerza, control, dolor y necesidades deportivas para definir un punto de partida claro.',
+  },
+  {
+    step: '02',
     title: 'Rehabilitación',
-    text: 'Planes progresivos para lesiones musculares, articulares, post quirúrgicos y dolor persistente.',
+    text: 'Planificamos una recuperación progresiva, con objetivos medibles y seguimiento de cada etapa.',
   },
   {
-    icon: 'waves',
+    step: '03',
+    title: 'Entrenamiento',
+    text: 'Readaptamos al esfuerzo con fuerza, movilidad y control de cargas para volver con seguridad.',
+  },
+];
+
+export const technologyServices = [
+  {
     title: 'Ondas de choque',
-    text: 'Tecnología aplicada a tendinopatías, fascitis, espolón calcáneo y cuadros crónicos seleccionados.',
+    text: 'Tecnología aplicada como recurso terapéutico en cuadros seleccionados, dentro de un plan de tratamiento profesional.',
   },
   {
-    icon: 'dumbbell',
-    title: 'Gimnasio personalizado',
-    text: 'Rutinas supervisadas, fuerza, movilidad y control de cargas con objetivos medibles.',
+    title: 'MEP ecoguiado',
+    text: 'Procedimiento guiado por ecografía para trabajar con mayor precisión sobre tejidos específicos.',
   },
+];
+
+export const ivolutionGallery = [
+  { id: 'ivolution-1', src: '/assets/ivolution-lab/lab2.jpg', label: 'Ivolution Lab 1' },
+  { id: 'ivolution-2', src: '/assets/ivolution-lab/lab3.jpg', label: 'Ivolution Lab 2' },
+  { id: 'ivolution-3', src: '/assets/ivolution-lab/lab4.jpg', label: 'Ivolution Lab 3' },
+  { id: 'ivolution-4', src: '/assets/ivolution-lab/lab5.jpg', label: 'Ivolution Lab 4' },
+  { id: 'ivolution-5', src: '/assets/ivolution-lab/lab6.jpg', label: 'Ivolution Lab 5' },
+  { id: 'ivolution-6', src: '/assets/ivolution-lab/lab7.jpg', label: 'Ivolution Lab 6' },
+  { id: 'ivolution-7', src: '/assets/ivolution-lab/lab8.jpg', label: 'Ivolution Lab 7' },
+  { id: 'ivolution-8', src: '/assets/ivolution-lab/lab9.jpg', label: 'Ivolution Lab 8' },
 ];
 
 export const gallery = [

@@ -15,6 +15,7 @@ export default {
       fontFamily: {
         sans: ['MuseoModerno', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         body: ['Montserrat', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        lab: ['Bahnschrift', 'Arial Narrow', 'Arial', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
         soft: '0 18px 50px rgba(17, 17, 17, 0.10)',
