@@ -1,5 +1,5 @@
 import React from 'react';
-import { Activity, Apple, Brain, Dumbbell, Image, ShieldCheck, Target, Video, Waves, Zap } from 'lucide-react';
+import { Activity, Apple, Brain, ChevronLeft, ChevronRight, Dumbbell, Image, ShieldCheck, Target, Video, Waves, Zap } from 'lucide-react';
 
 const serviceIcons = {
   activity: Activity,
@@ -10,6 +10,18 @@ const serviceIcons = {
 };
 
 export function ServicesSection({ hidden, ivolutionGallery, services, stages, technologyServices }) {
+  const ivolutionCarouselRef = React.useRef(null);
+
+  const scrollIvolutionGallery = (direction) => {
+    const carousel = ivolutionCarouselRef.current;
+    if (!carousel) return;
+
+    carousel.scrollBy({
+      left: direction * carousel.clientWidth * 0.72,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <section id="servicios" className={`${hidden ? 'hidden' : ''} bg-graphite py-20`}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -87,16 +99,34 @@ export function ServicesSection({ hidden, ivolutionGallery, services, stages, te
           </div>
 
           <div className="border-t border-white/10 p-4 sm:p-6 lg:p-8">
-            <div className="mb-5 flex flex-col justify-between gap-3 md:flex-row md:items-end">
+            <div className="mb-5 flex flex-row items-center justify-between gap-3">
               <div>
                 <p className="text-xs font-semibold uppercase text-[#f3c635]">Galería Ivolution Lab</p>
               </div>
+              <div className="flex items-center gap-2 lg:hidden">
+                <button
+                  type="button"
+                  aria-label="Ver imagen anterior"
+                  onClick={() => scrollIvolutionGallery(-1)}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-[#f3c635]/35 bg-white/8 text-[#f3c635] transition hover:bg-[#f3c635] hover:text-[#070808]"
+                >
+                  <ChevronLeft size={20} />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Ver imagen siguiente"
+                  onClick={() => scrollIvolutionGallery(1)}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-[#f3c635]/35 bg-white/8 text-[#f3c635] transition hover:bg-[#f3c635] hover:text-[#070808]"
+                >
+                  <ChevronRight size={20} />
+                </button>
+              </div>
             </div>
-            <div className="scrollbar-none flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth pb-2 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0">
+            <div ref={ivolutionCarouselRef} className="scrollbar-none flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth pb-2 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0">
               {ivolutionGallery.map((item) => (
-                <figure key={item.id} className="relative aspect-[4/3] min-w-[82%] shrink-0 snap-center overflow-hidden rounded-md border border-white/10 bg-white/[0.055] sm:min-w-[48%] lg:min-w-0">
+                <figure key={item.id} className="relative aspect-square min-w-[58%] max-w-[220px] shrink-0 snap-center overflow-hidden rounded-md border border-white/10 bg-black sm:min-w-[34%] sm:max-w-[240px] lg:aspect-[4/3] lg:min-w-0 lg:max-w-none lg:bg-white/[0.055]">
                   {item.src ? (
-                    <img src={item.src} alt={item.label} className="h-full w-full object-cover" />
+                    <img src={item.src} alt={item.label} className="h-full w-full object-contain lg:object-cover" />
                   ) : (
                     <div className="flex h-full flex-col items-center justify-center gap-3 px-4 text-center">
                       <Image className="text-[#f3c635]" size={28} />
