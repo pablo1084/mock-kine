@@ -1,5 +1,5 @@
 import React from 'react';
-import { Activity, Apple, Brain, ChevronLeft, ChevronRight, Dumbbell, Image, ShieldCheck, Target, Video, Waves, Zap } from 'lucide-react';
+import { Activity, Apple, Brain, ChevronLeft, ChevronRight, Dumbbell, Image, Maximize2, ShieldCheck, Target, Waves, X, Zap } from 'lucide-react';
 
 const serviceIcons = {
   activity: Activity,
@@ -11,6 +11,7 @@ const serviceIcons = {
 
 export function ServicesSection({ hidden, ivolutionGallery, services, stages, technologyServices }) {
   const ivolutionCarouselRef = React.useRef(null);
+  const [mepVideoOpen, setMepVideoOpen] = React.useState(false);
 
   const scrollIvolutionGallery = (direction) => {
     const carousel = ivolutionCarouselRef.current;
@@ -157,20 +158,75 @@ export function ServicesSection({ hidden, ivolutionGallery, services, stages, te
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-md border border-white/10 bg-white/8">
-            <div className="relative min-h-80 bg-graphiteSoft">
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 px-8 text-center">
-                <Video className="text-pulse" size={42} />
-                <div>
-                  <p className="text-lg font-semibold text-white">Video MEP ecoguiado</p>
-                  <p className="mt-2 text-sm leading-6 text-white/60">
-                    Bloque listo para insertar video.
-                  </p>
-                </div>
+          <div className="overflow-hidden rounded-md border border-white/10 bg-[#070808] shadow-soft">
+            <div className="p-5 sm:p-6">
+              <span className="text-xs font-semibold uppercase text-pulse">Aplicación en consultorio</span>
+              <p className="mt-2 text-2xl font-semibold text-white">Video MEP ecoguiado</p>
+              <p className="mt-2 max-w-md text-sm leading-6 text-white/72">
+                Procedimiento guiado por ecografía para trabajar con precisión sobre tejidos específicos.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {['Ecografía', 'Precisión', 'Tratamiento focalizado'].map((item) => (
+                  <span key={item} className="rounded-md border border-white/12 bg-white/10 px-3 py-1 text-xs font-semibold text-white/78">
+                    {item}
+                  </span>
+                ))}
               </div>
+            </div>
+            <div className="px-5 pb-5 sm:px-6 sm:pb-6">
+              <div className="relative aspect-video overflow-hidden rounded-md border border-white/12 bg-black shadow-[0_18px_45px_rgba(0,0,0,0.34)] ring-1 ring-white/5">
+                <video
+                  className="absolute inset-0 h-full w-full object-contain transition duration-500 sm:scale-[1.03] sm:object-cover sm:hover:scale-[1.045]"
+                  src="/assets/mep-ecoguiado.mp4"
+                  controls
+                  controlsList="nofullscreen nodownload"
+                  disablePictureInPicture
+                  playsInline
+                  preload="metadata"
+                  onLoadedMetadata={(event) => { event.currentTarget.volume = 0.5; }}
+                />
+              </div>
+              <button
+                type="button"
+                className="mt-4 inline-flex items-center justify-center gap-2 rounded-md border border-white/12 bg-white/8 px-4 py-2 text-sm font-semibold text-white transition hover:border-pulse hover:text-pulse"
+                onClick={() => setMepVideoOpen(true)}
+              >
+                Ver ampliado <Maximize2 size={16} />
+              </button>
             </div>
           </div>
         </div>
+
+        {mepVideoOpen && (
+          <div className="fixed inset-0 z-[70] flex items-center justify-center bg-graphiteDark/92 px-4 py-8 backdrop-blur" onClick={() => setMepVideoOpen(false)}>
+            <div className="w-full max-w-3xl rounded-md border border-white/10 bg-[#070808] p-3 shadow-soft" onClick={(event) => event.stopPropagation()}>
+              <div className="mb-3 flex items-center justify-between gap-4 px-1">
+                <div>
+                  <p className="text-xs font-semibold uppercase text-pulse">MEP ecoguiado</p>
+                  <p className="text-sm text-white/68">Vista ampliada</p>
+                </div>
+                <button
+                  type="button"
+                  aria-label="Cerrar video"
+                  className="flex h-10 w-10 items-center justify-center rounded-md border border-white/12 text-white transition hover:border-pulse hover:text-pulse"
+                  onClick={() => setMepVideoOpen(false)}
+                >
+                  <X size={18} />
+                </button>
+              </div>
+              <video
+                className="max-h-[72vh] w-full rounded-md bg-black object-contain"
+                src="/assets/mep-ecoguiado.mp4"
+                controls
+                controlsList="nofullscreen nodownload"
+                disablePictureInPicture
+                playsInline
+                preload="metadata"
+                onLoadedMetadata={(event) => { event.currentTarget.volume = 0.5; }}
+              />
+            </div>
+          </div>
+        )}
 
         <div className="mt-12">
           <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-end">
