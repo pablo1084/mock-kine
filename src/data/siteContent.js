@@ -64,12 +64,61 @@ export const ivolutionGallery = [
 ];
 
 export const gallery = [
-  { src: '/assets/centro-gimnasio.jpg', title: 'Área de rehabilitación y entrenamiento', tag: 'Rehabilitación' },
-  { src: '/assets/equipo.jpg', title: 'Nuestro equipo profesional', tag: 'Equipo' },
-  { src: '/assets/readaptacion.jpg', title: 'Readaptación deportiva', tag: 'Deporte' },
-  { src: '/assets/boxes.jpg', title: 'Consultorios de atención', tag: 'Boxes' },
-  { src: '/assets/moderno.jpg', title: 'Espacios modernos y confortables', tag: 'Centro' },
-  { src: '/assets/atencion.jpg', title: 'Atención Personalizada', tag: 'Atención' },
+  {
+    id: 'recepcion',
+    title: 'Recepción y bienvenida',
+    tag: 'Atención',
+    initials: 'RB',
+    src: '/assets/recepcion.jpeg',
+imageFit: 'contain',
+    summary: 'Un primer contacto claro y ordenado para orientar turnos, consultas y llegada al centro.',
+    text: 'La recepción acompaña la experiencia desde el ingreso, con información precisa, coordinación de turnos y una atención cercana para que cada paciente se sienta ubicado desde el primer momento.',
+  },
+  {
+    id: 'boxes',
+    title: 'Boxes de atención',
+    tag: 'Tratamiento',
+    initials: 'BA',
+    src: '',
+    summary: 'Espacios preparados para evaluación, seguimiento y tratamiento personalizado.',
+    text: 'Los boxes permiten trabajar de forma privada y cómoda, favoreciendo una evaluación detallada y una intervención adaptada a la condición, evolución y objetivos de cada persona.',
+  },
+  {
+    id: 'gimnasio',
+    title: 'Gimnasio de rehabilitación',
+    tag: 'Movimiento',
+    initials: 'GR',
+    src: '',
+    summary: 'Área para fuerza, movilidad, control de cargas y readaptación funcional.',
+    text: 'El gimnasio integra ejercicio terapéutico, entrenamiento supervisado y progresiones medibles para acompañar la recuperación y la vuelta segura a la actividad.',
+  },
+  {
+    id: 'laboratorio',
+    title: 'Laboratorio de evaluación',
+    tag: 'Evaluación',
+    initials: 'LE',
+    src: '',
+    summary: 'Tecnología aplicada para medir, comparar y seguir la evolución del proceso.',
+    text: 'El laboratorio permite obtener datos objetivos sobre fuerza, potencia, asimetrías y evolución, aportando información valiosa para tomar decisiones clínicas y deportivas.',
+  },
+  {
+    id: 'entrenamiento',
+    title: 'Área de entrenamiento',
+    tag: 'Rendimiento',
+    initials: 'AE',
+    src: '',
+    summary: 'Un espacio para entrenamiento personalizado, prevención y mejora física.',
+    text: 'El área de entrenamiento está pensada para trabajar objetivos concretos de fuerza, movilidad, acondicionamiento y rendimiento, siempre con supervisión profesional.',
+  },
+  {
+    id: 'tecnologia',
+    title: 'Tecnología terapéutica',
+    tag: 'Equipamiento',
+    initials: 'TT',
+    src: '',
+    summary: 'Recursos como ondas de choque y MEP ecoguiado integrados al tratamiento.',
+    text: 'La tecnología terapéutica complementa el abordaje profesional con herramientas específicas para mejorar precisión, seguimiento y respuesta al tratamiento.',
+  },
 ];
 
 export const slots = ['08:30', '10:00', '12:30', '15:00', '17:30', '19:00'];
