@@ -14,6 +14,17 @@ export function ServicesSection({ hidden, ivolutionGallery, services, stages, te
   const mepInlineVideoRef = React.useRef(null);
   const mepModalVideoRef = React.useRef(null);
   const [mepVideoOpen, setMepVideoOpen] = React.useState(false);
+  const [isTabletUp, setIsTabletUp] = React.useState(false);
+
+  React.useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 768px)');
+    const updateViewport = () => setIsTabletUp(mediaQuery.matches);
+
+    updateViewport();
+    mediaQuery.addEventListener('change', updateViewport);
+
+    return () => mediaQuery.removeEventListener('change', updateViewport);
+  }, []);
 
   const openMepVideo = () => {
     const inlineVideo = mepInlineVideoRef.current;
@@ -211,10 +222,10 @@ export function ServicesSection({ hidden, ivolutionGallery, services, stages, te
               <div className="relative aspect-video overflow-hidden rounded-md border border-white/12 bg-black shadow-[0_18px_45px_rgba(0,0,0,0.34)] ring-1 ring-white/5">
                 <video
                   ref={mepInlineVideoRef}
-                  className="absolute inset-0 h-full w-full object-contain transition duration-500 sm:scale-[1.03] sm:object-cover sm:hover:scale-[1.045]"
+                  className="absolute inset-0 h-full w-full scale-[1.03] object-cover transition duration-500 hover:scale-[1.045]"
                   src="/assets/mep-ecoguiado.mp4"
                   controls
-                  controlsList="nofullscreen nodownload"
+                  controlsList={isTabletUp ? 'nofullscreen nodownload' : 'nodownload'}
                   disablePictureInPicture
                   playsInline
                   preload="metadata"
@@ -223,7 +234,7 @@ export function ServicesSection({ hidden, ivolutionGallery, services, stages, te
               </div>
               <button
                 type="button"
-                className="mt-4 inline-flex items-center justify-center gap-2 rounded-md border border-white/12 bg-white/8 px-4 py-2 text-sm font-semibold text-white transition hover:border-pulse hover:text-pulse"
+                className="mt-4 hidden items-center justify-center gap-2 rounded-md border border-white/12 bg-white/8 px-4 py-2 text-sm font-semibold text-white transition hover:border-pulse hover:text-pulse md:inline-flex"
                 onClick={openMepVideo}
               >
                 Ver ampliado <Maximize2 size={16} />
@@ -233,7 +244,7 @@ export function ServicesSection({ hidden, ivolutionGallery, services, stages, te
         </div>
 
         {mepVideoOpen && (
-          <div className="fixed inset-0 z-[70] flex items-center justify-center bg-graphiteDark/92 px-4 py-8 backdrop-blur" onClick={closeMepVideo}>
+          <div className="fixed inset-0 z-[70] hidden items-center justify-center bg-graphiteDark/92 px-4 py-8 backdrop-blur md:flex" onClick={closeMepVideo}>
             <div className="w-full max-w-3xl rounded-md border border-white/10 bg-[#070808] p-3 shadow-soft" onClick={(event) => event.stopPropagation()}>
               <div className="mb-3 flex items-center justify-between gap-4 px-1">
                 <div>
