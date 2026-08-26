@@ -11,7 +11,41 @@ const serviceIcons = {
 
 export function ServicesSection({ hidden, ivolutionGallery, services, stages, technologyServices }) {
   const ivolutionCarouselRef = React.useRef(null);
+  const mepInlineVideoRef = React.useRef(null);
+  const mepModalVideoRef = React.useRef(null);
   const [mepVideoOpen, setMepVideoOpen] = React.useState(false);
+
+  const openMepVideo = () => {
+    const inlineVideo = mepInlineVideoRef.current;
+
+    if (inlineVideo) {
+      inlineVideo.pause();
+    }
+
+    setMepVideoOpen(true);
+  };
+
+  const closeMepVideo = () => {
+    if (mepModalVideoRef.current) {
+      mepModalVideoRef.current.pause();
+    }
+
+    setMepVideoOpen(false);
+  };
+
+  React.useEffect(() => {
+    const inlineVideo = mepInlineVideoRef.current;
+    const modalVideo = mepModalVideoRef.current;
+
+    if (!mepVideoOpen || !modalVideo) return;
+
+    if (inlineVideo) {
+      modalVideo.currentTime = inlineVideo.currentTime;
+    }
+
+    modalVideo.volume = 0.5;
+    modalVideo.play().catch(() => {});
+  }, [mepVideoOpen]);
 
   const scrollIvolutionGallery = (direction) => {
     const carousel = ivolutionCarouselRef.current;
@@ -176,6 +210,7 @@ export function ServicesSection({ hidden, ivolutionGallery, services, stages, te
             <div className="px-5 pb-5 sm:px-6 sm:pb-6">
               <div className="relative aspect-video overflow-hidden rounded-md border border-white/12 bg-black shadow-[0_18px_45px_rgba(0,0,0,0.34)] ring-1 ring-white/5">
                 <video
+                  ref={mepInlineVideoRef}
                   className="absolute inset-0 h-full w-full object-contain transition duration-500 sm:scale-[1.03] sm:object-cover sm:hover:scale-[1.045]"
                   src="/assets/mep-ecoguiado.mp4"
                   controls
@@ -189,7 +224,7 @@ export function ServicesSection({ hidden, ivolutionGallery, services, stages, te
               <button
                 type="button"
                 className="mt-4 inline-flex items-center justify-center gap-2 rounded-md border border-white/12 bg-white/8 px-4 py-2 text-sm font-semibold text-white transition hover:border-pulse hover:text-pulse"
-                onClick={() => setMepVideoOpen(true)}
+                onClick={openMepVideo}
               >
                 Ver ampliado <Maximize2 size={16} />
               </button>
@@ -198,7 +233,7 @@ export function ServicesSection({ hidden, ivolutionGallery, services, stages, te
         </div>
 
         {mepVideoOpen && (
-          <div className="fixed inset-0 z-[70] flex items-center justify-center bg-graphiteDark/92 px-4 py-8 backdrop-blur" onClick={() => setMepVideoOpen(false)}>
+          <div className="fixed inset-0 z-[70] flex items-center justify-center bg-graphiteDark/92 px-4 py-8 backdrop-blur" onClick={closeMepVideo}>
             <div className="w-full max-w-3xl rounded-md border border-white/10 bg-[#070808] p-3 shadow-soft" onClick={(event) => event.stopPropagation()}>
               <div className="mb-3 flex items-center justify-between gap-4 px-1">
                 <div>
@@ -209,17 +244,19 @@ export function ServicesSection({ hidden, ivolutionGallery, services, stages, te
                   type="button"
                   aria-label="Cerrar video"
                   className="flex h-10 w-10 items-center justify-center rounded-md border border-white/12 text-white transition hover:border-pulse hover:text-pulse"
-                  onClick={() => setMepVideoOpen(false)}
+                  onClick={closeMepVideo}
                 >
                   <X size={18} />
                 </button>
               </div>
               <video
+                ref={mepModalVideoRef}
                 className="max-h-[72vh] w-full rounded-md bg-black object-contain"
                 src="/assets/mep-ecoguiado.mp4"
                 controls
                 controlsList="nofullscreen nodownload"
                 disablePictureInPicture
+                autoPlay
                 playsInline
                 preload="metadata"
                 onLoadedMetadata={(event) => { event.currentTarget.volume = 0.5; }}
