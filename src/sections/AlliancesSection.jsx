@@ -36,20 +36,20 @@ export function AlliancesSection({ hidden, items }) {
           Construimos vínculos que nos permiten conectar experiencia, formación y trabajo interdisciplinario para ofrecer un acompañamiento cada vez más completo.
         </p>
 
-        <div className="alliances-marquee mt-10 overflow-hidden">
+        <div className="alliances-marquee scrollbar-none mt-10 overflow-x-auto overflow-y-hidden touch-pan-x">
           <div className="alliances-track flex w-max">
             {[0, 1].map((group) => (
-              <div key={group} className="flex shrink-0 gap-4 pr-4" aria-hidden={group === 1 ? 'true' : undefined}>
+              <div key={group} className="flex shrink-0 gap-2 pr-2 lg:gap-4 lg:pr-4" aria-hidden={group === 1 ? 'true' : undefined}>
                 {items.map((item, index) => (
                   <button
                     key={`${group}-${item.id}`}
                     type="button"
-                    className="group w-72 shrink-0 bg-transparent text-left sm:w-96"
+                    className="group w-56 shrink-0 bg-transparent text-left sm:w-64 lg:w-96"
                     onClick={() => setSelectedIndex(index)}
                     aria-label={`Ampliar imagen de ${item.title}`}
                     tabIndex={group === 1 ? -1 : undefined}
                   >
-                    <div className="flex h-64 items-center justify-center p-2 sm:h-72">
+                    <div className="flex h-52 items-center justify-center p-1 sm:h-60 lg:h-72 lg:p-2">
                       <img src={item.src} alt={item.title} className="max-h-full max-w-full rounded-md border border-white/30 p-1 object-contain transition duration-500 group-hover:scale-105 group-hover:border-pulse" />
                     </div>
                     <div className="px-3 pb-3 pt-2 text-center">
