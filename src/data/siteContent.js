@@ -65,6 +65,15 @@ export const ivolutionGallery = [
 
 export const gallery = [
   {
+    id: 'fachada',
+    title: 'Fachada e ingreso',
+    tag: 'Nuestro centro',
+    initials: 'FI',
+    src: '/assets/centro/fachada.jpeg',
+    summary: 'El acceso principal a un espacio preparado para acompañarte desde el primer momento.',
+    text: 'La fachada y el ingreso identifican nuestro centro y dan la bienvenida a un espacio pensado para brindar atención profesional, comodidad y una experiencia cercana desde la llegada.',
+  },
+  {
     id: 'recepcion',
     title: 'Recepción y bienvenida',
     tag: 'Atención',
@@ -112,15 +121,6 @@ imageFit: 'contain',
     detailSrc: '/assets/centro/consultorio2.jpeg',
     summary: 'Espacios privados y confortables para consultas, evaluaciones y seguimiento profesional.',
     text: 'Los consultorios ofrecen un entorno cómodo y privado para realizar entrevistas, evaluaciones y controles, favoreciendo una atención cercana y personalizada en cada especialidad.',
-  },
-  {
-    id: 'tecnologia',
-    title: 'Tecnología terapéutica',
-    tag: 'Equipamiento',
-    initials: 'TT',
-    src: '',
-    summary: 'Recursos como ondas de choque y MEP ecoguiado integrados al tratamiento.',
-    text: 'La tecnología terapéutica complementa el abordaje profesional con herramientas específicas para mejorar precisión, seguimiento y respuesta al tratamiento.',
   },
 ];
 

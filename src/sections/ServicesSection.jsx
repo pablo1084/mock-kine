@@ -15,6 +15,15 @@ export function ServicesSection({ hidden, ivolutionGallery, onBack, services, st
   const mepModalVideoRef = React.useRef(null);
   const [mepVideoOpen, setMepVideoOpen] = React.useState(false);
   const [isTabletUp, setIsTabletUp] = React.useState(false);
+  const [selectedIvolutionIndex, setSelectedIvolutionIndex] = React.useState(null);
+
+  const showPreviousIvolutionImage = React.useCallback(() => {
+    setSelectedIvolutionIndex((current) => (current - 1 + ivolutionGallery.length) % ivolutionGallery.length);
+  }, [ivolutionGallery.length]);
+
+  const showNextIvolutionImage = React.useCallback(() => {
+    setSelectedIvolutionIndex((current) => (current + 1) % ivolutionGallery.length);
+  }, [ivolutionGallery.length]);
 
   React.useEffect(() => {
     const mediaQuery = window.matchMedia('(min-width: 768px)');
@@ -57,6 +66,19 @@ export function ServicesSection({ hidden, ivolutionGallery, onBack, services, st
     modalVideo.volume = 0.5;
     modalVideo.play().catch(() => {});
   }, [mepVideoOpen]);
+
+  React.useEffect(() => {
+    if (selectedIvolutionIndex === null) return undefined;
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') setSelectedIvolutionIndex(null);
+      if (event.key === 'ArrowLeft') showPreviousIvolutionImage();
+      if (event.key === 'ArrowRight') showNextIvolutionImage();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedIvolutionIndex, showPreviousIvolutionImage, showNextIvolutionImage]);
 
   const scrollIvolutionGallery = (direction) => {
     const carousel = ivolutionCarouselRef.current;
@@ -148,48 +170,53 @@ export function ServicesSection({ hidden, ivolutionGallery, onBack, services, st
           </div>
 
           <div className="border-t border-white/10 p-4 sm:p-6 lg:p-8">
-            <div className="mb-5 flex flex-row items-center justify-between gap-3">
-              <div>
-                <p className="text-xs font-semibold uppercase text-[#f3c635]">Galería Ivolution Lab</p>
-              </div>
-              <div className="flex items-center gap-2 lg:hidden">
-                <button
-                  type="button"
-                  aria-label="Ver imagen anterior"
-                  onClick={() => scrollIvolutionGallery(-1)}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-[#f3c635]/35 bg-white/8 text-[#f3c635] transition hover:bg-[#f3c635] hover:text-[#070808]"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-                <button
-                  type="button"
-                  aria-label="Ver imagen siguiente"
-                  onClick={() => scrollIvolutionGallery(1)}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-[#f3c635]/35 bg-white/8 text-[#f3c635] transition hover:bg-[#f3c635] hover:text-[#070808]"
-                >
-                  <ChevronRight size={20} />
-                </button>
-              </div>
+            <div className="mb-5">
+              <p className="text-xs font-semibold uppercase text-[#f3c635]">Galería Ivolution Lab</p>
             </div>
-            <div ref={ivolutionCarouselRef} className="scrollbar-none flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth pb-2 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0">
-              {ivolutionGallery.map((item) => (
-                <figure key={item.id} className="relative aspect-square min-w-[58%] max-w-[220px] shrink-0 snap-center overflow-hidden rounded-md border border-white/10 bg-black sm:min-w-[34%] sm:max-w-[240px] lg:aspect-[4/3] lg:min-w-0 lg:max-w-none lg:bg-white/[0.055]">
-                  {item.src ? (
-                    <img src={item.src} alt={item.label} className="h-full w-full object-contain lg:object-cover" />
-                  ) : (
-                    <div className="flex h-full flex-col items-center justify-center gap-3 px-4 text-center">
-                      <Image className="text-[#f3c635]" size={28} />
-                      <div>
-                        <figcaption className="text-sm font-semibold text-white">{item.label}</figcaption>
-                        <p className="mt-1 text-xs leading-5 text-white/48">Próxima imagen</p>
+            <div className="relative">
+              <button type="button" aria-label="Ver imagen anterior" onClick={() => scrollIvolutionGallery(-1)} className="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-[#070808]/75 text-[#f3c635] shadow-lg backdrop-blur transition active:bg-[#f3c635] active:text-[#070808] lg:hidden">
+                <ChevronLeft size={24} />
+              </button>
+              <div ref={ivolutionCarouselRef} className="scrollbar-none flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth pb-2 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0">
+                {ivolutionGallery.map((item, index) => (
+                  <button key={item.id} type="button" aria-label={`Ampliar ${item.label}`} onClick={() => setSelectedIvolutionIndex(index)} className="group relative aspect-square min-w-[58%] max-w-[220px] shrink-0 snap-center overflow-hidden rounded-md border border-white/10 bg-black sm:min-w-[34%] sm:max-w-[240px] lg:aspect-[4/3] lg:min-w-0 lg:max-w-none lg:bg-white/[0.055]">
+                    {item.src ? (
+                      <img src={item.src} alt={item.label} className="h-full w-full object-contain transition duration-500 group-hover:scale-105 lg:object-cover" />
+                    ) : (
+                      <div className="flex h-full flex-col items-center justify-center gap-3 px-4 text-center">
+                        <Image className="text-[#f3c635]" size={28} />
+                        <div>
+                          <span className="text-sm font-semibold text-white">{item.label}</span>
+                          <p className="mt-1 text-xs leading-5 text-white/48">Próxima imagen</p>
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </figure>
-              ))}
+                    )}
+                  </button>
+                ))}
+              </div>
+              <button type="button" aria-label="Ver imagen siguiente" onClick={() => scrollIvolutionGallery(1)} className="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-[#070808]/75 text-[#f3c635] shadow-lg backdrop-blur transition active:bg-[#f3c635] active:text-[#070808] lg:hidden">
+                <ChevronRight size={24} />
+              </button>
             </div>
           </div>
         </div>
+
+        {selectedIvolutionIndex !== null && (
+          <div className="fixed inset-0 z-[80] flex items-center justify-center bg-graphiteDark/95 p-4 backdrop-blur" onClick={() => setSelectedIvolutionIndex(null)}>
+            <button type="button" aria-label="Cerrar imagen" className="absolute right-4 top-4 rounded-md border border-white/20 p-2 text-white transition hover:border-[#f3c635] hover:text-[#f3c635] sm:right-8 sm:top-8" onClick={() => setSelectedIvolutionIndex(null)}>
+              <X size={22} />
+            </button>
+            <button type="button" aria-label="Imagen anterior" className="absolute left-3 z-10 rounded-full bg-white/10 p-3 text-white transition hover:bg-[#f3c635] hover:text-[#070808] sm:left-8" onClick={(event) => { event.stopPropagation(); showPreviousIvolutionImage(); }}>
+              <ChevronLeft size={28} />
+            </button>
+            <figure className="flex max-h-[85vh] w-full max-w-5xl flex-col items-center p-5 sm:p-8" onClick={(event) => event.stopPropagation()}>
+              <img src={ivolutionGallery[selectedIvolutionIndex].src} alt={ivolutionGallery[selectedIvolutionIndex].label} className="max-h-[70vh] max-w-full rounded-md border border-white/30 object-contain" />
+            </figure>
+            <button type="button" aria-label="Imagen siguiente" className="absolute right-3 z-10 rounded-full bg-white/10 p-3 text-white transition hover:bg-[#f3c635] hover:text-[#070808] sm:right-8" onClick={(event) => { event.stopPropagation(); showNextIvolutionImage(); }}>
+              <ChevronRight size={28} />
+            </button>
+          </div>
+        )}
 
         <div className="mt-12 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="rounded-md border border-white/10 bg-white p-6 text-ink shadow-sm">
