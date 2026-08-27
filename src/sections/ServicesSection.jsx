@@ -1,5 +1,5 @@
 import React from 'react';
-import { Activity, Apple, Brain, ChevronLeft, ChevronRight, Dumbbell, Image, Maximize2, ShieldCheck, Target, Waves, X, Zap } from 'lucide-react';
+import { Activity, Apple, ArrowLeft, Brain, ChevronLeft, ChevronRight, Dumbbell, Image, Maximize2, ShieldCheck, Target, Waves, X, Zap } from 'lucide-react';
 
 const serviceIcons = {
   activity: Activity,
@@ -9,7 +9,7 @@ const serviceIcons = {
   dumbbell: Dumbbell,
 };
 
-export function ServicesSection({ hidden, ivolutionGallery, services, stages, technologyServices }) {
+export function ServicesSection({ hidden, ivolutionGallery, onBack, services, stages, technologyServices }) {
   const ivolutionCarouselRef = React.useRef(null);
   const mepInlineVideoRef = React.useRef(null);
   const mepModalVideoRef = React.useRef(null);
@@ -69,8 +69,11 @@ export function ServicesSection({ hidden, ivolutionGallery, services, stages, te
   };
 
   return (
-    <section id="servicios" className={`${hidden ? 'hidden' : ''} bg-graphite py-20`}>
+    <section className={`${hidden ? 'hidden' : ''} bg-graphite pb-20 pt-32`}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <button type="button" className="mb-10 inline-flex items-center gap-2 text-sm font-semibold text-white/70 transition hover:text-pulse" onClick={onBack}>
+          <ArrowLeft size={17} /> Volver al inicio
+        </button>
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <div>
             <p className="text-sm font-semibold uppercase text-pulse">Servicios</p>
@@ -93,7 +96,7 @@ export function ServicesSection({ hidden, ivolutionGallery, services, stages, te
           ))}
         </div>
 
-        <div className="mt-14 overflow-hidden rounded-md border border-[#f3c635]/25 bg-[#070808] shadow-soft">
+        <div id="laboratorio-ivolution" className="mt-14 scroll-mt-28 overflow-hidden rounded-md border border-[#f3c635]/25 bg-[#070808] shadow-soft">
           <div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
             <div className="p-6 sm:p-8 lg:p-10">
               <span className="inline-flex items-center gap-2 rounded-md border border-[#f3c635]/45 bg-[#f3c635]/10 px-3 py-2 text-xs font-semibold uppercase text-[#f3c635]">
@@ -136,7 +139,7 @@ export function ServicesSection({ hidden, ivolutionGallery, services, stages, te
             </div>
             <div className="relative min-h-80 overflow-hidden bg-[#101112]">
               <img
-                src="/assets/ivolution-lab/lab1.jpg"
+                src="/assets/ivolution-lab/lab1.jpeg"
                 alt="Evaluación deportiva en Ivolution Lab"
                 className="absolute inset-0 h-full w-full object-cover"
               />
@@ -194,7 +197,7 @@ export function ServicesSection({ hidden, ivolutionGallery, services, stages, te
             <h3 className="mt-3 text-3xl font-semibold text-graphite">Ondas de choque y MEP ecoguiado</h3>
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               {technologyServices.map((service) => (
-                <article key={service.title} className="rounded-md border border-line p-5">
+                <article id={service.title === 'Ondas de choque' ? 'ondas-de-choque' : undefined} key={service.title} className="scroll-mt-28 rounded-md border border-line p-5">
                   {service.title === 'Ondas de choque' ? <Waves className="text-pulse" size={26} /> : <Activity className="text-pulse" size={26} />}
                   <h4 className="mt-4 text-xl font-semibold text-graphite">{service.title}</h4>
                   <p className="mt-3 text-sm leading-7 text-neutral-600">{service.text}</p>
@@ -206,7 +209,7 @@ export function ServicesSection({ hidden, ivolutionGallery, services, stages, te
           <div className="overflow-hidden rounded-md border border-white/10 bg-[#070808] shadow-soft">
             <div className="p-5 sm:p-6">
               <span className="text-xs font-semibold uppercase text-pulse">Aplicación en consultorio</span>
-              <p className="mt-2 text-2xl font-semibold text-white">Video MEP ecoguiado</p>
+              <p className="mt-2 text-2xl font-semibold text-white">MEP ecoguiado de precisión</p>
               <p className="mt-2 max-w-md text-sm leading-6 text-white/72">
                 Procedimiento guiado por ecografía para trabajar con precisión sobre tejidos específicos.
               </p>

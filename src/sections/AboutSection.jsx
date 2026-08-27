@@ -5,15 +5,9 @@ export function AboutSection({ hidden, onOpenTeamPage }) {
   return (
     <section id="quienes-somos" className={`${hidden ? 'hidden' : ''} border-y border-white/10 bg-graphite py-20`}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div>
-          <p className="text-sm font-semibold uppercase text-pulse">Quienes Somos</p>
-          <h2 className="mt-3 max-w-3xl text-4xl font-semibold tracking-normal text-white">Un equipo interdisciplinario para acompañarte en cada etapa.</h2>
-          <p className="mt-5 max-w-2xl text-base leading-8 text-white/72">
-            Evaluación, tratamiento, entrenamiento y seguimiento en un mismo lugar.
-          </p>
-        </div>
+        <p className="text-sm font-semibold uppercase text-pulse">Quiénes somos</p>
 
-        <div className="mt-12 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+        <div className="mt-8 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <a
             href="#equipo"
             className="group block overflow-hidden rounded-md border border-white/10 bg-white/8 shadow-soft"
@@ -35,12 +29,8 @@ export function AboutSection({ hidden, onOpenTeamPage }) {
             </div>
           </a>
           <div className="max-w-2xl lg:pl-4">
-            <span className="text-xs font-semibold uppercase text-pulse">Nuestro enfoque</span>
-            <p className="mt-4 text-3xl font-semibold leading-snug text-white sm:text-4xl">
-              José Oviedo Kinesiología integra boxes de atención, gimnasio, laboratorio de evaluación y profesionales enfocados en recuperación funcional.
-            </p>
-            <p className="mt-5 text-base leading-8 text-white/70">
-              El abordaje es moderno, medible y pensado para acompañar desde el diagnóstico hasta la vuelta segura a la actividad.
+            <p className="text-2xl font-semibold leading-relaxed text-white sm:text-3xl">
+              En José Oviedo Kinesiología trabajamos como un equipo interdisciplinario que integra evaluación, tratamiento, entrenamiento y seguimiento en un mismo lugar, acompañando cada proceso desde el diagnóstico hasta la vuelta segura a la actividad.
             </p>
           </div>
         </div>

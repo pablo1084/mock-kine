@@ -1,4 +1,4 @@
-export const navItems = ['Inicio', 'Quienes somos', 'Servicios', 'Nuestro centro', 'Alianzas estratégicas', 'Experiencias'];
+export const navItems = ['Inicio', 'Quienes somos', 'Servicios', 'Nuestro centro', 'Alianzas estratégicas', 'Contacto'];
 
 export const services = [
   {
@@ -69,7 +69,7 @@ export const gallery = [
     title: 'Recepción y bienvenida',
     tag: 'Atención',
     initials: 'RB',
-    src: '/assets/recepcion.jpeg',
+    src: '/assets/centro/recepcion.jpeg',
 imageFit: 'contain',
     summary: 'Un primer contacto claro y ordenado para orientar turnos, consultas y llegada al centro.',
     text: 'La recepción acompaña la experiencia desde el ingreso, con información precisa, coordinación de turnos y una atención cercana para que cada paciente se sienta ubicado desde el primer momento.',
@@ -79,7 +79,8 @@ imageFit: 'contain',
     title: 'Boxes de atención',
     tag: 'Tratamiento',
     initials: 'BA',
-    src: '',
+    src: '/assets/centro/boxes1.jpeg',
+    detailSrc: '/assets/centro/boxes2.jpeg',
     summary: 'Espacios preparados para evaluación, seguimiento y tratamiento personalizado.',
     text: 'Los boxes permiten trabajar de forma privada y cómoda, favoreciendo una evaluación detallada y una intervención adaptada a la condición, evolución y objetivos de cada persona.',
   },
@@ -88,7 +89,8 @@ imageFit: 'contain',
     title: 'Gimnasio de rehabilitación',
     tag: 'Movimiento',
     initials: 'GR',
-    src: '',
+    src: '/assets/centro/gimnasio1.jpeg',
+    detailSrc: '/assets/centro/gimnasio2.jpeg',
     summary: 'Área para fuerza, movilidad, control de cargas y readaptación funcional.',
     text: 'El gimnasio integra ejercicio terapéutico, entrenamiento supervisado y progresiones medibles para acompañar la recuperación y la vuelta segura a la actividad.',
   },
@@ -97,18 +99,19 @@ imageFit: 'contain',
     title: 'Laboratorio de evaluación',
     tag: 'Evaluación',
     initials: 'LE',
-    src: '',
+    src: '/assets/centro/laboratorio1.jpeg',
     summary: 'Tecnología aplicada para medir, comparar y seguir la evolución del proceso.',
     text: 'El laboratorio permite obtener datos objetivos sobre fuerza, potencia, asimetrías y evolución, aportando información valiosa para tomar decisiones clínicas y deportivas.',
   },
   {
-    id: 'entrenamiento',
-    title: 'Área de entrenamiento',
-    tag: 'Rendimiento',
-    initials: 'AE',
-    src: '',
-    summary: 'Un espacio para entrenamiento personalizado, prevención y mejora física.',
-    text: 'El área de entrenamiento está pensada para trabajar objetivos concretos de fuerza, movilidad, acondicionamiento y rendimiento, siempre con supervisión profesional.',
+    id: 'consultorios',
+    title: 'Consultorios',
+    tag: 'Atención profesional',
+    initials: 'CO',
+    src: '/assets/centro/consultorio.jpeg',
+    detailSrc: '/assets/centro/consultorio2.jpeg',
+    summary: 'Espacios privados y confortables para consultas, evaluaciones y seguimiento profesional.',
+    text: 'Los consultorios ofrecen un entorno cómodo y privado para realizar entrevistas, evaluaciones y controles, favoreciendo una atención cercana y personalizada en cada especialidad.',
   },
   {
     id: 'tecnologia',
@@ -140,7 +143,12 @@ export const teamMembers = [
   { id: 'administracion-2', name: 'Nazarena Oviedo', role: 'Gestión administrativa', area: 'Administración', initials: 'A2', photo: '/assets/equipo/administracion-2.jpg', imagePosition: 'object-[50%_13%]', summary: 'Acompaña la organización interna y la experiencia de atención.', bio: 'Colabora con la gestión del centro para que cada paciente reciba información clara, seguimiento y una atención ordenada.' },
 ];
 
-export const allianceItems = ['Instituciones', 'Profesionales', 'Marcas'];
+export const allianceItems = [
+  { id: 'ucse', title: 'UCSE', src: '/assets/alianzas/ucse.jpeg' },
+  { id: 'esitef', title: 'ESITEF', src: '/assets/alianzas/esitef.jpeg' },
+  { id: 'casla', title: 'CASLA', src: '/assets/alianzas/casla.jpeg' },
+  { id: 'cam', title: 'CAM', src: '/assets/alianzas/cam.jpeg' },
+];
 
 export const contactCards = [
   { icon: 'phone', title: 'Teléfono / WhatsApp', text: '+54 9 383 XXX XXXX' },

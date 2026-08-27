@@ -6,13 +6,11 @@ export function SiteFooter({ hidden }) {
     <footer className={`${hidden ? 'hidden' : ''} bg-graphiteDark text-white`}>
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
         <div>
-          <div className="flex items-center gap-3">
-            <img src="/assets/logo-icon.jpg" alt="José Oviedo Kinesiología" className="h-12 w-12 rounded-md object-cover" />
-            <div>
-              <h3 className="text-xl font-bold">José Oviedo</h3>
-              <p className="text-sm text-white/70">Kinesiología</p>
-            </div>
-          </div>
+          <img
+            src="/assets/LOGO.png"
+            alt="José Oviedo Kinesiología Deportiva"
+            className="h-14 w-auto object-contain sm:h-16"
+          />
 
           <p className="mt-5 leading-7 text-white/70">
             Recuperación, prevención de lesiones y entrenamiento personalizado con un enfoque integral para mejorar tu calidad de vida.

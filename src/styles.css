@@ -39,3 +39,27 @@ img {
   opacity: 0.18;
   mix-blend-mode: soft-light;
 }
+
+@keyframes alliances-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.alliances-track {
+  animation: alliances-scroll 28s linear infinite;
+}
+
+.alliances-marquee:hover .alliances-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alliances-track {
+    animation-play-state: paused;
+  }
+}

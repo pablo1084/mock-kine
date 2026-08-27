@@ -1,11 +1,14 @@
 import React from 'react';
-import { ArrowRight, Building2, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Building2, X } from 'lucide-react';
 
-export function CenterSection({ hidden, gallery }) {
+export function CenterSection({ hidden, gallery, onBack }) {
   const [selectedSpace, setSelectedSpace] = React.useState(null);
 
   return (
-    <section id="nuestro-centro" className={`${hidden ? 'hidden' : ''} mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8`}>
+    <section className={`${hidden ? 'hidden' : ''} mx-auto max-w-7xl px-4 pb-20 pt-32 sm:px-6 lg:px-8`}>
+      <button type="button" className="mb-10 inline-flex items-center gap-2 text-sm font-semibold text-white/70 transition hover:text-pulse" onClick={onBack}>
+        <ArrowLeft size={17} /> Volver al inicio
+      </button>
       <div className="mb-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
         <div>
           <p className="text-sm font-semibold uppercase text-pulse">Nuestro Centro</p>
@@ -29,22 +32,21 @@ export function CenterSection({ hidden, gallery }) {
                 <Building2 size={34} />
                 <span className="text-3xl font-semibold">{item.initials}</span>
               </div>
-              {item.src && item.imageFit === 'contain' && (
-  <img
-    src={item.src}
-    alt=""
-    className="absolute inset-0 h-full w-full scale-110 object-cover opacity-35 blur-md"
-  />
-)}
-{item.src && (
-  <img
-    src={item.src}
-    alt={item.title}
-    className={`absolute inset-0 h-full w-full transition duration-500 group-hover:scale-105 ${
-      item.imageFit === 'contain' ? 'object-contain p-3' : 'object-cover'
-    }`}
-  />
-)}
+              {item.src && (
+                <>
+                  <img
+                    src={item.src}
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute inset-0 h-full w-full scale-110 object-cover opacity-35 blur-md"
+                  />
+                  <img
+                    src={item.src}
+                    alt={item.title}
+                    className="absolute inset-0 h-full w-full object-contain p-3 transition duration-500 group-hover:scale-105"
+                  />
+                </>
+              )}
             </div>
             <div className="p-5">
               <div className="flex items-center justify-between gap-4">
@@ -66,8 +68,12 @@ export function CenterSection({ hidden, gallery }) {
                 <Building2 size={42} />
                 <span className="text-5xl font-semibold">{selectedSpace.initials}</span>
               </div>
-              {selectedSpace.src && (
-                <img src={selectedSpace.src} alt={selectedSpace.title} className="absolute inset-0 h-full w-full object-cover" />
+              {(selectedSpace.detailSrc || selectedSpace.src) && (
+                <img
+                  src={selectedSpace.detailSrc || selectedSpace.src}
+                  alt={selectedSpace.title}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
               )}
             </div>
             <div className="relative overflow-y-auto p-6 sm:p-8">
