@@ -29,13 +29,22 @@ export function CenterSection({ hidden, gallery }) {
                 <Building2 size={34} />
                 <span className="text-3xl font-semibold">{item.initials}</span>
               </div>
-              {item.src && (
-                <img
-                  src={item.src}
-                  alt={item.title}
-                  className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                />
-              )}
+              {item.src && item.imageFit === 'contain' && (
+  <img
+    src={item.src}
+    alt=""
+    className="absolute inset-0 h-full w-full scale-110 object-cover opacity-35 blur-md"
+  />
+)}
+{item.src && (
+  <img
+    src={item.src}
+    alt={item.title}
+    className={`absolute inset-0 h-full w-full transition duration-500 group-hover:scale-105 ${
+      item.imageFit === 'contain' ? 'object-contain p-3' : 'object-cover'
+    }`}
+  />
+)}
             </div>
             <div className="p-5">
               <div className="flex items-center justify-between gap-4">
