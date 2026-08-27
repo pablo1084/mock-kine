@@ -52,10 +52,13 @@ img {
 
 .alliances-track {
   animation: alliances-scroll 28s linear infinite;
+  will-change: transform;
 }
 
-.alliances-marquee:hover .alliances-track {
-  animation-play-state: paused;
+@media (hover: hover) and (pointer: fine) {
+  .alliances-marquee:hover .alliances-track {
+    animation-play-state: paused;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
