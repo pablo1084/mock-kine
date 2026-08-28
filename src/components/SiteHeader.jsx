@@ -33,7 +33,7 @@ export function SiteHeader({ menuOpen, navItems, onCloseMenu, onHomeSection, onO
       {menuOpen && (
         <div className="fixed inset-0 z-[60] bg-[#15181b] text-white md:hidden">
           <div className="flex items-center justify-between px-5 py-4">
-            <img src="/assets/jose-oviedo-navbar-logo.png" alt="José Oviedo kinesiología deportiva" className="h-14 w-auto object-contain" />
+            <img src="/assets/LOGO.png" alt="José Oviedo kinesiología deportiva" className="h-14 w-auto object-contain" />
             <button aria-label="Cerrar menu" className="rounded-md border border-white/15 p-2" onClick={onCloseMenu}>
               <X size={20} />
             </button>

@@ -3,24 +3,27 @@ import { SiteFooter } from './components/SiteFooter';
 import { SiteHeader } from './components/SiteHeader';
 import { TeamMemberModal } from './components/TeamMemberModal';
 import { allianceItems, contactCards, gallery, ivolutionGallery, navItems, services, slots, sportsKinesiologyStages, teamAreas, teamMembers, technologyServices } from './data/siteContent';
-import { useSlowVideo } from './hooks/useSlowVideo';
 import { AboutSection } from './sections/AboutSection';
 import { AlliancesSection } from './sections/AlliancesSection';
 import { AppointmentsSection } from './sections/AppointmentsSection';
-import { CenterSection } from './sections/CenterSection';
 import { ContactSection } from './sections/ContactSection';
 import { CenterOverviewSection } from './sections/CenterOverviewSection';
 import { HeroSection } from './sections/HeroSection';
-import { ServicesSection } from './sections/ServicesSection';
 import { ServicesOverviewSection } from './sections/ServicesOverviewSection';
-import { TeamPage } from './sections/TeamPage';
+
+const CenterSection = React.lazy(() => import('./sections/CenterSection').then((module) => ({ default: module.CenterSection })));
+const ServicesSection = React.lazy(() => import('./sections/ServicesSection').then((module) => ({ default: module.ServicesSection })));
+const TeamPage = React.lazy(() => import('./sections/TeamPage').then((module) => ({ default: module.TeamPage })));
+
+function PageFallback() {
+  return <div className="min-h-screen bg-graphite pt-32 text-center text-sm text-white/60">Cargando contenido…</div>;
+}
 
 export default function App() {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [activePage, setActivePage] = React.useState('home');
   const [selectedSlot, setSelectedSlot] = React.useState('10:00');
   const [selectedTeamMember, setSelectedTeamMember] = React.useState(null);
-  const heroVideoRef = useSlowVideo();
 
   const openHomeSection = () => {
     setActivePage('home');
@@ -57,20 +60,26 @@ export default function App() {
         onOpenMenu={() => setMenuOpen(true)}
       />
 
-      <HeroSection hidden={!showHome} videoRef={heroVideoRef} />
+      <HeroSection hidden={!showHome} />
       <AboutSection hidden={!showHome} onOpenTeamPage={openTeamPage} />
-      <TeamPage
-        hidden={activePage !== 'team'}
-        teamAreas={teamAreas}
-        teamMembers={teamMembers}
-        onBack={openHomeSection}
-        onSelectMember={setSelectedTeamMember}
-      />
+      {activePage === 'team' && (
+        <React.Suspense fallback={<PageFallback />}>
+          <TeamPage teamAreas={teamAreas} teamMembers={teamMembers} onBack={openHomeSection} onSelectMember={setSelectedTeamMember} />
+        </React.Suspense>
+      )}
       <TeamMemberModal member={selectedTeamMember} onClose={() => setSelectedTeamMember(null)} />
       <ServicesOverviewSection hidden={!showHome} onOpenServices={(targetId) => openPage('services', targetId)} />
-      <ServicesSection hidden={activePage !== 'services'} onBack={openHomeSection} ivolutionGallery={ivolutionGallery} services={services} stages={sportsKinesiologyStages} technologyServices={technologyServices} />
+      {activePage === 'services' && (
+        <React.Suspense fallback={<PageFallback />}>
+          <ServicesSection onBack={openHomeSection} ivolutionGallery={ivolutionGallery} services={services} stages={sportsKinesiologyStages} technologyServices={technologyServices} />
+        </React.Suspense>
+      )}
       <CenterOverviewSection hidden={!showHome} onOpenCenter={() => openPage('center')} />
-      <CenterSection hidden={activePage !== 'center'} onBack={openHomeSection} gallery={gallery} />
+      {activePage === 'center' && (
+        <React.Suspense fallback={<PageFallback />}>
+          <CenterSection onBack={openHomeSection} gallery={gallery} />
+        </React.Suspense>
+      )}
       <AlliancesSection hidden={!showHome} items={allianceItems} />
       <AppointmentsSection hidden={!showHome} selectedSlot={selectedSlot} services={services} slots={slots} onSelectSlot={setSelectedSlot} />
       <ContactSection contactCards={contactCards} hidden={!showHome} />

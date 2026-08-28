@@ -46,7 +46,7 @@ export function ContactSection({ contactCards, hidden }) {
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-sm">
-        <img src="/assets/fachada.jpg" alt="Centro José Oviedo Kinesiología" className="h-80 w-full object-cover" />
+        <img src="/assets/fachada.jpg" alt="Centro José Oviedo Kinesiología" className="h-80 w-full object-cover" loading="lazy" decoding="async" />
         <div className="p-7">
           <h3 className="text-2xl font-bold text-graphite">Conocé nuestro centro</h3>
           <p className="mt-4 leading-7 text-neutral-600">
@@ -55,7 +55,7 @@ export function ContactSection({ contactCards, hidden }) {
           <a
             href="https://www.google.com/maps/place/Jose+Oviedo/@-28.4655158,-65.7743581,324m/data=!3m1!1e3!4m6!3m5!1s0x942428bf3c67d161:0x9aac28ab8d1dd802!8m2!3d-28.4652554!4d-65.7729641!16s%2Fg%2F11bbrhdlmb?entry=ttu&g_ep=EgoyMDI2MDcyNi4wIKXMDSoASAFQAw%3D%3D"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="mt-8 inline-flex items-center rounded-lg border border-pulse px-6 py-3 font-semibold text-pulse transition hover:bg-pulse hover:text-white"
           >
             Ver en Google Maps

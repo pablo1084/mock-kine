@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600;1,700&family=MuseoModerno:wght@400;500;600;700;800&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -26,17 +24,19 @@ img {
   display: none;
 }
 
-.hero-video {
-  filter: brightness(0.45) contrast(1.18) saturate(0.96);
-  transform: scale(1.035);
+.hero-image {
+  filter: contrast(1.08) saturate(0.78);
+  transform: scale(1.015);
 }
 
-.hero-video-texture {
+.hero-image-texture {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: linear-gradient(115deg, rgba(255,255,255,0.035), rgba(255,255,255,0) 42%);
-  opacity: 0.18;
+  background-image:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.045), transparent 38%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.012) 0, rgba(255, 255, 255, 0.012) 1px, transparent 1px, transparent 5px);
+  opacity: 0.22;
   mix-blend-mode: soft-light;
 }
 
@@ -54,6 +54,18 @@ img {
   animation: alliances-scroll 28s linear infinite;
   -webkit-animation: alliances-scroll 28s linear infinite;
   will-change: transform;
+}
+
+.alliances-group {
+  gap: 1rem;
+  padding-right: 1rem;
+}
+
+@media (max-width: 1024px) {
+  .alliances-group {
+    gap: 0;
+    padding-right: 0;
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {

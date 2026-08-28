@@ -38,11 +38,15 @@ export function CenterSection({ hidden, gallery, onBack }) {
                     src={item.src}
                     alt=""
                     aria-hidden="true"
+                    loading="lazy"
+                    decoding="async"
                     className="absolute inset-0 h-full w-full scale-110 object-cover opacity-35 blur-md"
                   />
                   <img
                     src={item.src}
                     alt={item.title}
+                    loading="lazy"
+                    decoding="async"
                     className="absolute inset-0 h-full w-full object-contain p-3 transition duration-500 group-hover:scale-105"
                   />
                 </>
@@ -72,6 +76,7 @@ export function CenterSection({ hidden, gallery, onBack }) {
                 <img
                   src={selectedSpace.detailSrc || selectedSpace.src}
                   alt={selectedSpace.title}
+                  decoding="async"
                   className="absolute inset-0 h-full w-full object-cover"
                 />
               )}

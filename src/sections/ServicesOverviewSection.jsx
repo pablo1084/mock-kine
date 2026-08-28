@@ -44,7 +44,7 @@ export function ServicesOverviewSection({ hidden, onOpenServices }) {
               className="group relative min-h-80 overflow-hidden rounded-md border border-white/10 text-left"
               onClick={() => onOpenServices(id)}
             >
-              <img src={image} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+              <img src={image} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-graphiteDark via-graphiteDark/55 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
                 <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase text-pulse">

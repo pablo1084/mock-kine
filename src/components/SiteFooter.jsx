@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaFacebookF, FaInstagram, FaWhatsapp } from 'react-icons/fa';
+import { Facebook, Instagram, MessageCircle } from 'lucide-react';
 
 export function SiteFooter({ hidden }) {
   return (
@@ -10,6 +10,8 @@ export function SiteFooter({ hidden }) {
             src="/assets/LOGO.png"
             alt="José Oviedo Kinesiología Deportiva"
             className="h-14 w-auto object-contain sm:h-16"
+            loading="lazy"
+            decoding="async"
           />
 
           <p className="mt-5 leading-7 text-white/70">
@@ -44,26 +46,29 @@ export function SiteFooter({ hidden }) {
             <a
               href="https://wa.me/549383XXXXXXX"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
+              aria-label="Contactar por WhatsApp"
               className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 transition hover:bg-green-600"
             >
-              <FaWhatsapp size={22} />
+              <MessageCircle size={22} />
             </a>
             <a
-              href="https://instagram.com/tuusuario"
+              href="https://www.instagram.com/joseoviedokinesiodeportiva?igsi=dmk1YWRyM3JmNjJu"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
+              aria-label="Visitar Instagram"
               className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 transition hover:bg-pink-600"
             >
-              <FaInstagram size={20} />
+              <Instagram size={20} />
             </a>
             <a
-              href="https://facebook.com/tuusuario"
+              href="https://www.facebook.com/share/19WbSaPrep/"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
+              aria-label="Visitar Facebook"
               className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 transition hover:bg-blue-600"
             >
-              <FaFacebookF size={20} />
+              <Facebook size={20} />
             </a>
           </div>
 
