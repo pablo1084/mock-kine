@@ -6,7 +6,7 @@ export function CenterOverviewSection({ hidden, onOpenCenter }) {
     <section id="nuestro-centro" className={`${hidden ? 'hidden' : ''} bg-graphite py-20`}>
       <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:px-8">
         <button type="button" className="group relative min-h-96 overflow-hidden rounded-md border border-white/10" onClick={onOpenCenter}>
-          <img src="/assets/centro/fachada.jpeg" alt="Fachada del centro José Oviedo Kinesiología" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" decoding="async" />
+          <img src="/assets/centro/fachada.jpeg" alt="Carteles luminosos de la fachada del centro José Oviedo Kinesiología" className="absolute inset-0 h-full w-full object-cover object-[center_20%] transition duration-700 group-hover:scale-105" loading="lazy" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-t from-graphiteDark/65 to-transparent" />
         </button>
         <div className="lg:pl-8">

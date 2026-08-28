@@ -46,10 +46,3 @@ li {
   color: rgba(255, 255, 255, 0.72);
   line-height: 1.8;
 }
-
-.notice {
-  margin-top: 2rem;
-  padding: 1rem 1.25rem;
-  border-left: 3px solid #f05a28;
-  background: rgba(255, 255, 255, 0.05);
-}

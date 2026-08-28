@@ -8,28 +8,19 @@ export function HeroSection({ hidden }) {
     <section id="inicio" className={`${hidden ? 'hidden' : ''} relative isolate overflow-hidden bg-graphite pt-24 text-white`}>
       <div className="absolute inset-0">
         <img
-          src="/assets/centro-gimnasio.jpg"
+          src="/assets/hero-centro.jpeg"
           alt="Área de entrenamiento y rehabilitación del centro José Oviedo"
-          className="hero-image h-full w-full object-cover object-center md:object-[68%_52%]"
+          className="hero-image h-full w-full object-cover object-center md:object-[70%_48%]"
           fetchPriority="high"
         />
-        <div className="absolute inset-0 bg-graphite/25" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#15181b] via-[#202428]/90 to-[#202428]/20" />
+        <div className="hero-contrast-overlay" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#15181b]/85 via-transparent to-[#15181b]/25" />
         <div className="hero-image-texture" />
         <div className="absolute -left-20 top-1/3 h-72 w-72 rounded-full bg-pulse/10 blur-[110px]" />
       </div>
 
-      <div className="relative mx-auto flex min-h-[calc(100svh-6rem)] max-w-7xl flex-col justify-center px-4 pb-12 pt-12 sm:px-6 sm:pb-16 sm:pt-16 lg:px-8">
-        <div className="flex w-full justify-center">
-          <img
-            src="/assets/logo-hero.png"
-            alt="José Oviedo Kinesiología Deportiva"
-            className="h-auto w-full max-w-[300px] object-contain drop-shadow-[0_12px_30px_rgba(0,0,0,0.4)] sm:max-w-[400px] lg:max-w-[480px]"
-          />
-        </div>
-
-        <div className="mt-2 max-w-[760px] pb-8 sm:mt-4">
+      <div className="relative mx-auto flex min-h-[calc(100svh-6rem)] max-w-7xl items-center px-4 pb-12 pt-12 sm:px-6 sm:pb-16 sm:pt-16 lg:px-8">
+        <div className="max-w-[760px] py-8">
           <p className="flex items-center gap-3 text-[0.68rem] font-bold uppercase tracking-[0.22em] text-white/75 sm:text-xs">
             <span className="h-px w-9 bg-pulse" /> Readaptación · Rendimiento · Prevención
           </p>

@@ -40,6 +40,30 @@ img {
   mix-blend-mode: soft-light;
 }
 
+.hero-contrast-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      #15181b 0%,
+      #15181b 14%,
+      rgba(21, 24, 27, 0.97) 24%,
+      rgba(21, 24, 27, 0.82) 38%,
+      rgba(21, 24, 27, 0.48) 54%,
+      rgba(21, 24, 27, 0.14) 72%,
+      transparent 86%
+    );
+}
+
+@media (max-width: 767px) {
+  .hero-contrast-overlay {
+    background:
+      linear-gradient(90deg, rgba(21, 24, 27, 0.94), rgba(21, 24, 27, 0.5)),
+      linear-gradient(0deg, rgba(21, 24, 27, 0.72), transparent 60%);
+  }
+}
+
 @keyframes alliances-scroll {
   from {
     transform: translateX(0);

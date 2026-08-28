@@ -9,7 +9,7 @@ export function AppointmentsSection({ hidden, selectedSlot, services, slots, onS
           <p className="text-sm font-semibold uppercase tracking-wider text-pulse">Turnos Online</p>
           <h2 className="mt-3 text-4xl font-semibold tracking-normal">Solicitá tu turno de manera rápida y sencilla.</h2>
           <p className="mt-5 text-base leading-8 text-white/70">
-            Completá el formulario con tus datos y el servicio que necesitás según la agenda disponible del centro. Esta versión permite mostrar visualmente cómo será la reserva.
+            Completá el formulario con tus datos, elegí el servicio y seleccioná un horario disponible. Nuestro equipo revisará la solicitud y se comunicará con vos para confirmar el turno.
           </p>
           <div className="mt-8 rounded-md border border-white/10 bg-white/5 p-5 backdrop-blur">
             <h3 className="text-lg font-semibold">Primera consulta</h3>
@@ -53,6 +53,9 @@ export function AppointmentsSection({ hidden, selectedSlot, services, slots, onS
             Motivo de consulta
             <textarea name="reason" maxLength={1000} className="min-h-28 rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse" placeholder="Contanos brevemente qué necesitás trabajar." />
           </label>
+          <p className="mt-3 text-xs leading-5 text-neutral-500">
+            Si contás con obra social, consultanos previamente para verificar cobertura, requisitos y disponibilidad de la prestación.
+          </p>
           <label className="mt-5 flex items-start gap-3 text-sm leading-6 text-neutral-600">
             <input type="checkbox" name="privacyConsent" required className="mt-1 h-4 w-4 shrink-0 accent-pulse" />
             <span>

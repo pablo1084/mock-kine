@@ -70,6 +70,7 @@ export const gallery = [
     tag: 'Nuestro centro',
     initials: 'FI',
     src: '/assets/centro/fachada.jpeg',
+    imagePosition: 'object-[center_20%]',
     summary: 'El acceso principal a un espacio preparado para acompañarte desde el primer momento.',
     text: 'La fachada y el ingreso identifican nuestro centro y dan la bienvenida a un espacio pensado para brindar atención profesional, comodidad y una experiencia cercana desde la llegada.',
   },
@@ -130,7 +131,7 @@ export const teamAreas = ['Dirección', 'Kinesiología', 'Salud integral', 'Entr
 
 export const teamMembers = [
   { id: 'director', name: 'Dr. José Oviedo', role: 'Director / Kinesiólogo', area: 'Dirección', initials: 'JO', photo: '/assets/equipo/director.jpg', imagePosition: 'object-[50%_9%]', highlight: true, summary: 'Coordina el abordaje integral del centro y acompaña procesos de rehabilitación, readaptación y rendimiento.', bio: 'Director del centro y referente del equipo profesional. Su trabajo integra evaluación funcional, tratamiento kinésico y seguimiento personalizado para que cada paciente avance con objetivos claros y medibles.' },
-  { id: 'kinesiologo-1', name: 'Luciana Cordero', role: 'Kinesiología y rehabilitación', area: 'Kinesiología', initials: 'K1', photo: '/assets/equipo/kinesiologo-1.jpg', imagePosition: 'object-[50%_13%]', summary: 'Acompaña procesos de recuperación funcional con seguimiento cercano y progresivo.', bio: 'Profesional del área kinésica orientado/a a la recuperación del movimiento, el control del dolor y la vuelta segura a las actividades de cada paciente.' },
+  { id: 'kinesiologo-1', name: 'Luciana Cordero', role: 'Kinesiología y rehabilitación', area: 'Kinesiología', initials: 'K1', photo: '/assets/equipo/kinesiologo-1.jpg', imagePosition: 'object-[50%_13%]', summary: 'Acompaña procesos de recuperación funcional con seguimiento cercano y progresivo.', bio: 'Profesional del área kinésica orientada a la recuperación del movimiento, el control del dolor y la vuelta segura a las actividades de cada paciente.' },
   { id: 'kinesiologo-2', name: 'Tomas Ibañez Espeche', role: 'Kinesiología y rehabilitación', area: 'Kinesiología', initials: 'K2', photo: '/assets/equipo/kinesiologo-2.jpg', imagePosition: 'object-[50%_13%]', summary: 'Trabaja con lesiones deportivas, movilidad y readaptación al esfuerzo.', bio: 'Su enfoque combina evaluación clínica, ejercicios terapéuticos y progresiones de carga para acompañar a personas activas y deportistas.' },
   { id: 'kinesiologo-3', name: 'Javier Luna Mercado', role: 'Kinesiología y rehabilitación', area: 'Kinesiología', initials: 'K3', photo: '/assets/equipo/kinesiologo-3.jpg', imagePosition: 'object-[50%_13%]', summary: 'Diseña planes de tratamiento para mejorar movilidad, fuerza y autonomía.', bio: 'Acompaña procesos de rehabilitación musculoesquelética con objetivos concretos, controles periódicos y educación para el paciente.' },
   { id: 'kinesiologo-4', name: 'Natalia Herrera', role: 'Kinesiología y rehabilitación', area: 'Kinesiología', initials: 'K4', photo: '/assets/equipo/kinesiologo-4.jpg', imagePosition: 'object-[50%_13%]', summary: 'Integra recursos manuales, ejercicio terapéutico y prevención.', bio: 'Su intervención busca mejorar la calidad del movimiento y reducir molestias mediante un abordaje personalizado y progresivo.' },
@@ -151,8 +152,15 @@ export const allianceItems = [
 ];
 
 export const contactCards = [
-  { icon: 'phone', title: 'Teléfono / WhatsApp', text: '+54 9 383 XXX XXXX' },
-  { icon: 'map', title: 'Dirección', text: 'Núñez del Prado 987, Catamarca, Argentina' },
-  { icon: 'mail', title: 'Correo electrónico', text: 'contacto@joseoviedokinesiologia.com' },
-  { icon: 'clock', title: 'Horarios de atención', text: 'Lunes a Viernes: 8:00 a 20:00 hs', secondLine: 'Sábados: 8:00 a 13:00 hs' },
+  {
+    icon: 'phone',
+    title: 'Teléfonos',
+    lines: [
+      { label: 'WhatsApp', text: '+54 9 383 461 4543', href: 'https://wa.me/5493834614543', external: true },
+      { label: 'Teléfono fijo', text: '(0383) 474-6521', href: 'tel:+543834746521' },
+    ],
+  },
+  { icon: 'map', title: 'Dirección', text: 'Núñez del Prado 992, Catamarca, Argentina' },
+  { icon: 'mail', title: 'Correo electrónico', text: 'kinesiologiadeportivaoviedoad@gmail.com', href: 'mailto:kinesiologiadeportivaoviedoad@gmail.com' },
+  { icon: 'clock', title: 'Horarios de atención', text: 'Lunes a Viernes: 8:00 a 21:30 hs' },
 ];

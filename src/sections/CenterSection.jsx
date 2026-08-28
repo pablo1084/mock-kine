@@ -40,7 +40,7 @@ export function CenterSection({ hidden, gallery, onBack }) {
                     aria-hidden="true"
                     loading="lazy"
                     decoding="async"
-                    className="absolute inset-0 h-full w-full scale-110 object-cover opacity-35 blur-md"
+                    className={`absolute inset-0 h-full w-full scale-110 object-cover opacity-35 blur-md ${item.imagePosition || 'object-center'}`}
                   />
                   <img
                     src={item.src}
@@ -77,7 +77,7 @@ export function CenterSection({ hidden, gallery, onBack }) {
                   src={selectedSpace.detailSrc || selectedSpace.src}
                   alt={selectedSpace.title}
                   decoding="async"
-                  className="absolute inset-0 h-full w-full object-cover"
+                  className={`absolute inset-0 h-full w-full object-cover ${selectedSpace.imagePosition || 'object-center'}`}
                 />
               )}
             </div>

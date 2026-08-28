@@ -44,7 +44,7 @@ export function SiteFooter({ hidden }) {
           <h4 className="mb-4 text-lg font-semibold">Seguinos</h4>
           <div className="flex gap-3">
             <a
-              href="https://wa.me/549383XXXXXXX"
+              href="https://wa.me/5493834614543"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Contactar por WhatsApp"
