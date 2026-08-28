@@ -53,6 +53,15 @@ export function AppointmentsSection({ hidden, selectedSlot, services, slots, onS
             Motivo de consulta
             <textarea name="reason" maxLength={1000} className="min-h-28 rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse" placeholder="Contanos brevemente qué necesitás trabajar." />
           </label>
+          <label className="mt-5 flex items-start gap-3 text-sm leading-6 text-neutral-600">
+            <input type="checkbox" name="privacyConsent" required className="mt-1 h-4 w-4 shrink-0 accent-pulse" />
+            <span>
+              Acepto que mis datos sean utilizados para gestionar mi solicitud de turno, según la{' '}
+              <a href="/politica-de-privacidad.html" target="_blank" rel="noopener noreferrer" className="font-semibold text-pulse underline-offset-2 hover:underline">
+                política de privacidad
+              </a>.
+            </span>
+          </label>
           <button type="submit" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-md bg-graphite px-5 py-3 text-sm font-semibold text-white transition hover:bg-pulse sm:w-auto">
             Solicitar reserva <CalendarCheck size={17} />
           </button>

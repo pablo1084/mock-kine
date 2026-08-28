@@ -53,7 +53,7 @@ export function SiteFooter({ hidden }) {
               <MessageCircle size={22} />
             </a>
             <a
-              href="https://www.instagram.com/joseoviedokinesiodeportiva?igsi=dmk1YWRyM3JmNjJu"
+              href="https://www.instagram.com/joseoviedokinesiodeportiva/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Visitar Instagram"
@@ -81,6 +81,7 @@ export function SiteFooter({ hidden }) {
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-6 text-sm text-white/60 sm:flex-row sm:px-6 lg:px-8">
           <p>© {new Date().getFullYear()} José Oviedo Kinesiología. Todos los derechos reservados.</p>
+          <a href="/politica-de-privacidad.html" className="transition hover:text-pulse">Política de privacidad</a>
         </div>
       </div>
     </footer>
