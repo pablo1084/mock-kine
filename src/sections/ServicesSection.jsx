@@ -226,7 +226,7 @@ export function ServicesSection({ hidden, ivolutionGallery, onBack, services, st
               {technologyServices.find((service) => service.title === 'Ondas de choque')?.text}
             </p>
             <div className="mt-6 grid grid-cols-[1.1fr_0.9fr] items-center gap-3 sm:gap-4">
-              <img src="/assets/ondas-aplicacion.png" alt="Aplicación de ondas de choque en la rodilla" width="941" height="1672" className="h-auto w-full rounded-md" loading="lazy" decoding="async" />
+              <img src="/assets/ondas-aplicacion.jpg" alt="Aplicación de ondas de choque en la rodilla" width="941" height="1672" className="h-auto w-full rounded-md" loading="lazy" decoding="async" />
               <img src="/assets/ondas-tratamiento.jpg" alt="Tratamiento con ondas de choque en consultorio" width="1080" height="1350" className="h-auto w-full rounded-md" loading="lazy" decoding="async" />
             </div>
           </div>

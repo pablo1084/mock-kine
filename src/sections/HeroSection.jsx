@@ -37,7 +37,7 @@ export function HeroSection({ hidden }) {
         </div>
         <div className="hero-photo relative -mx-4 aspect-[4/5] overflow-hidden sm:-mx-6 lg:mx-0">
           <img
-            src="/assets/hero-centro.png"
+            src="/assets/hero-centro.jpg"
             alt="Dos profesionales acompañan a una paciente durante una evaluación en Ivolution Lab"
             className="hero-image h-full w-full object-cover object-bottom"
             width="1200"
