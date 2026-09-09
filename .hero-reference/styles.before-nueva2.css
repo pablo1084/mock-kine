@@ -28,11 +28,6 @@ img {
   filter: contrast(1.08) saturate(0.78);
 }
 
-/* Encuadre de hero-nueva2: pista del suelo y personas entrenando. */
-.hero-photo .hero-image.hero-image-training {
-  object-position: 20% 100%;
-}
-
 .hero-photo-fade {
   background: linear-gradient(to bottom, #15181b, transparent 18%, transparent 90%, #15181b);
 }
@@ -66,13 +61,13 @@ img {
 
   .hero-photo {
     position: absolute;
-    inset: 0 0 0 25%;
+    inset: 0 0 0 50%;
     aspect-ratio: auto;
   }
 
   .hero-photo-fade {
     background:
-      linear-gradient(to right, #15181b 0%, rgba(21, 24, 27, 0.85) 12%, rgba(21, 24, 27, 0.65) 30%, rgba(21, 24, 27, 0.2) 45%, transparent 60%),
+      linear-gradient(to right, #15181b 0%, rgba(21, 24, 27, 0.8) 6%, rgba(21, 24, 27, 0.25) 18%, transparent 32%),
       linear-gradient(to top, rgba(21, 24, 27, 0.45), transparent 18%);
   }
 }

@@ -37,11 +37,11 @@ export function HeroSection({ hidden }) {
         </div>
         <div className="hero-photo relative -mx-4 aspect-[4/5] overflow-hidden sm:-mx-6 lg:mx-0">
           <img
-            src="/assets/hero-nueva2.jpg"
-            alt="Personas entrenando sobre la pista marcada del centro José Oviedo"
-            className="hero-image hero-image-training h-full w-full object-cover object-bottom"
-            width="1600"
-            height="1200"
+            src="/assets/hero-nueva.png"
+            alt="Dos profesionales acompañan a una paciente durante una evaluación en Ivolution Lab"
+            className="hero-image h-full w-full object-cover object-bottom"
+            width="1200"
+            height="1800"
             fetchPriority="high"
           />
           <div className="hero-image-texture" />
