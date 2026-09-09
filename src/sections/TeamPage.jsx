@@ -2,6 +2,23 @@ import React from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { TeamMemberCard } from '../components/TeamMemberCard';
 
+// Encuadre exclusivo de los carruseles móvil y de escritorio.
+const carouselImagePositions = {
+  director: 'object-[50%_9%]', // José Oviedo
+  'kinesiologo-1': 'object-[50%_18%]', // Luciana Cordero
+  'kinesiologo-2': 'object-[50%_13%]', // Tomas Ibañez Espeche
+  'kinesiologo-3': 'object-[50%_13%]', // Javier Luna Mercado
+  'kinesiologo-4': 'object-[50%_13%]', // Leandro Fagonde
+  'kinesiologo-5': 'object-[50%_32%]', // Natalia Herrera · Kinesiología
+  osteopata: 'object-[90%_20%]', // Pablo Villafañe
+  psicologo: 'object-[50%_13%]', // Ezequiel Vera
+  nutricionista: 'object-[50%_20%]', // Viviana Ali
+  profesor: 'object-[50%_13%]', // Mateo Vega
+  entrenadora: 'object-[50%_20%]', // Natalia Herrera · Entrenamiento
+  'administracion-1': 'object-[50%_20%]', // Alejandra Tamargo
+  'administracion-2': 'object-[50%_20%]', // Nazarena Oviedo
+};
+
 export function TeamPage({ hidden, teamAreas, teamMembers, onBack, onSelectMember }) {
   const [activeMemberIndex, setActiveMemberIndex] = React.useState(0);
   const [desktopViewerIndex, setDesktopViewerIndex] = React.useState(null);
@@ -88,7 +105,7 @@ export function TeamPage({ hidden, teamAreas, teamMembers, onBack, onSelectMembe
                 else showNextMember();
               }
             }}>
-              <TeamMemberCard member={teamMembers[activeMemberIndex]} onSelect={(member) => {
+              <TeamMemberCard member={teamMembers[activeMemberIndex]} imagePosition={carouselImagePositions[teamMembers[activeMemberIndex].id]} onSelect={(member) => {
                 if (didSwipeRef.current) {
                   didSwipeRef.current = false;
                   return;
@@ -146,7 +163,7 @@ export function TeamPage({ hidden, teamAreas, teamMembers, onBack, onSelectMembe
             <p className="mb-4 text-center text-sm font-semibold uppercase text-pulse">
               {desktopViewerIndex + 1} de {teamMembers.length} · {teamMembers[desktopViewerIndex].area}
             </p>
-            <TeamMemberCard member={teamMembers[desktopViewerIndex]} onSelect={onSelectMember} />
+            <TeamMemberCard member={teamMembers[desktopViewerIndex]} imagePosition={carouselImagePositions[teamMembers[desktopViewerIndex].id]} onSelect={onSelectMember} />
             <p className="mt-4 text-center text-sm text-white/60">Hacé clic en la card para ver la presentación completa.</p>
           </div>
 

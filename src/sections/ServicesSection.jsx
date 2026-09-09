@@ -1,15 +1,21 @@
 import React from 'react';
-import { Activity, Apple, ArrowLeft, Brain, ChevronLeft, ChevronRight, Dumbbell, Image, Maximize2, ShieldCheck, Target, Waves, X, Zap } from 'lucide-react';
+import { Apple, ArrowLeft, Brain, ChevronLeft, ChevronRight, Image, Maximize2, ShieldCheck, Target, Waves, X, Zap } from 'lucide-react';
 
 const serviceIcons = {
-  activity: Activity,
   shield: ShieldCheck,
   brain: Brain,
   apple: Apple,
-  dumbbell: Dumbbell,
 };
 
-export function ServicesSection({ hidden, ivolutionGallery, onBack, services, stages, technologyServices }) {
+export function ServicesSection({ hidden, targetId, ivolutionGallery, onBack, onRequestAppointment, services, stages, technologyServices }) {
+  React.useEffect(() => {
+    if (targetId) {
+      document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [targetId]);
+
   const ivolutionCarouselRef = React.useRef(null);
   const mepInlineVideoRef = React.useRef(null);
   const mepModalVideoRef = React.useRef(null);
@@ -100,7 +106,7 @@ export function ServicesSection({ hidden, ivolutionGallery, onBack, services, st
           <div>
             <p className="text-sm font-semibold uppercase text-pulse">Servicios</p>
             <h2 className="mt-3 max-w-4xl text-4xl font-semibold tracking-normal text-white sm:text-5xl">
-              Kinesiología deportiva basada en evaluación, rehabilitación y rendimiento.
+              Cuatro pilares para acompañar tu recuperación y rendimiento.
             </h2>
           </div>
           <p className="max-w-xl text-base leading-8 text-white/72">
@@ -108,17 +114,34 @@ export function ServicesSection({ hidden, ivolutionGallery, onBack, services, st
           </p>
         </div>
 
-        <div className="mt-12 grid gap-4 md:grid-cols-3">
-          {stages.map((stage) => (
-            <article key={stage.title} className="rounded-md border border-white/10 bg-white/8 p-6">
-              <span className="text-sm font-semibold text-pulse">{stage.step}</span>
-              <h3 className="mt-4 text-2xl font-semibold text-white">{stage.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-white/68">{stage.text}</p>
-            </article>
-          ))}
-        </div>
+
+        <section id="kinesiologia" aria-labelledby="kinesiologia-title" className="mt-14 scroll-mt-28 rounded-md border border-white/10 bg-graphiteDark p-6 sm:p-8 lg:p-10">
+          <div className="grid items-center gap-8 lg:grid-cols-2">
+            <div>
+              <p className="text-sm font-semibold uppercase text-pulse">01 · Recuperar movimiento</p>
+              <h3 id="kinesiologia-title" className="mt-3 text-3xl font-semibold text-white">Kinesiología deportiva y rehabilitación</h3>
+              <p className="mt-5 text-base leading-8 text-white/72">Un tratamiento personalizado que parte de la evaluación de la lesión, las necesidades y los objetivos de cada persona.</p>
+              <p className="mt-4 text-sm leading-7 text-white/68">Integramos recuperación funcional, ejercicio terapéutico y seguimiento de la evolución para acompañar el regreso a las actividades cotidianas y deportivas.</p>
+            </div>
+            <div className="grid grid-cols-2 items-center gap-4">
+              {/* Reemplazar estos espacios por las futuras fotos de Kinesiología. */}
+              {['Atención personalizada', 'Recuperación en movimiento'].map((label, index) => (
+                <div key={label} className={`flex aspect-[3/4] flex-col items-center justify-center gap-4 rounded-md border border-dashed border-white/20 bg-white/5 p-4 text-center ${index ? 'mt-10' : ''}`}>
+                  <Image size={28} className="text-pulse/70" aria-hidden="true" />
+                  <p className="text-sm font-medium text-white/65">{label}</p>
+                  <span className="text-xs text-white/40">Próximamente</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         <div id="laboratorio-ivolution" className="mt-14 scroll-mt-28 overflow-hidden rounded-md border border-[#f3c635]/25 bg-[#070808] shadow-soft">
+          <div className="border-b border-white/10 px-6 py-6 sm:px-8 lg:px-10">
+            <p className="text-sm font-semibold uppercase text-[#f3c635]">02 · Medir para decidir</p>
+            <h3 className="mt-3 text-3xl font-semibold text-white">Evaluación funcional y del rendimiento</h3>
+            <p className="mt-3 max-w-3xl text-sm leading-7 text-white/70">Ivolution Lab es nuestra unidad de evaluación objetiva: un perfil de rendimiento para orientar las decisiones y seguir la evolución.</p>
+          </div>
           <div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
             <div className="p-6 sm:p-8 lg:p-10">
               <span className="inline-flex items-center gap-2 rounded-md border border-[#f3c635]/45 bg-[#f3c635]/10 px-3 py-2 text-xs font-semibold uppercase text-[#f3c635]">
@@ -218,7 +241,26 @@ export function ServicesSection({ hidden, ivolutionGallery, onBack, services, st
           </div>
         )}
 
-        <div className="mt-12 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+        <section id="readaptacion" aria-labelledby="readaptacion-title" className="mt-14 scroll-mt-28 rounded-md border border-white/10 bg-graphiteDark p-6 sm:p-8 lg:p-10">
+          <p className="text-sm font-semibold uppercase text-pulse">03 · Volver a la actividad</p>
+          <h3 id="readaptacion-title" className="mt-3 text-3xl font-semibold text-white">Readaptación y entrenamiento</h3>
+          <p className="mt-5 max-w-3xl text-base leading-8 text-white/72">El puente entre rehabilitación y rendimiento. Trabajamos el fortalecimiento, el reacondicionamiento y la progresión de cargas de acuerdo con las demandas de cada actividad o deporte.</p>
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            {stages.map((stage) => (
+              <article key={stage.title} className="rounded-md border border-white/10 bg-white/5 p-5">
+                <span className="text-sm font-semibold text-pulse">{stage.step}</span>
+                <h4 className="mt-3 text-xl font-semibold text-white">{stage.title}</h4>
+                <p className="mt-3 text-sm leading-7 text-white/68">{stage.text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="tecnologia-aplicada" aria-labelledby="tecnologia-title" className="mt-14 scroll-mt-28">
+          <p className="text-sm font-semibold uppercase text-pulse">04 · Herramientas al servicio del tratamiento</p>
+          <h3 id="tecnologia-title" className="mt-3 text-3xl font-semibold text-white">Tecnología aplicada</h3>
+          <p className="mt-5 max-w-3xl text-base leading-8 text-white/72">Ondas de choque y MEP ecoguiado se integran al plan de tratamiento según la evaluación y las necesidades de cada paciente.</p>
+        <div className="mt-8 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
           <div id="ondas-de-choque" className="scroll-mt-28 rounded-md border border-white/10 bg-white p-6 text-ink shadow-sm">
             <span className="text-sm font-semibold uppercase text-pulse">Tecnología terapéutica</span>
             <h3 className="mt-3 flex items-center gap-3 text-3xl font-semibold text-graphite"><Waves className="shrink-0 text-pulse" size={26} /> Ondas de choque</h3>
@@ -271,6 +313,8 @@ export function ServicesSection({ hidden, ivolutionGallery, onBack, services, st
           </div>
         </div>
 
+        </section>
+
         {mepVideoOpen && (
           <div className="fixed inset-0 z-[70] hidden items-center justify-center bg-graphiteDark/92 px-4 py-8 backdrop-blur md:flex" onClick={closeMepVideo}>
             <div className="w-full max-w-3xl rounded-md border border-white/10 bg-[#070808] p-3 shadow-soft" onClick={(event) => event.stopPropagation()}>
@@ -314,8 +358,8 @@ export function ServicesSection({ hidden, ivolutionGallery, onBack, services, st
               Profesionales y recursos que acompañan el proceso clínico, deportivo y de bienestar.
             </p>
           </div>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {services.map(({ icon, title, text }) => {
+          <div className="grid gap-4 md:grid-cols-3">
+            {services.filter((service) => service.icon !== 'activity').map(({ icon, title, text }) => {
               const Icon = serviceIcons[icon];
 
               return (
@@ -323,18 +367,46 @@ export function ServicesSection({ hidden, ivolutionGallery, onBack, services, st
                   <Icon className="text-pulse" size={30} />
                   <h4 className="mt-5 text-xl font-semibold text-graphite">{title}</h4>
                   <p className="mt-3 text-sm leading-7 text-neutral-600">{text}</p>
+                  {title === 'Osteopatía' && (
+                    <a href="#osteopatia" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-pulse underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-pulse">
+                      Conocer el abordaje <ChevronRight size={16} />
+                    </a>
+                  )}
                 </article>
               );
             })}
           </div>
         </div>
 
+        <section id="osteopatia" aria-labelledby="osteopatia-title" className="mt-10 scroll-mt-28 overflow-hidden rounded-md border border-white/10 bg-graphiteDark p-6 sm:p-8 lg:p-10">
+          <div className="grid items-center gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-pulse">Atención personalizada</p>
+              <h3 id="osteopatia-title" className="mt-3 text-3xl font-semibold text-white sm:text-4xl">Osteopatía</h3>
+              <p className="mt-5 text-base leading-8 text-white/72">
+                Una mirada integral sobre la movilidad, la postura y la función corporal, con un abordaje adaptado a cada persona.
+              </p>
+              <p className="mt-4 text-sm leading-7 text-white/68">
+                La evaluación y el trabajo manual se integran al acompañamiento del equipo para atender las necesidades y los objetivos de cada consulta.
+              </p>
+              <div className="mt-7 border-l-2 border-pulse pl-4">
+                <p className="font-semibold text-white">Pablo Villafañe</p>
+                <p className="mt-1 text-sm text-white/60">Osteopatía · Equipo de salud integral</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-[1.15fr_0.85fr] items-center gap-3 sm:gap-5">
+              <img src="/assets/osteopata/osteopata2-web.jpg" alt="Pablo Villafañe durante una sesión de trabajo manual en la zona cervical" className="h-auto w-full rounded-md" loading="lazy" decoding="async" />
+              <img src="/assets/osteopata/osteopata5-web.jpg" alt="Trabajo de movilidad de la pierna durante una consulta de osteopatía" className="mt-10 h-auto w-full rounded-md sm:mt-16" loading="lazy" decoding="async" />
+            </div>
+          </div>
+        </section>
+
         <div className="mt-12 rounded-md border border-white/10 bg-white/8 p-6 sm:flex sm:items-center sm:justify-between sm:gap-8">
           <div>
             <p className="text-sm font-semibold uppercase text-pulse">Consulta especializada</p>
             <h3 className="mt-2 text-2xl font-semibold text-white">Evaluá, tratá y entrená con un plan pensado para tu objetivo.</h3>
           </div>
-          <a href="#turnos" className="mt-5 inline-flex items-center justify-center rounded-md bg-pulse px-5 py-3 text-sm font-semibold text-white transition hover:bg-orange-600 sm:mt-0">
+          <a href="#turnos" onClick={(event) => { event.preventDefault(); onRequestAppointment(); }} className="mt-5 inline-flex items-center justify-center rounded-md bg-pulse px-5 py-3 text-sm font-semibold text-white transition hover:bg-orange-600 sm:mt-0">
             Solicitar turno
           </a>
         </div>

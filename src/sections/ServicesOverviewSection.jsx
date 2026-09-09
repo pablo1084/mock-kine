@@ -1,25 +1,7 @@
 import React from 'react';
-import { ArrowRight, FlaskConical, Waves } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { ServicePillars } from '../components/ServicePillars';
 
-const highlights = [
-  {
-    id: 'laboratorio-ivolution',
-    eyebrow: 'Evaluación objetiva',
-    title: 'Ivolution Lab',
-    text: 'Tecnología para medir fuerza, potencia, asimetrías y evolución.',
-    image: '/assets/ivolution-lab/ivolution-logo.png',
-    isLogo: true,
-    icon: FlaskConical,
-  },
-  {
-    id: 'ondas-de-choque',
-    eyebrow: 'Tecnología terapéutica',
-    title: 'Ondas de choque',
-    text: 'Un recurso específico integrado a un plan de tratamiento profesional.',
-    image: '/assets/ondas.jpg',
-    icon: Waves,
-  },
-];
 
 export function ServicesOverviewSection({ hidden, onOpenServices }) {
   return (
@@ -29,7 +11,7 @@ export function ServicesOverviewSection({ hidden, onOpenServices }) {
           <div>
             <p className="text-sm font-semibold uppercase text-pulse">Servicios</p>
             <h2 className="mt-3 max-w-3xl text-4xl font-semibold text-white">
-              Evaluar mejor para tomar decisiones más precisas.
+              Cuatro pilares para acompañar tu recuperación y rendimiento.
             </h2>
           </div>
           <p className="max-w-lg text-base leading-8 text-white/68">
@@ -37,37 +19,7 @@ export function ServicesOverviewSection({ hidden, onOpenServices }) {
           </p>
         </div>
 
-        <div className="mt-10 grid gap-4 lg:grid-cols-2">
-          {highlights.map(({ id, eyebrow, title, text, image, isLogo, icon: Icon }) => (
-            <button
-              key={id}
-              type="button"
-              className={`group relative min-h-80 overflow-hidden rounded-md border border-white/10 text-left ${isLogo ? 'flex flex-col bg-black' : ''}`}
-              onClick={() => onOpenServices(id)}
-            >
-              {isLogo ? (
-                <div className="mx-4 mt-4 flex h-40 items-center justify-center sm:h-48">
-                  <img src={image} alt="" className="h-full w-full translate-x-[12px] object-contain [clip-path:inset(2%)] transition duration-700 group-hover:scale-105" loading="lazy" decoding="async" />
-                </div>
-              ) : (
-                <>
-                  <img src={image} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" decoding="async" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-graphiteDark via-graphiteDark/55 to-transparent" />
-                </>
-              )}
-              <div className={`${isLogo ? 'relative mt-auto w-full' : 'absolute inset-x-0 bottom-0'} p-6 sm:p-8`}>
-                <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase text-pulse">
-                  <Icon size={17} /> {eyebrow}
-                </span>
-                <h3 className="mt-3 text-3xl font-semibold text-white">{title}</h3>
-                <p className="mt-3 max-w-md text-sm leading-7 text-white/72">{text}</p>
-                <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white">
-                  Conocer más <ArrowRight className="transition group-hover:translate-x-1" size={17} />
-                </span>
-              </div>
-            </button>
-          ))}
-        </div>
+        <ServicePillars onOpenServices={onOpenServices} />
 
         <button type="button" className="mt-8 inline-flex items-center gap-2 rounded-md border border-pulse bg-pulse/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-pulse" onClick={() => onOpenServices()}>
           Explorar todos los servicios <ArrowRight size={17} />

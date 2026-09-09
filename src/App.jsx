@@ -24,6 +24,7 @@ export default function App() {
   const [activePage, setActivePage] = React.useState('home');
   const [selectedSlot, setSelectedSlot] = React.useState('10:00');
   const [selectedTeamMember, setSelectedTeamMember] = React.useState(null);
+  const [serviceTargetId, setServiceTargetId] = React.useState(null);
 
   const openHomeSection = () => {
     setActivePage('home');
@@ -39,6 +40,10 @@ export default function App() {
   const openPage = (page, targetId) => {
     setActivePage(page);
     setSelectedTeamMember(null);
+    if (page === 'services') {
+      setServiceTargetId(targetId || null);
+      return;
+    }
     window.setTimeout(() => {
       if (targetId) {
         document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -71,7 +76,7 @@ export default function App() {
       <ServicesOverviewSection hidden={!showHome} onOpenServices={(targetId) => openPage('services', targetId)} />
       {activePage === 'services' && (
         <React.Suspense fallback={<PageFallback />}>
-          <ServicesSection onBack={openHomeSection} ivolutionGallery={ivolutionGallery} services={services} stages={sportsKinesiologyStages} technologyServices={technologyServices} />
+          <ServicesSection targetId={serviceTargetId} onBack={openHomeSection} onRequestAppointment={() => openPage('home', 'turnos')} ivolutionGallery={ivolutionGallery} services={services} stages={sportsKinesiologyStages} technologyServices={technologyServices} />
         </React.Suspense>
       )}
       <CenterOverviewSection hidden={!showHome} onOpenCenter={() => openPage('center')} />

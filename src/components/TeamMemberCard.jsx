@@ -1,5 +1,5 @@
 import React from 'react';
-export function TeamMemberCard({ member, onSelect }) {
+export function TeamMemberCard({ member, onSelect, imagePosition = member.imagePosition }) {
   return (
     <button
       type="button"
@@ -15,7 +15,7 @@ export function TeamMemberCard({ member, onSelect }) {
           alt={member.name}
           loading="lazy"
           decoding="async"
-          className={`absolute inset-0 h-full w-full object-cover ${member.imagePosition} transition duration-500 group-hover:scale-105`}
+          className={`absolute inset-0 h-full w-full object-cover ${imagePosition} transition duration-500 group-hover:scale-105`}
           onError={(event) => {
             event.currentTarget.style.display = 'none';
           }}
