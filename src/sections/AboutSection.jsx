@@ -22,7 +22,7 @@ export function AboutSection({ hidden, onOpenTeamPage }) {
                 alt="Equipo completo de José Oviedo kinesiología deportiva"
                 loading="lazy"
                 decoding="async"
-                className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                className="h-full w-full object-cover object-[center_65%] transition duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-graphiteDark/80 via-transparent to-transparent" />
               <span className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-md bg-pulse px-4 py-3 text-sm font-semibold text-white transition group-hover:bg-orange-600">

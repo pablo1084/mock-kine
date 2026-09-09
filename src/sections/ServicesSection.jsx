@@ -132,7 +132,7 @@ export function ServicesSection({ hidden, ivolutionGallery, onBack, services, st
                     className="h-auto w-full"
                   />
                 </div>
-                <p className="font-lab text-5xl font-semibold leading-none tracking-normal text-[#f3c635] drop-shadow-[4px_5px_0_rgba(0,0,0,0.35)] sm:text-6xl">
+                <p className="font-lab text-5xl font-semibold leading-none tracking-normal text-[#f3c635] drop-shadow-[4px_5px_0_rgba(0,0,0,0.35)] sm:relative sm:bottom-[20px] sm:text-6xl">
                   lab
                 </p>
               </div>
@@ -161,9 +161,9 @@ export function ServicesSection({ hidden, ivolutionGallery, onBack, services, st
             </div>
             <div className="relative min-h-80 overflow-hidden bg-[#101112]">
               <img
-                src="/assets/ivolution-lab/lab1.jpeg"
+                src="/assets/ivolution-lab/lab1.jpg"
                 alt="Evaluación deportiva en Ivolution Lab"
-                className="absolute inset-0 h-full w-full object-cover"
+                className="absolute inset-0 h-full w-full object-cover object-[center_30%]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#070808]/72 via-[#070808]/12 to-transparent" />
             </div>
@@ -219,17 +219,15 @@ export function ServicesSection({ hidden, ivolutionGallery, onBack, services, st
         )}
 
         <div className="mt-12 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="rounded-md border border-white/10 bg-white p-6 text-ink shadow-sm">
+          <div id="ondas-de-choque" className="scroll-mt-28 rounded-md border border-white/10 bg-white p-6 text-ink shadow-sm">
             <span className="text-sm font-semibold uppercase text-pulse">Tecnología terapéutica</span>
-            <h3 className="mt-3 text-3xl font-semibold text-graphite">Ondas de choque y MEP ecoguiado</h3>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              {technologyServices.map((service) => (
-                <article id={service.title === 'Ondas de choque' ? 'ondas-de-choque' : undefined} key={service.title} className="scroll-mt-28 rounded-md border border-line p-5">
-                  {service.title === 'Ondas de choque' ? <Waves className="text-pulse" size={26} /> : <Activity className="text-pulse" size={26} />}
-                  <h4 className="mt-4 text-xl font-semibold text-graphite">{service.title}</h4>
-                  <p className="mt-3 text-sm leading-7 text-neutral-600">{service.text}</p>
-                </article>
-              ))}
+            <h3 className="mt-3 flex items-center gap-3 text-3xl font-semibold text-graphite"><Waves className="shrink-0 text-pulse" size={26} /> Ondas de choque</h3>
+            <p className="mt-4 text-sm leading-7 text-neutral-600">
+              {technologyServices.find((service) => service.title === 'Ondas de choque')?.text}
+            </p>
+            <div className="mt-6 grid grid-cols-[1.1fr_0.9fr] items-center gap-3 sm:gap-4">
+              <img src="/assets/ondas-aplicacion.png" alt="Aplicación de ondas de choque en la rodilla" width="941" height="1672" className="h-auto w-full rounded-md" loading="lazy" decoding="async" />
+              <img src="/assets/ondas-tratamiento.jpg" alt="Tratamiento con ondas de choque en consultorio" width="1080" height="1350" className="h-auto w-full rounded-md" loading="lazy" decoding="async" />
             </div>
           </div>
 

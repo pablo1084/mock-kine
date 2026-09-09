@@ -46,10 +46,6 @@ export const technologyServices = [
     title: 'Ondas de choque',
     text: 'Tecnología aplicada como recurso terapéutico en cuadros seleccionados, dentro de un plan de tratamiento profesional.',
   },
-  {
-    title: 'MEP ecoguiado',
-    text: 'Procedimiento guiado por ecografía para trabajar con mayor precisión sobre tejidos específicos.',
-  },
 ];
 
 export const ivolutionGallery = [
@@ -139,7 +135,7 @@ export const teamMembers = [
   { id: 'osteopata', name: 'Pablo Villafañe', role: 'Osteopatía', area: 'Salud integral', initials: 'OS', photo: '/assets/equipo/osteopata.jpg', imagePosition: 'object-[50%_13%]', summary: 'Aporta una mirada global sobre movilidad, postura y equilibrio corporal.', bio: 'Desde la osteopatía, acompaña el tratamiento con una evaluación integral orientada a mejorar la función y el bienestar general.' },
   { id: 'psicologo', name: 'Ezequiel Vera', role: 'Psicología', area: 'Salud integral', initials: 'PS', photo: '/assets/equipo/psicologo.jpg', imagePosition: 'object-[50%_13%]', summary: 'Acompaña aspectos emocionales vinculados al proceso de recuperación y bienestar.', bio: 'Brinda un espacio de escucha y acompañamiento para pacientes que atraviesan procesos de dolor, lesión, cambios de hábitos o vuelta a la actividad.' },
   { id: 'nutricionista', name: 'Viviana Ali', role: 'Nutrición', area: 'Salud integral', initials: 'NU', photo: '/assets/equipo/nutricionista.jpg', imagePosition: 'object-[50%_13%]', summary: 'Orienta hábitos alimentarios para potenciar salud, recuperación y rendimiento.', bio: 'Trabaja en estrategias nutricionales personalizadas, integradas a los objetivos clínicos, deportivos y de bienestar de cada paciente.' },
-  { id: 'profesor', name: 'Mateo Vega', title: 'Profesor de Educación Física', role: 'Entrenamiento personalizado', area: 'Entrenamiento', initials: 'EF', photo: '/assets/equipo/profe-educacion-fisica.jpg', imagePosition: 'object-[50%_13%]', summary: 'Planifica entrenamientos personalizados con control de cargas y objetivos medibles.', bio: 'Profesor de Educación Física especializado en entrenamiento personalizado. Acompaña rutinas de fuerza, movilidad y acondicionamiento físico, adaptadas al estado inicial, la evolución y las metas de cada persona.' },
+  { id: 'profesor', name: 'Mateo Vega', title: 'Profesor de Educación Física', role: 'Entrenamiento Específico', area: 'Entrenamiento', initials: 'EF', photo: '/assets/equipo/profe-educacion-fisica.jpg', imagePosition: 'object-[50%_13%]', summary: 'Planifica entrenamientos personalizados con control de cargas y objetivos medibles.', bio: 'Profesor de Educación Física especializado en entrenamiento personalizado. Acompaña rutinas de fuerza, movilidad y acondicionamiento físico, adaptadas al estado inicial, la evolución y las metas de cada persona.' },
   { id: 'administracion-1', name: 'Alejandra Tamargo', role: 'Atención y coordinación', area: 'Administración', initials: 'A1', photo: '/assets/equipo/administracion-1.jpg', imagePosition: 'object-[50%_13%]', summary: 'Organiza turnos, consultas y la comunicación diaria con pacientes.', bio: 'Forma parte del primer contacto con el centro, acompañando la gestión de turnos, orientación inicial y coordinación administrativa.' },
   { id: 'administracion-2', name: 'Nazarena Oviedo', role: 'Gestión administrativa', area: 'Administración', initials: 'A2', photo: '/assets/equipo/administracion-2.jpg', imagePosition: 'object-[50%_13%]', summary: 'Acompaña la organización interna y la experiencia de atención.', bio: 'Colabora con la gestión del centro para que cada paciente reciba información clara, seguimiento y una atención ordenada.' },
 ];

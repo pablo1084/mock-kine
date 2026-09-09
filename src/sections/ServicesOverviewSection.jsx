@@ -7,7 +7,8 @@ const highlights = [
     eyebrow: 'Evaluación objetiva',
     title: 'Ivolution Lab',
     text: 'Tecnología para medir fuerza, potencia, asimetrías y evolución.',
-    image: '/assets/ivolution-lab/lab1.jpeg',
+    image: '/assets/ivolution-lab/ivolution-logo.png',
+    isLogo: true,
     icon: FlaskConical,
   },
   {
@@ -37,16 +38,24 @@ export function ServicesOverviewSection({ hidden, onOpenServices }) {
         </div>
 
         <div className="mt-10 grid gap-4 lg:grid-cols-2">
-          {highlights.map(({ id, eyebrow, title, text, image, icon: Icon }) => (
+          {highlights.map(({ id, eyebrow, title, text, image, isLogo, icon: Icon }) => (
             <button
               key={id}
               type="button"
-              className="group relative min-h-80 overflow-hidden rounded-md border border-white/10 text-left"
+              className={`group relative min-h-80 overflow-hidden rounded-md border border-white/10 text-left ${isLogo ? 'flex flex-col bg-black' : ''}`}
               onClick={() => onOpenServices(id)}
             >
-              <img src={image} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" decoding="async" />
-              <div className="absolute inset-0 bg-gradient-to-t from-graphiteDark via-graphiteDark/55 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
+              {isLogo ? (
+                <div className="mx-4 mt-4 flex h-40 items-center justify-center sm:h-48">
+                  <img src={image} alt="" className="h-full w-full translate-x-[12px] object-contain [clip-path:inset(2%)] transition duration-700 group-hover:scale-105" loading="lazy" decoding="async" />
+                </div>
+              ) : (
+                <>
+                  <img src={image} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" decoding="async" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-graphiteDark via-graphiteDark/55 to-transparent" />
+                </>
+              )}
+              <div className={`${isLogo ? 'relative mt-auto w-full' : 'absolute inset-x-0 bottom-0'} p-6 sm:p-8`}>
                 <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase text-pulse">
                   <Icon size={17} /> {eyebrow}
                 </span>
