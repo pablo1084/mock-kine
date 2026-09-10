@@ -9,9 +9,9 @@ const pillars = [
 ];
 
 const pillarImages = {
-  kinesiologia: '/assets/centro/gimnasio2.jpeg',
-  readaptacion: '/assets/readaptacion-entrenamiento.jpg',
-  'tecnologia-aplicada': '/assets/ondas-tratamiento.jpg',
+  kinesiologia: '/assets/centro/gimnasio2.webp',
+  readaptacion: '/assets/readaptacion-entrenamiento.webp',
+  'tecnologia-aplicada': '/assets/ondas-tratamiento.webp',
 };
 
 export function ServicePillars({ onOpenServices }) {
@@ -39,7 +39,7 @@ export function ServicePillars({ onOpenServices }) {
             <span className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-pulse">Conocer más <ArrowRight size={17} className="transition group-hover:translate-x-1" /></span>
             {id === 'laboratorio-ivolution' && (
               <img
-                src="/assets/ivolution-lab/ivolution-logo.jpg"
+                src="/assets/ivolution-lab/ivolution-logo.webp"
                 alt="Ivolution"
                 loading="lazy"
                 decoding="async"

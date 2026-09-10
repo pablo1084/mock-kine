@@ -8,7 +8,7 @@ const experiences = [
     sport: 'Fútbol',
     role: 'Jugador profesional de fútbol en River Plate',
     caption: 'La intensidad de cada partido empieza mucho antes de entrar a la cancha.',
-    image: '/assets/experiencias/moreno.jpg',
+    image: '/assets/experiencias/moreno.webp',
     position: 'center 48%',
   },
   {
@@ -17,7 +17,7 @@ const experiences = [
     sport: 'Pádel',
     role: 'Número 1° del mundo en pádel',
     caption: 'Precisión, potencia y movimiento: los detalles que se trabajan entre un punto y el siguiente.',
-    image: '/assets/experiencias/tapia.jpg',
+    image: '/assets/experiencias/tapia.webp',
     position: 'center 65%',
   },
   {
@@ -26,7 +26,7 @@ const experiences = [
     sport: 'Enduro · Rally',
     role: 'Tres veces campeón de Rally Dakar',
     caption: 'Detrás de cada etapa hay preparación, resistencia y un nuevo desafío por recorrer.',
-    image: '/assets/experiencias/llanos.jpg',
+    image: '/assets/experiencias/llanos.webp',
     position: 'center 48%',
   },
   {
@@ -35,7 +35,7 @@ const experiences = [
     sport: 'Boxeo',
     role: 'Boxeador profesional',
     caption: 'La fuerza de cada round también se construye con disciplina fuera del ring.',
-    image: '/assets/experiencias/aguero.jpg',
+    image: '/assets/experiencias/aguero.webp',
     position: 'center 48%',
   },
 ];

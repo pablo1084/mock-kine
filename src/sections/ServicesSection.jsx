@@ -150,7 +150,7 @@ export function ServicesSection({ hidden, targetId, ivolutionGallery, onBack, on
               <div className="mt-7 flex flex-col gap-3 sm:inline-flex sm:flex-row sm:items-end sm:gap-5">
                 <div className="w-full max-w-[17rem] sm:max-w-xs">
                   <img
-                    src="/assets/ivolution-lab/ivolution-logo.jpg"
+                    src="/assets/ivolution-lab/ivolution-logo.webp"
                     alt="Ivolution"
                     className="h-auto w-full"
                   />
@@ -269,7 +269,7 @@ export function ServicesSection({ hidden, targetId, ivolutionGallery, onBack, on
             </p>
             <div className="mt-6 grid grid-cols-[1.1fr_0.9fr] items-center gap-3 sm:gap-4">
               <img src="/assets/ondas-aplicacion.jpg" alt="Aplicación de ondas de choque en la rodilla" width="941" height="1672" className="h-auto w-full rounded-md" loading="lazy" decoding="async" />
-              <img src="/assets/ondas-tratamiento.jpg" alt="Tratamiento con ondas de choque en consultorio" width="1080" height="1350" className="h-auto w-full rounded-md" loading="lazy" decoding="async" />
+              <img src="/assets/ondas-tratamiento.webp" alt="Tratamiento con ondas de choque en consultorio" width="1080" height="1350" className="h-auto w-full rounded-md" loading="lazy" decoding="async" />
             </div>
           </div>
 
