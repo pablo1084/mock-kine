@@ -17,7 +17,7 @@ export function HeroSection({ hidden }) {
             <span className="text-white/70">Nuestro propósito.</span>
           </h1>
           <p className="mt-6 max-w-2xl font-body text-base leading-7 text-white/75 sm:text-lg sm:leading-8">
-            Kinesiología deportiva, rehabilitación y entrenamiento basado en evaluación para acompañarte desde la lesión hasta tu mejor rendimiento.
+            Kinesiología deportiva, evaluación y readaptación para acompañarte desde la lesión hasta el rendimiento.
           </p>
           <div className="hero-actions mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <a href="#turnos" className="group inline-flex items-center justify-center gap-2 rounded-md bg-pulse px-6 py-3.5 text-sm font-semibold text-white shadow-[0_14px_35px_rgba(240,90,40,0.24)] transition hover:-translate-y-0.5 hover:bg-orange-600">

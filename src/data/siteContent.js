@@ -1,4 +1,4 @@
-export const navItems = ['Inicio', 'Quienes somos', 'Servicios', 'Nuestro centro', 'Alianzas estratégicas', 'Contacto'];
+export const navItems = ['Inicio', 'Servicios', 'Nuestro centro', 'Quienes somos', 'Alianzas estratégicas', 'Contacto'];
 
 export const services = [
   {

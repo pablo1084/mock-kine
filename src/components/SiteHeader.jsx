@@ -39,10 +39,10 @@ export function SiteHeader({ menuOpen, navItems, onCloseMenu, onHomeSection, onO
             </button>
           </div>
           <nav className="grid gap-3 px-5 pt-6 text-2xl font-semibold">
-            {[...navItems, 'Turnos'].map((item) => (
+            {[...navItems, 'Reservar'].map((item) => (
               <a
                 key={item}
-                href={`#${slug(item)}`}
+                href={item === 'Reservar' ? '#turnos' : `#${slug(item)}`}
                 className="rounded-md border border-white/10 bg-white/8 px-4 py-4 text-white shadow-sm transition hover:bg-white/14"
                 onClick={() => {
                   onHomeSection();

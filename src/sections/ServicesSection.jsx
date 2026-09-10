@@ -136,26 +136,26 @@ export function ServicesSection({ hidden, targetId, ivolutionGallery, onBack, on
           </div>
         </section>
 
-        <div id="laboratorio-ivolution" className="mt-14 scroll-mt-28 overflow-hidden rounded-md border border-[#f3c635]/25 bg-[#070808] shadow-soft">
+        <div id="laboratorio-ivolution" className="mt-14 scroll-mt-28 overflow-hidden rounded-md border border-pulse/25 bg-[#070808] shadow-soft">
           <div className="border-b border-white/10 px-6 py-6 sm:px-8 lg:px-10">
-            <p className="text-sm font-semibold uppercase text-[#f3c635]">02 · Medir para decidir</p>
+            <p className="text-sm font-semibold uppercase text-pulse">02 · Medir para decidir</p>
             <h3 className="mt-3 text-3xl font-semibold text-white">Evaluación funcional y del rendimiento</h3>
             <p className="mt-3 max-w-3xl text-sm leading-7 text-white/70">Ivolution Lab es nuestra unidad de evaluación objetiva: un perfil de rendimiento para orientar las decisiones y seguir la evolución.</p>
           </div>
           <div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
             <div className="p-6 sm:p-8 lg:p-10">
-              <span className="inline-flex items-center gap-2 rounded-md border border-[#f3c635]/45 bg-[#f3c635]/10 px-3 py-2 text-xs font-semibold uppercase text-[#f3c635]">
+              <span className="inline-flex items-center gap-2 rounded-md border border-pulse/45 bg-pulse/10 px-3 py-2 text-xs font-semibold uppercase text-pulse">
                 <Zap size={15} /> Laboratorio exclusivo
               </span>
               <div className="mt-7 flex flex-col gap-3 sm:inline-flex sm:flex-row sm:items-end sm:gap-5">
                 <div className="w-full max-w-[17rem] sm:max-w-xs">
                   <img
-                    src="/assets/ivolution-lab/ivolution-logo.png"
+                    src="/assets/ivolution-lab/ivolution-logo.jpg"
                     alt="Ivolution"
                     className="h-auto w-full"
                   />
                 </div>
-                <p className="font-lab text-5xl font-semibold leading-none tracking-normal text-[#f3c635] drop-shadow-[4px_5px_0_rgba(0,0,0,0.35)] sm:relative sm:bottom-[20px] sm:text-6xl">
+                <p className="font-lab text-5xl font-semibold leading-none tracking-normal text-pulse drop-shadow-[4px_5px_0_rgba(0,0,0,0.35)] sm:relative sm:bottom-[20px] sm:text-6xl">
                   lab
                 </p>
               </div>
@@ -172,8 +172,8 @@ export function ServicesSection({ hidden, targetId, ivolutionGallery, onBack, on
               </p>
               <div className="mt-7 grid gap-3 sm:grid-cols-3">
                 {['Fuerza', 'Potencia', 'Asimetrías'].map((item) => (
-                  <div key={item} className="rounded-md border border-[#f3c635]/18 bg-white/[0.06] p-4">
-                    <Target className="text-[#f3c635]" size={20} />
+                  <div key={item} className="rounded-md border border-pulse/18 bg-white/[0.06] p-4">
+                    <Target className="text-pulse" size={20} />
                     <span className="mt-3 block text-sm font-semibold text-white">{item}</span>
                   </div>
                 ))}
@@ -194,10 +194,10 @@ export function ServicesSection({ hidden, targetId, ivolutionGallery, onBack, on
 
           <div className="border-t border-white/10 p-4 sm:p-6 lg:p-8">
             <div className="mb-5">
-              <p className="text-xs font-semibold uppercase text-[#f3c635]">Galería Ivolution Lab</p>
+              <p className="text-xs font-semibold uppercase text-pulse">Galería Ivolution Lab</p>
             </div>
             <div className="relative">
-              <button type="button" aria-label="Ver imagen anterior" onClick={() => scrollIvolutionGallery(-1)} className="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-[#070808]/75 text-[#f3c635] shadow-lg backdrop-blur transition active:bg-[#f3c635] active:text-[#070808] lg:hidden">
+              <button type="button" aria-label="Ver imagen anterior" onClick={() => scrollIvolutionGallery(-1)} className="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-[#070808]/75 text-pulse shadow-lg backdrop-blur transition active:bg-pulse active:text-[#070808] lg:hidden">
                 <ChevronLeft size={24} />
               </button>
               <div ref={ivolutionCarouselRef} className="scrollbar-none flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth pb-2 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0">
@@ -207,7 +207,7 @@ export function ServicesSection({ hidden, targetId, ivolutionGallery, onBack, on
                       <img src={item.src} alt={item.label} className="h-full w-full object-contain transition duration-500 group-hover:scale-105 lg:object-cover" />
                     ) : (
                       <div className="flex h-full flex-col items-center justify-center gap-3 px-4 text-center">
-                        <Image className="text-[#f3c635]" size={28} />
+                        <Image className="text-pulse" size={28} />
                         <div>
                           <span className="text-sm font-semibold text-white">{item.label}</span>
                           <p className="mt-1 text-xs leading-5 text-white/48">Próxima imagen</p>
@@ -217,7 +217,7 @@ export function ServicesSection({ hidden, targetId, ivolutionGallery, onBack, on
                   </button>
                 ))}
               </div>
-              <button type="button" aria-label="Ver imagen siguiente" onClick={() => scrollIvolutionGallery(1)} className="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-[#070808]/75 text-[#f3c635] shadow-lg backdrop-blur transition active:bg-[#f3c635] active:text-[#070808] lg:hidden">
+              <button type="button" aria-label="Ver imagen siguiente" onClick={() => scrollIvolutionGallery(1)} className="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-[#070808]/75 text-pulse shadow-lg backdrop-blur transition active:bg-pulse active:text-[#070808] lg:hidden">
                 <ChevronRight size={24} />
               </button>
             </div>
@@ -226,16 +226,16 @@ export function ServicesSection({ hidden, targetId, ivolutionGallery, onBack, on
 
         {selectedIvolutionIndex !== null && (
           <div className="fixed inset-0 z-[80] flex items-center justify-center bg-graphiteDark/95 p-4 backdrop-blur" onClick={() => setSelectedIvolutionIndex(null)}>
-            <button type="button" aria-label="Cerrar imagen" className="absolute right-4 top-4 rounded-md border border-white/20 p-2 text-white transition hover:border-[#f3c635] hover:text-[#f3c635] sm:right-8 sm:top-8" onClick={() => setSelectedIvolutionIndex(null)}>
+            <button type="button" aria-label="Cerrar imagen" className="absolute right-4 top-4 rounded-md border border-white/20 p-2 text-white transition hover:border-pulse hover:text-pulse sm:right-8 sm:top-8" onClick={() => setSelectedIvolutionIndex(null)}>
               <X size={22} />
             </button>
-            <button type="button" aria-label="Imagen anterior" className="absolute left-3 z-10 rounded-full bg-white/10 p-3 text-white transition hover:bg-[#f3c635] hover:text-[#070808] sm:left-8" onClick={(event) => { event.stopPropagation(); showPreviousIvolutionImage(); }}>
+            <button type="button" aria-label="Imagen anterior" className="absolute left-3 z-10 rounded-full bg-white/10 p-3 text-white transition hover:bg-pulse hover:text-[#070808] sm:left-8" onClick={(event) => { event.stopPropagation(); showPreviousIvolutionImage(); }}>
               <ChevronLeft size={28} />
             </button>
             <figure className="flex max-h-[85vh] w-full max-w-5xl flex-col items-center p-5 sm:p-8" onClick={(event) => event.stopPropagation()}>
               <img src={ivolutionGallery[selectedIvolutionIndex].src} alt={ivolutionGallery[selectedIvolutionIndex].label} className="max-h-[70vh] max-w-full rounded-md border border-white/30 object-contain" />
             </figure>
-            <button type="button" aria-label="Imagen siguiente" className="absolute right-3 z-10 rounded-full bg-white/10 p-3 text-white transition hover:bg-[#f3c635] hover:text-[#070808] sm:right-8" onClick={(event) => { event.stopPropagation(); showNextIvolutionImage(); }}>
+            <button type="button" aria-label="Imagen siguiente" className="absolute right-3 z-10 rounded-full bg-white/10 p-3 text-white transition hover:bg-pulse hover:text-[#070808] sm:right-8" onClick={(event) => { event.stopPropagation(); showNextIvolutionImage(); }}>
               <ChevronRight size={28} />
             </button>
           </div>

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Facebook, Instagram, MessageCircle } from 'lucide-react';
+import { navItems } from '../data/siteContent';
+import { slug } from '../utils/slug';
 
 export function SiteFooter({ hidden }) {
   return (
@@ -22,11 +24,10 @@ export function SiteFooter({ hidden }) {
         <div>
           <h4 className="mb-4 text-lg font-semibold">Navegación</h4>
           <ul className="space-y-3 text-white/70">
-            <li><a href="#inicio" className="hover:text-pulse">Inicio</a></li>
-            <li><a href="#servicios" className="hover:text-pulse">Servicios</a></li>
-            <li><a href="#quienes-somos" className="hover:text-pulse">Sobre nosotros</a></li>
-            <li><a href="#turnos" className="hover:text-pulse">Turnos Online</a></li>
-            <li><a href="#contacto" className="hover:text-pulse">Contacto</a></li>
+            {navItems.map((item) => (
+              <li key={item}><a href={`#${slug(item)}`} className="hover:text-pulse">{item}</a></li>
+            ))}
+            <li><a href="#turnos" className="hover:text-pulse">Reservar</a></li>
           </ul>
         </div>
 

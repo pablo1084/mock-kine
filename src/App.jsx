@@ -66,13 +66,6 @@ export default function App() {
       />
 
       <HeroSection hidden={!showHome} />
-      <AboutSection hidden={!showHome} onOpenTeamPage={openTeamPage} />
-      {activePage === 'team' && (
-        <React.Suspense fallback={<PageFallback />}>
-          <TeamPage teamAreas={teamAreas} teamMembers={teamMembers} onBack={openHomeSection} onSelectMember={setSelectedTeamMember} />
-        </React.Suspense>
-      )}
-      <TeamMemberModal member={selectedTeamMember} onClose={() => setSelectedTeamMember(null)} />
       <ServicesOverviewSection hidden={!showHome} onOpenServices={(targetId) => openPage('services', targetId)} />
       {activePage === 'services' && (
         <React.Suspense fallback={<PageFallback />}>
@@ -85,9 +78,16 @@ export default function App() {
           <CenterSection onBack={openHomeSection} gallery={gallery} />
         </React.Suspense>
       )}
+      <AboutSection hidden={!showHome} onOpenTeamPage={openTeamPage} />
+      {activePage === 'team' && (
+        <React.Suspense fallback={<PageFallback />}>
+          <TeamPage teamAreas={teamAreas} teamMembers={teamMembers} onBack={openHomeSection} onSelectMember={setSelectedTeamMember} />
+        </React.Suspense>
+      )}
+      <TeamMemberModal member={selectedTeamMember} onClose={() => setSelectedTeamMember(null)} />
       <AlliancesSection hidden={!showHome} items={allianceItems} />
-      <AppointmentsSection hidden={!showHome} selectedSlot={selectedSlot} services={services} slots={slots} onSelectSlot={setSelectedSlot} />
       <ContactSection contactCards={contactCards} hidden={!showHome} />
+      <AppointmentsSection hidden={!showHome} selectedSlot={selectedSlot} services={services} slots={slots} onSelectSlot={setSelectedSlot} />
       <SiteFooter hidden={!showHome} />
     </main>
   );
