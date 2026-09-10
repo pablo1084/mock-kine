@@ -113,6 +113,19 @@ img {
   }
 }
 
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+  .experience-card .experience-tab {
+    opacity: 0;
+    transition: opacity 180ms ease, color 180ms ease, border-color 180ms ease;
+  }
+
+  .experience-card:hover .experience-tab,
+  .experience-card:focus-within .experience-tab,
+  .experience-card details[open] .experience-tab {
+    opacity: 1;
+  }
+}
+
 @media (min-width: 1024px) {
   .hero-layout {
     min-height: max(580px, calc(60vw - 6rem));

@@ -9,6 +9,7 @@ import { AppointmentsSection } from './sections/AppointmentsSection';
 import { ContactSection } from './sections/ContactSection';
 import { CenterOverviewSection } from './sections/CenterOverviewSection';
 import { HeroSection } from './sections/HeroSection';
+import { ExperiencesSection } from './sections/ExperiencesSection';
 import { ServicesOverviewSection } from './sections/ServicesOverviewSection';
 
 const CenterSection = React.lazy(() => import('./sections/CenterSection').then((module) => ({ default: module.CenterSection })));
@@ -85,6 +86,7 @@ export default function App() {
         </React.Suspense>
       )}
       <TeamMemberModal member={selectedTeamMember} onClose={() => setSelectedTeamMember(null)} />
+      <ExperiencesSection hidden={!showHome} />
       <AlliancesSection hidden={!showHome} items={allianceItems} />
       <ContactSection contactCards={contactCards} hidden={!showHome} />
       <AppointmentsSection hidden={!showHome} selectedSlot={selectedSlot} services={services} slots={slots} onSelectSlot={setSelectedSlot} />
