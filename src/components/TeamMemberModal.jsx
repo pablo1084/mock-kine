@@ -20,7 +20,7 @@ export function TeamMemberModal({ member, onClose }) {
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center bg-graphiteDark/90 px-4 py-8 backdrop-blur" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="team-member-name">
       <article
-        className="grid max-h-[90vh] w-full max-w-4xl overflow-hidden rounded-md border border-white/10 bg-white text-ink shadow-soft md:grid-cols-[0.86fr_1.14fr]"
+        className="grid max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-md border border-white/10 bg-white text-ink shadow-soft md:grid-cols-[0.86fr_1.14fr] md:overflow-hidden"
         onClick={(event) => event.stopPropagation()}
       >
         <div className="relative min-h-80 bg-graphiteSoft">
@@ -37,7 +37,7 @@ export function TeamMemberModal({ member, onClose }) {
             }}
           />
         </div>
-        <div className="relative overflow-y-auto p-6 sm:p-8">
+        <div className="relative p-6 sm:p-8 md:overflow-y-auto">
           <button
             type="button"
             aria-label="Cerrar presentación"
@@ -51,6 +51,14 @@ export function TeamMemberModal({ member, onClose }) {
           {member.title && <p className="mt-2 text-lg font-semibold text-graphite">{member.title}</p>}
           <p className="mt-2 text-base font-semibold text-neutral-600">{member.role}</p>
           <p className="mt-6 text-base leading-8 text-neutral-600">{member.bio}</p>
+          {member.training?.length > 0 && (
+            <section className="mt-6 border-t border-line pt-5" aria-labelledby="team-member-training">
+              <h4 id="team-member-training" className="text-sm font-semibold uppercase text-pulse">{member.trainingLabel || 'Formación complementaria'}</h4>
+              <ul className="mt-3 list-disc space-y-3 pl-5 text-sm leading-6 text-neutral-600 marker:text-pulse">
+                {member.training.map((item) => <li key={item}>{item}</li>)}
+              </ul>
+            </section>
+          )}
           {member.certificationsUrl && (
             <a
               href={member.certificationsUrl}

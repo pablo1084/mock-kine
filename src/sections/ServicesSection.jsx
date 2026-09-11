@@ -184,7 +184,7 @@ export function ServicesSection({ hidden, targetId, ivolutionGallery, onBack, on
             </div>
             <div className="relative min-h-80 overflow-hidden bg-[#101112]">
               <img
-                src="/assets/ivolution-lab/lab1.jpg"
+                src="/assets/ivolution-lab/lab1-optimized.webp"
                 alt="Evaluación deportiva en Ivolution Lab"
                 className="absolute inset-0 h-full w-full object-cover object-[center_30%]"
               />
@@ -268,7 +268,7 @@ export function ServicesSection({ hidden, targetId, ivolutionGallery, onBack, on
               {technologyServices.find((service) => service.title === 'Ondas de choque')?.text}
             </p>
             <div className="mt-6 grid grid-cols-[1.1fr_0.9fr] items-center gap-3 sm:gap-4">
-              <img src="/assets/ondas-aplicacion.jpg" alt="Aplicación de ondas de choque en la rodilla" width="941" height="1672" className="h-auto w-full rounded-md" loading="lazy" decoding="async" />
+              <img src="/assets/ondas-aplicacion-optimized.webp" alt="Aplicación de ondas de choque en la rodilla" width="941" height="1672" className="h-auto w-full rounded-md" loading="lazy" decoding="async" />
               <img src="/assets/ondas-tratamiento.webp" alt="Tratamiento con ondas de choque en consultorio" width="1080" height="1350" className="h-auto w-full rounded-md" loading="lazy" decoding="async" />
             </div>
           </div>
@@ -395,8 +395,8 @@ export function ServicesSection({ hidden, targetId, ivolutionGallery, onBack, on
               </div>
             </div>
             <div className="grid grid-cols-[1.15fr_0.85fr] items-center gap-3 sm:gap-5">
-              <img src="/assets/osteopata/osteopata2-web.jpg" alt="Pablo Villafañe durante una sesión de trabajo manual en la zona cervical" className="h-auto w-full rounded-md" loading="lazy" decoding="async" />
-              <img src="/assets/osteopata/osteopata5-web.jpg" alt="Trabajo de movilidad de la pierna durante una consulta de osteopatía" className="mt-10 h-auto w-full rounded-md sm:mt-16" loading="lazy" decoding="async" />
+              <img src="/assets/osteopata/osteopata2-web-optimized.webp" alt="Pablo Villafañe durante una sesión de trabajo manual en la zona cervical" className="h-auto w-full rounded-md" loading="lazy" decoding="async" />
+              <img src="/assets/osteopata/osteopata5-web-optimized.webp" alt="Trabajo de movilidad de la pierna durante una consulta de osteopatía" className="mt-10 h-auto w-full rounded-md sm:mt-16" loading="lazy" decoding="async" />
             </div>
           </div>
         </section>

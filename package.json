@@ -7,7 +7,12 @@
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "images:optimize": "node scripts/optimize-images.mjs"
+    "start": "npm --prefix backend start",
+    "dev:backend": "npm --prefix backend run dev",
+    "test:backend": "npm --prefix backend test",
+    "test:youtube": "npm --prefix backend test",
+    "images:optimize": "node scripts/optimize-images.mjs",
+    "images:optimize-site": "node scripts/optimize-site-assets.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",

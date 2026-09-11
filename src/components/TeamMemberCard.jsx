@@ -21,7 +21,7 @@ export function TeamMemberCard({ member, onSelect, imagePosition = member.imageP
           }}
         />
       </div>
-      <div className="flex flex-1 flex-col p-5">
+      <div className={`flex flex-1 flex-col p-5 ${member.highlight ? 'border-t-4 border-pulse lg:border-l-4 lg:border-t-0' : ''}`}>
         <span className="text-xs font-semibold uppercase text-pulse">{member.role}</span>
         <h4 className="mt-2 text-2xl font-semibold text-graphite">{member.name}</h4>
         {member.title && <p className="mt-1 text-sm font-semibold text-neutral-500">{member.title}</p>}

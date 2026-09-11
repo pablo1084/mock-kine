@@ -62,7 +62,7 @@ export function ContactSection({ contactCards, hidden }) {
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-sm">
-        <img src="/assets/centro/fachada.jpeg" alt="Carteles luminosos de la fachada del centro José Oviedo Kinesiología" className="h-96 w-full object-cover object-[center_20%]" loading="lazy" decoding="async" />
+        <img src="/assets/centro/fachada-optimized.webp" alt="Carteles luminosos de la fachada del centro José Oviedo Kinesiología" className="h-96 w-full object-cover object-[center_20%]" loading="lazy" decoding="async" />
         <div className="p-7">
           <h3 className="text-2xl font-bold text-graphite">Conocé nuestro centro</h3>
           <p className="mt-4 leading-7 text-neutral-600">

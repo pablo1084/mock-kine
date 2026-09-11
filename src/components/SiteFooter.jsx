@@ -1,15 +1,25 @@
 import React from 'react';
-import { Facebook, Instagram, MessageCircle } from 'lucide-react';
+import { Facebook, Instagram, MessageCircle, Youtube } from 'lucide-react';
 import { navItems } from '../data/siteContent';
+import { getPublicConfig } from '../utils/api';
 import { slug } from '../utils/slug';
 
 export function SiteFooter({ hidden }) {
+  const [channelUrl, setChannelUrl] = React.useState('');
+  React.useEffect(() => {
+    if (hidden) return undefined;
+    let active = true;
+    getPublicConfig().then((config) => {
+      if (active) setChannelUrl(config.youtube?.channelUrl || '');
+    }).catch(() => {});
+    return () => { active = false; };
+  }, [hidden]);
   return (
     <footer className={`${hidden ? 'hidden' : ''} bg-graphiteDark text-white`}>
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
         <div>
           <img
-            src="/assets/LOGO.png"
+            src="/assets/LOGO-optimized.webp"
             alt="José Oviedo Kinesiología Deportiva"
             className="h-14 w-auto object-contain sm:h-16"
             loading="lazy"
@@ -71,6 +81,17 @@ export function SiteFooter({ hidden }) {
             >
               <Facebook size={20} />
             </a>
+            {channelUrl && (
+              <a
+                href={channelUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visitar YouTube"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 transition hover:bg-red-600"
+              >
+                <Youtube size={22} />
+              </a>
+            )}
           </div>
 
           <p className="mt-5 text-sm leading-6 text-white/70">
