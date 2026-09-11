@@ -1,5 +1,4 @@
-const baseUrl = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
-const apiBase = (import.meta.env.VITE_API_BASE_URL || `${baseUrl}/api`).replace(/\/+$/, '');
+const apiBase = import.meta.env.VITE_API_BASE_URL.trim().replace(/\/+$/, '');
 
 export function apiUrl(path) {
   return `${apiBase}/${path.replace(/^\/+/, '')}`;

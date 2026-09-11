@@ -13,7 +13,7 @@ El sistema usa Supabase/PostgreSQL como fuente de verdad. El frontend solamente 
 5. Enviar la solicitud a una Edge Function pública específica de reservas.
 6. La función valida formato, rate limit/CAPTCHA cuando esté configurado y normaliza el teléfono.
 7. La función llama con credenciales de servidor a `create_pending_appointment`.
-8. PostgreSQL toma un advisory transaction lock para servicio+horario, vuelve a comprobar disponibilidad y capacidad y crea el turno `pending` en una única transacción.
+8. PostgreSQL toma un lock de fila sobre el servicio (y un advisory lock para el UUID de solicitud), vuelve a comprobar disponibilidad y capacidad y crea el turno `pending` en una única transacción.
 9. La misma transacción genera eventos en `integration_outbox` para Google Calendar y WhatsApp.
 10. Un worker procesa el outbox de forma idempotente. Los fallos externos no eliminan ni duplican el turno.
 
@@ -49,7 +49,7 @@ Rutas previstas:
 
 ## Reprogramación
 
-Debe implementarse con otra función PostgreSQL transaccional: bloquear el nuevo servicio+horario, comprobar cupo, mover el turno, registrar auditoría y encolar actualización de Calendar/WhatsApp. Nunca hacer un UPDATE directo desde React.
+Debe implementarse con otra función PostgreSQL transaccional: bloquear las filas de los servicios implicados, ordenadas por UUID, comprobar cupo, mover el turno, registrar auditoría y encolar actualización de Calendar/WhatsApp. Nunca hacer un UPDATE directo desde React.
 
 ## Google Calendar
 
@@ -97,3 +97,7 @@ Debe implementarse con otra función PostgreSQL transaccional: bloquear el nuevo
 ## Integraciones pendientes de credenciales
 
 Para activar Calendar y WhatsApp se necesitarán secretos reales en Supabase, que no deben enviarse ni commitearse en GitHub. El código debe poder desarrollarse con adaptadores y luego activar cada proveedor al configurar sus secretos.
+
+## Auditor?a de la etapa 1
+
+Ver [BOOKING_MIGRATION_AUDIT.md](BOOKING_MIGRATION_AUDIT.md) para correcciones, firmas vigentes, permisos implementados, pruebas y limitaciones. Los apartados del panel e integraciones de este documento describen el objetivo; todav?a no est?n implementados.

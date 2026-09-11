@@ -10,12 +10,15 @@
     "dev": "node --env-file-if-exists=.env --watch src/index.mjs",
     "start": "node --env-file-if-exists=.env src/index.mjs",
     "test": "node --test tests/*.test.mjs",
+    "test:booking:concurrency": "node tests/booking-concurrency.mjs",
     "deploy:supabase": "supabase functions deploy api --project-ref oiipswlnxbcgfflqnlid --use-api"
   },
   "dependencies": {
     "fast-xml-parser": "^5.11.1"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
+    "pg": "^8.23.0",
     "supabase": "^2.117.0"
   }
 }
