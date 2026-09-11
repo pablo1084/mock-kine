@@ -1,0 +1,7 @@
+project_id = "oiipswlnxbcgfflqnlid"
+
+# API pública de YouTube/configuración; no expone tablas ni operaciones de turnos.
+[functions.api]
+enabled = true
+verify_jwt = false
+entrypoint = "./functions/api/index.ts"

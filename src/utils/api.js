@@ -1,7 +1,8 @@
 const baseUrl = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
+const apiBase = (import.meta.env.VITE_API_BASE_URL || `${baseUrl}/api`).replace(/\/+$/, '');
 
 export function apiUrl(path) {
-  return `${baseUrl}/api/${path.replace(/^\/+/, '')}`;
+  return `${apiBase}/${path.replace(/^\/+/, '')}`;
 }
 
 let configRequest;

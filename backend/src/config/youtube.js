@@ -1,3 +1,5 @@
+import { DEFAULT_CHANNEL_URL } from '../../supabase/functions/_shared/config.js';
+
 export const youtubeConfig = {
-  channelUrl: process.env.YOUTUBE_CHANNEL_URL ?? 'https://www.youtube.com/@kinesiologiadeportiva8487/videos',
+  channelUrl: process.env.YOUTUBE_CHANNEL_URL ?? DEFAULT_CHANNEL_URL,
 };
