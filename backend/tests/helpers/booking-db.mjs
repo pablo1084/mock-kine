@@ -1,6 +1,8 @@
 import { readFile } from 'node:fs/promises';
 
 export const migration = await readFile(new URL('../../supabase/migrations/20260911170000_booking_system.sql', import.meta.url), 'utf8');
+export const rateMigration = await readFile(new URL('../../supabase/migrations/20260912090000_booking_api_rate_limits.sql', import.meta.url), 'utf8');
+export const contactMigration = await readFile(new URL('../../supabase/migrations/20260912120000_contact_requests.sql', import.meta.url), 'utf8');
 // Solo base VACIA de pruebas. Emula identidad y ACL por defecto de Supabase.
 export const bootstrap = `
 create role anon nologin;

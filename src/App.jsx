@@ -2,7 +2,7 @@ import React from 'react';
 import { SiteFooter } from './components/SiteFooter';
 import { SiteHeader } from './components/SiteHeader';
 import { TeamMemberModal } from './components/TeamMemberModal';
-import { allianceItems, contactCards, gallery, ivolutionGallery, navItems, services, slots, sportsKinesiologyStages, teamAreas, teamMembers, technologyServices } from './data/siteContent';
+import { allianceItems, contactCards, gallery, ivolutionGallery, navItems, services, sportsKinesiologyStages, teamAreas, teamMembers, technologyServices } from './data/siteContent';
 import { AboutSection } from './sections/AboutSection';
 import { AlliancesSection } from './sections/AlliancesSection';
 import { AppointmentsSection } from './sections/AppointmentsSection';
@@ -24,7 +24,6 @@ function PageFallback() {
 export default function App() {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [activePage, setActivePage] = React.useState('home');
-  const [selectedSlot, setSelectedSlot] = React.useState('10:00');
   const [selectedTeamMember, setSelectedTeamMember] = React.useState(null);
   const [serviceTargetId, setServiceTargetId] = React.useState(null);
 
@@ -91,7 +90,7 @@ export default function App() {
       <NewsSection hidden={!showHome} />
       <AlliancesSection hidden={!showHome} items={allianceItems} />
       <ContactSection contactCards={contactCards} hidden={!showHome} />
-      <AppointmentsSection hidden={!showHome} selectedSlot={selectedSlot} services={services} slots={slots} onSelectSlot={setSelectedSlot} />
+      <AppointmentsSection hidden={!showHome} />
       <SiteFooter hidden={!showHome} />
     </main>
   );

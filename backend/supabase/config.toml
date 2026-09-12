@@ -5,3 +5,16 @@ project_id = "oiipswlnxbcgfflqnlid"
 enabled = true
 verify_jwt = false
 entrypoint = "./functions/api/index.ts"
+
+# Solicitudes de contacto con Turnstile obligatorio, cuotas persistentes y RPC restringidas.
+# Las operaciones administrativas NO se exponen en esta funcion.
+[functions.booking]
+enabled = true
+verify_jwt = false
+entrypoint = "./functions/booking/index.ts"
+
+# Worker exclusivo del servidor; valida CONTACT_WORKER_SECRET en Authorization.
+[functions.contact-notifications]
+enabled = true
+verify_jwt = false
+entrypoint = "./functions/contact-notifications/index.ts"

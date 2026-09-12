@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import pg from 'pg';
-import { bootstrap, migration, fixture, bookingSql, service } from './helpers/booking-db.mjs';
+import { bootstrap, migration, rateMigration, fixture, bookingSql, service } from './helpers/booking-db.mjs';
 
 const url = new URL(process.env.BOOKING_TEST_DATABASE_URL || 'postgres://localhost/booking_audit_test');
 assert.ok(['localhost', '127.0.0.1', '[::1]'].includes(url.hostname), 'Solo PostgreSQL local');
@@ -13,7 +13,7 @@ try {
   await Promise.all(clients.map(c => c.connect()));
   assert.equal((await setup.query(`select count(*)::int as n from pg_tables
     where schemaname not in ('pg_catalog', 'information_schema')`)).rows[0].n, 0, 'La base debe estar vacia');
-  await setup.query(bootstrap + migration + fixture);
+  await setup.query(bootstrap + migration + rateMigration + fixture);
   for (const scenario of [
     { name: 'ultimo cupo, sesiones en zonas distintas', capacity: 1, time: '09:00', same: false, ok: false },
     { name: 'horarios distintos superpuestos', capacity: 1, time: '09:30', same: false, ok: false },
@@ -58,6 +58,27 @@ try {
       join public.appointments a on a.id=o.appointment_id where a.service_id=$1`, [svc])).rows[0].n, expected * 3);
     console.log(`OK: ${scenario.name}`);
   }
+  // Dos solicitudes intentan consumir simultaneamente la ultima unidad de cuota.
+  const subject = randomUUID().replaceAll('-', '').repeat(2);
+  const quotaSql = "select * from public.consume_booking_rate_limit('phone', $1)";
+  await setup.query(quotaSql, [subject]); await setup.query(quotaSql, [subject]);
+  await a.query('begin; set local role service_role');
+  assert.equal((await a.query(quotaSql, [subject])).rows[0].allowed, true);
+  await b.query("begin; set local role service_role; set local statement_timeout='10s'");
+  const quotaPending = b.query(quotaSql, [subject]).then(value => ({ value }), error => ({ error }));
+  let quotaWaiting = false;
+  for (let i = 0; i < 250; i++) {
+    const state = await setup.query('select wait_event_type from pg_stat_activity where pid=$1', [b.processID]);
+    if (state.rows[0]?.wait_event_type === 'Lock') { quotaWaiting = true; break; }
+    await new Promise(resolve => setTimeout(resolve, 20));
+  }
+  assert.ok(quotaWaiting);
+  await a.query('commit');
+  const quotaResult = await quotaPending;
+  assert.ifError(quotaResult.error);
+  assert.equal(quotaResult.value.rows[0].allowed, false);
+  await b.query('commit');
+  console.log('OK: cuota persistente concurrente');
 } finally {
   await Promise.allSettled(clients.map(c => c.end()));
 }

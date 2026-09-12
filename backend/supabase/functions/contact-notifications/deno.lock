@@ -1,0 +1,16 @@
+{
+  "version": "5",
+  "specifiers": {
+    "npm:libphonenumber-js@1.13.13": "1.13.13"
+  },
+  "npm": {
+    "libphonenumber-js@1.13.13": {
+      "integrity": "sha512-hV6SmWnyQ8U1QXhhqbqYBHIStNnscG7A5XbGodgdHhf/8N5PwhYpJA5U/yHDjYwPYTd8uNGXqq416XctuvK2PA=="
+    }
+  },
+  "workspace": {
+    "dependencies": [
+      "npm:libphonenumber-js@1.13.13"
+    ]
+  }
+}

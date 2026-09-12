@@ -13,3 +13,7 @@ Ejecutar `npm run dev`. El navegador consulta directamente `/config` y `/youtube
 `npm run build` produce `dist/`; `npm run preview` (también `npm start`) permite revisar ese build localmente. Configurar `VITE_API_BASE_URL` en el entorno de build de Cloudflare con la URL de la Edge Function. Las variables Vite quedan incorporadas al bundle: cambiarlas requiere reconstruir. Nunca poner service_role, tokens de Google/WhatsApp ni otros secretos en variables VITE_*.
 
 El código histórico `backend/src` permanece para sus pruebas, pero no participa del arranque del frontend ni del despliegue estático. La API pública de configuración/YouTube sigue separada de las futuras operaciones sensibles de turnos.
+
+## Solicitudes por WhatsApp
+
+El formulario ahora solicita nombre y apellido, tel?fono, servicio y descripci?n. Consultar [CONTACT_REQUESTS.md](CONTACT_REQUESTS.md) para variables p?blicas de Turnstile, configuraci?n backend de Meta, migraci?n y cron. Sin configuraci?n no simula env?os exitosos. `npm run test:browser` prueba escritorio y m?vil con servicios simulados.

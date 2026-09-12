@@ -1,3 +1,5 @@
+> Documento hist?rico del dise?o con agenda. El flujo vigente, sin fecha/hora ni Google Calendar, est? documentado en [CONTACT_REQUESTS.md](CONTACT_REQUESTS.md).
+
 # Arquitectura del sistema de turnos
 
 ## Objetivo

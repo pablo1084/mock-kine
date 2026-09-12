@@ -121,7 +121,6 @@ imageFit: 'contain',
   },
 ];
 
-export const slots = ['08:30', '10:00', '12:30', '15:00', '17:30', '19:00'];
 
 export const teamAreas = ['Dirección', 'Kinesiología', 'Salud integral', 'Entrenamiento', 'Administración'];
 

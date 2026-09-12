@@ -1,3 +1,5 @@
+> Documento hist?rico del dise?o con agenda. El flujo vigente, sin fecha/hora ni Google Calendar, est? documentado en [CONTACT_REQUESTS.md](CONTACT_REQUESTS.md).
+
 # Auditoría de la migración inicial — 11 de septiembre de 2026
 
 Alcance: etapa 1, `20260911170000_booking_system.sql`. Se corrigió el archivo inicial suponiendo, como indica el pedido, que todavía no se aplicó. No se consultó ni modificó Supabase de producción. Si ya fue aplicado en algún entorno persistente, estos cambios necesitan una migración incremental; editar el archivo no actualiza una base existente.

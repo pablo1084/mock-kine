@@ -11,6 +11,7 @@
     "preview": "vite preview --host 127.0.0.1",
     "start": "npm run preview --",
     "test:backend": "npm --prefix backend test",
+    "test:browser": "playwright test",
     "test:youtube": "npm --prefix backend test",
     "images:optimize": "node scripts/optimize-images.mjs",
     "images:optimize-site": "node scripts/optimize-site-assets.mjs"
@@ -22,6 +23,7 @@
     "vite": "^6.0.5"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
     "sharp": "^0.35.4",

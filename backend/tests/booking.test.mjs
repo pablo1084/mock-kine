@@ -2,12 +2,12 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { PGlite } from '@electric-sql/pglite';
-import { migration, bootstrap, fixture, service, admin, superadmin, user, daySql, startSql, bookingSql } from './helpers/booking-db.mjs';
+import { migration, rateMigration, bootstrap, fixture, service, admin, superadmin, user, daySql, startSql, bookingSql } from './helpers/booking-db.mjs';
 
 test('Migracion de turnos: PostgreSQL, ACL y reglas de negocio', async (t) => {
   const db = new PGlite();
   t.after(() => db.close());
-  await db.exec(bootstrap + migration + fixture);
+  await db.exec(bootstrap + migration + rateMigration + fixture);
   async function scenario(name, run) {
     await t.test(name, async () => {
       await db.exec('begin');
@@ -157,5 +157,30 @@ test('Migracion de turnos: PostgreSQL, ACL y reglas de negocio', async (t) => {
   await scenario('aislamiento con snapshot antiguo rechazado', async () => {
     await db.exec('set transaction isolation level repeatable read');
     await assert.rejects(book(), /UNSUPPORTED_ISOLATION/);
+  });
+  await scenario('cuota persistente por telefono, reinicio y ACL', async () => {
+    const subject = 'a'.repeat(64);
+    const consume = async () => (await db.query("select * from public.consume_booking_rate_limit('phone', $1)", [subject])).rows[0];
+    await db.exec('set local role service_role');
+    for (let i = 0; i < 3; i++) assert.equal((await consume()).allowed, true);
+    const denied = await consume();
+    assert.equal(denied.allowed, false); assert.ok(denied.retry_after > 0 && denied.retry_after <= 3600);
+    await db.exec('reset role');
+    await db.exec("update public.booking_rate_limits set expires_at=now()-interval '1 second'");
+    assert.equal((await consume()).allowed, true);
+    for (const role of ['anon', 'authenticated', 'service_role']) {
+      assert.equal(await scalar("select has_table_privilege($1, 'public.booking_rate_limits', 'SELECT')", [role]), false);
+      assert.equal(await scalar("select has_table_privilege($1, 'public.booking_rate_limits', 'UPDATE')", [role]), false);
+    }
+    await db.exec('set local role authenticated');
+    await assert.rejects(consume(), /permission denied/);
+  });
+  await scenario('cuotas globales independientes y limpieza de pseudonimos', async () => {
+    await db.exec(`insert into public.booking_rate_limits values ('phone', '${'b'.repeat(64)}', 1, now()-interval '2 days')`);
+    for (let i = 0; i < 60; i++) assert.equal(await scalar("select allowed from public.consume_booking_rate_limit('create')"), true);
+    assert.equal(await scalar("select allowed from public.consume_booking_rate_limit('create')"), false);
+    assert.equal(await scalar("select allowed from public.consume_booking_rate_limit('read')"), true);
+    assert.equal(await scalar("select count(*)::int from public.booking_rate_limits where scope='phone'"), 0);
+    await assert.rejects(db.query("select * from public.consume_booking_rate_limit('phone', 'numero-en-claro')"), /INVALID_RATE_LIMIT/);
   });
 });

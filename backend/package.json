@@ -14,7 +14,8 @@
     "deploy:supabase": "supabase functions deploy api --project-ref oiipswlnxbcgfflqnlid --use-api"
   },
   "dependencies": {
-    "fast-xml-parser": "^5.11.1"
+    "fast-xml-parser": "^5.11.1",
+    "libphonenumber-js": "^1.13.13"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.8",
