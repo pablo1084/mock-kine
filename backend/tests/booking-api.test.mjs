@@ -117,3 +117,26 @@ test('REST: solo RPC de contacto, credenciales backend y errores mapeados', asyn
   const env = { BOOKING_ALLOWED_ORIGINS: origin, SUPABASE_URL: config.supabaseUrl, SUPABASE_SERVICE_ROLE_KEY: config.serviceKey, TURNSTILE_SECRET_KEY: config.turnstileSecret, BOOKING_RATE_LIMIT_SECRET: config.hashSecret };
   assert.ok(bookingConfig(key => env[key])); assert.equal(bookingConfig(key => ({ ...env, BOOKING_ALLOWED_ORIGINS: '*' })[key]), null);
 });
+
+test('REST: finish acepta 204 sin JSON; otros endpoints y errores siguen protegidos', async () => {
+  const backend = createBookingBackend(config, async () => new Response(null, { status: 204 }));
+  assert.equal(await backend.finish({}), null);
+  await assert.rejects(backend.services(), /BACKEND_UNAVAILABLE/);
+  const failed = createBookingBackend(config, async () => new Response(null, { status: 403 }));
+  await assert.rejects(failed.finish({}), /BACKEND_UNAVAILABLE/);
+});
+
+test('Cuota por telefono: 429 precede creacion y registra ventana sin PII', async () => {
+  const { handler, calls, logs } = harness({ backend: { consume: async scope => {
+    if (scope === 'phone') throw new BookingError('RATE_LIMITED', 429, 120);
+  } } });
+  const response = await handler(req());
+  assert.equal(response.status, 429);
+  assert.equal(response.headers.get('Retry-After'), '120');
+  assert.ok(!calls.some(x => ['create', 'dispatch'].includes(x[0])));
+  const events = logs.map(JSON.parse);
+  assert.ok(events.some(x => x.event === 'turnstile_verified'));
+  assert.ok(events.some(x => x.event === 'rate_limit_rejected' && x.scope === 'phone' && x.created === false));
+  assert.ok(!logs.join('').includes('Paciente Prueba'));
+  assert.ok(!logs.join('').includes('test-token'));
+});

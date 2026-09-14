@@ -25,7 +25,7 @@ export function bookingConfig(env) {
 }
 
 export function createBookingBackend(config, fetchImpl = fetch) {
-  async function call(path, args) {
+  async function call(path, args, allowEmpty = false) {
     let response;
     try {
       response = await fetchImpl(`${config.supabaseUrl}/rest/v1/${path}`, {
@@ -35,6 +35,8 @@ export function createBookingBackend(config, fetchImpl = fetch) {
         signal: AbortSignal.timeout(10000), redirect: 'error',
       });
     } catch { throw new BookingError('BACKEND_UNAVAILABLE', 503); }
+    // PostgREST responde 204 a una RPC returns void. No es un fallo de persistencia.
+    if (allowEmpty && response.ok && response.status === 204) return null;
     let data;
     try { data = await response.json(); } catch { throw new BookingError('BACKEND_UNAVAILABLE', 503); }
     if (!response.ok) {
@@ -46,7 +48,7 @@ export function createBookingBackend(config, fetchImpl = fetch) {
   }
   return {
     claim: (id = null) => call('rpc/claim_contact_notifications', { p_contact_id: id }),
-    finish: (args) => call('rpc/finish_contact_notification', args),
+    finish: (args) => call('rpc/finish_contact_notification', args, true),
     services: () => call('services?select=id,slug,name&active=eq.true&order=name.asc&limit=100'),
     create: (args) => call('rpc/create_contact_request', args),
     consume: async (scope, subject = 'global') => {

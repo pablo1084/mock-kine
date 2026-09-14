@@ -62,3 +62,24 @@ test('WhatsApp: configuracion obligatoria sin valores por defecto ni credenciale
   assert.ok(whatsappConfig(key => env[key]));
   assert.equal(whatsappConfig(key => key === 'CONTACT_WORKER_SECRET' ? 'short' : env[key]), null);
 });
+
+test('Despacho distingue aceptacion Meta y fallo de persistencia por destinatario', async () => {
+  const logs = [];
+  const dispatch = createContactDispatcher({ claim: async () => [{ ...job, recipient: 'center' }], finish: async () => { throw new Error('private'); } },
+    async () => ({ result: 'accepted', messageId: 'wamid.test', httpStatus: 200 }), x => logs.push(JSON.parse(x)));
+  assert.deepEqual(await dispatch('contact-id'), { processed: 1, errors: 1 });
+  assert.ok(logs.some(x => x.event === 'whatsapp_center_success' && x.http_status === 200));
+  assert.ok(logs.some(x => x.event === 'contact_notification_incomplete' && x.stage === 'persist' && x.notification_id === job.id));
+  assert.ok(!JSON.stringify(logs).includes('private'));
+});
+
+test('Meta body diagnostic excludes free text and secrets', async () => {
+  const logs = [];
+  const send = createWhatsAppSender(config, async () => Response.json({ error: { code: 131030, message: config.token, error_data: { details: job.phone } } }, { status: 400 }));
+  await createContactDispatcher({ claim: async () => [job], finish: async () => {} }, send, x => logs.push(JSON.parse(x)))();
+  const failure = logs.find(x => x.event === 'whatsapp_patient_failed');
+  assert.equal(failure.http_status, 400);
+  assert.equal(failure.meta_body.error.code, 131030);
+  assert.ok(!JSON.stringify(logs).includes(config.token));
+  assert.ok(!JSON.stringify(logs).includes(job.phone));
+});

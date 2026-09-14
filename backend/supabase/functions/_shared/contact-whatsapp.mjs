@@ -40,13 +40,19 @@ export function createWhatsAppSender(config, fetchImpl = fetch) {
       let error = `HTTP_${response.status}`;
       if (numeric(details?.code)) error += `_META_${details.code}`;
       if (numeric(details?.error_subcode)) error += `_SUB_${details.error_subcode}`;
-      return { result: response.status === 429 ? 'retry' : response.status >= 500 ? 'unknown' : 'failed', error };
+      const body = { error: {
+        ...(numeric(details?.code) ? { code: details.code } : {}),
+        ...(numeric(details?.error_subcode) ? { error_subcode: details.error_subcode } : {}),
+        ...(typeof details?.is_transient === 'boolean' ? { is_transient: details.is_transient } : {}),
+        message: '[REDACTED]', error_data: '[REDACTED]',
+      } };
+      return { result: response.status === 429 ? 'retry' : response.status >= 500 ? 'unknown' : 'failed', error, httpStatus: response.status, providerBody: body };
     }
     let data;
     try { data = await response.json(); } catch { return { result: 'unknown', error: 'INVALID_PROVIDER_RESPONSE' }; }
     const id = data?.messages?.[0]?.id;
     return typeof id === 'string' && id.length > 0 && id.length <= 500
-      ? { result: 'accepted', messageId: id }
+      ? { result: 'accepted', messageId: id, httpStatus: response.status }
       : { result: 'unknown', error: 'MISSING_MESSAGE_ID' };
   };
 }
@@ -57,9 +63,24 @@ export function createContactDispatcher(backend, send, log = console.warn) {
     const jobs = await backend.claim(contactId);
     if (!Array.isArray(jobs) || jobs.length > 2) throw new Error('INVALID_CLAIM');
     const results = await Promise.allSettled(jobs.map(async (job) => {
-      const outcome = await send(job);
-      await backend.finish({ p_id: job.id, p_claim_token: job.claim_token, p_result: outcome.result,
-        p_message_id: outcome.messageId || null, p_error_code: outcome.error || null });
+      const context = { notification_id: job.id, contact_id: contactId, recipient: job.recipient };
+      const emit = (event, details = {}) => log(JSON.stringify({ event, ...context, ...details }));
+      emit(`whatsapp_${job.recipient}_attempt`);
+      let stage = 'send';
+      try {
+        const outcome = await send(job);
+        emit(`whatsapp_${job.recipient}_${outcome.result === 'accepted' ? 'success' : 'failed'}`, {
+          outcome: outcome.result, http_status: outcome.httpStatus || null, code: outcome.error || null,
+          ...(outcome.providerBody ? { meta_body: outcome.providerBody } : {}),
+        });
+        stage = 'persist';
+        await backend.finish({ p_id: job.id, p_claim_token: job.claim_token, p_result: outcome.result,
+          p_message_id: outcome.messageId || null, p_error_code: outcome.error || null });
+        emit('contact_notification_persisted', { outcome: outcome.result });
+      } catch {
+        emit('contact_notification_incomplete', { stage });
+        throw new Error('DISPATCH_INCOMPLETE');
+      }
     }));
     const errors = results.filter(result => result.status === 'rejected').length;
     if (errors) log(JSON.stringify({ event: 'contact_dispatch_incomplete', count: errors }));

@@ -14,6 +14,10 @@ const messages = {
 async function read(response) {
   let data;
   try { data = await response.json(); } catch { throw new Error('El servicio de solicitudes no está disponible por el momento.'); }
+  if (response.status === 429 && data?.error?.code === 'RATE_LIMITED') {
+    const seconds = Number(response.headers.get('Retry-After'));
+    if (Number.isFinite(seconds) && seconds > 0) throw new Error(`Alcanzaste el límite de intentos. Volvé a probar en ${Math.ceil(seconds / 60)} minuto(s). No se creó una nueva solicitud en este intento.`);
+  }
   if (!response.ok) throw new Error(messages[data?.error?.code] || 'No pudimos comprobar el envío. Tus datos siguen aquí; volvé a intentar.');
   return data;
 }

@@ -7,6 +7,14 @@ function pick(value, fields) {
 export function createBookingApi({ config, backend, verifyTurnstile, hashPhone, afterCreate = (_id = '') => {}, log = console.warn }) {
   return async (request) => {
     const traceId = crypto.randomUUID();
+    const emit = (event, details = {}) => log(JSON.stringify({ event, request_id: traceId, ...details }));
+    const consume = async (scope, subject) => {
+      try { await backend.consume(scope, subject); emit('rate_limit_allowed', { scope }); }
+      catch (error) {
+        if (error instanceof BookingError && error.code === 'RATE_LIMITED') emit('rate_limit_rejected', { scope, retry_after: error.retryAfter, created: false });
+        throw error;
+      }
+    };
     const headers = {
       'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store',
       'X-Content-Type-Options': 'nosniff', Vary: 'Origin', 'X-Request-Id': traceId,
@@ -34,20 +42,23 @@ export function createBookingApi({ config, backend, verifyTurnstile, hashPhone, 
       if (request.method !== method) { headers.Allow = `${method}, OPTIONS`; throw new BookingError('METHOD_NOT_ALLOWED', 405); }
       if (path === '/booking/services') {
         if (url.search) throw new BookingError('INVALID_INPUT');
-        await backend.consume('read');
+        await consume('read');
         const data = await backend.services();
         if (!Array.isArray(data)) throw new BookingError('BACKEND_UNAVAILABLE', 503);
         return reply(200, { services: data.map(row => pick(row, ['id', 'slug', 'name'])) });
       }
       if (url.search) throw new BookingError('INVALID_INPUT');
-      await backend.consume('create');
+      emit('booking_request_received');
+      await consume('create');
       const { rpc, token } = bookingInput(await readBookingBody(request), request.headers.get('idempotency-key'));
       await verifyTurnstile(token, new URL(origin).hostname, rpc.p_request_id);
-      await backend.consume('phone', await hashPhone(rpc.p_phone_normalized));
+      emit('turnstile_verified');
+      await consume('phone', await hashPhone(rpc.p_phone_normalized));
       const result = await backend.create(rpc);
       // PostgREST puede devolver un objeto compuesto o una lista de una fila.
       const row = Array.isArray(result) && result.length === 1 ? result[0] : result;
       if (!row?.id || row.status !== 'received') throw new BookingError('BACKEND_UNAVAILABLE', 503);
+      emit('contact_request_recorded', { contact_id: row.id });
       try { afterCreate(row.id); } catch { log(JSON.stringify({ event: 'contact_dispatch_deferred', request_id: traceId })); }
       return reply(200, { request: pick(row, ['id', 'status']) });
     } catch (error) {
