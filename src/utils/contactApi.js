@@ -2,6 +2,8 @@ import { apiUrl } from './api';
 
 const base = (import.meta.env.VITE_BOOKING_API_BASE_URL?.trim() || new URL('../booking', apiUrl('')).href).replace(/\/+$/, '');
 const messages = {
+  SERVICE_DIRECT_CONTACT: 'Este servicio se coordina por contacto directo. Seleccionalo nuevamente para ver la información de contacto.',
+  CONTACT_ALREADY_REQUESTED: 'Ya recibimos tu solicitud para este servicio en las últimas 24 horas. No es posible enviarla nuevamente por ahora. Nos comunicaremos con vos a la brevedad.',
   INVALID_PHONE: 'Revisá el teléfono e incluí el código de área.',
   INVALID_INPUT: 'Revisá los datos del formulario e intentá nuevamente.',
   CONSENT_REQUIRED: 'Necesitamos tu autorización para gestionar la solicitud por WhatsApp.',

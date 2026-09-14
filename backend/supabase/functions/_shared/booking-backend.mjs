@@ -1,6 +1,8 @@
 import { BookingError } from './booking-validation.mjs';
 
 const knownErrors = {
+  SERVICE_DIRECT_CONTACT: [409, 'SERVICE_DIRECT_CONTACT'],
+  CONTACT_ALREADY_REQUESTED: [409, 'CONTACT_ALREADY_REQUESTED'],
   IDEMPOTENCY_CONFLICT: [409, 'IDEMPOTENCY_CONFLICT'],
   SERVICE_NOT_FOUND: [404, 'SERVICE_NOT_FOUND'],
   INVALID_REQUEST: [400, 'INVALID_INPUT'], INVALID_NAME: [400, 'INVALID_INPUT'],
@@ -49,7 +51,7 @@ export function createBookingBackend(config, fetchImpl = fetch) {
   return {
     claim: (id = null) => call('rpc/claim_contact_notifications', { p_contact_id: id }),
     finish: (args) => call('rpc/finish_contact_notification', args, true),
-    services: () => call('services?select=id,slug,name&active=eq.true&order=name.asc&limit=100'),
+    services: () => call('services?select=id,slug,name,contact_mode,contact_phone,parent_id,display_order&active=eq.true&order=display_order.asc,name.asc&limit=100'),
     create: (args) => call('rpc/create_contact_request', args),
     consume: async (scope, subject = 'global') => {
       const rows = await call('rpc/consume_booking_rate_limit', { p_scope: scope, p_subject: subject });

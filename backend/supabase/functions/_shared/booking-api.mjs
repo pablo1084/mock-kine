@@ -45,7 +45,7 @@ export function createBookingApi({ config, backend, verifyTurnstile, hashPhone, 
         await consume('read');
         const data = await backend.services();
         if (!Array.isArray(data)) throw new BookingError('BACKEND_UNAVAILABLE', 503);
-        return reply(200, { services: data.map(row => pick(row, ['id', 'slug', 'name'])) });
+        return reply(200, { services: data.map(row => pick(row, ['id', 'slug', 'name', 'contact_mode', 'contact_phone', 'parent_id', 'display_order'])) });
       }
       if (url.search) throw new BookingError('INVALID_INPUT');
       emit('booking_request_received');

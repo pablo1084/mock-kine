@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 const service = '00000000-0000-4000-8000-000000000001';
-async function setup(page, failFirst = false, unavailable = false, challengeError = null) {
+async function setup(page, failFirst = false, unavailable = false, challengeError = null, duplicate = false, catalog = [{ id: service, name: 'Kinesiología deportiva' }]) {
   const sent = [];
   await page.route('https://**/*', async route => {
     const url = new URL(route.request().url());
@@ -12,9 +12,10 @@ async function setup(page, failFirst = false, unavailable = false, challengeErro
     if (url.hostname !== 'booking-test.example') return route.abort();
     const headers = { 'access-control-allow-origin': '*', 'access-control-allow-headers': 'content-type,idempotency-key', 'access-control-allow-methods': 'GET,POST,OPTIONS' };
     if (route.request().method() === 'OPTIONS') return route.fulfill({ status: 204, headers });
-    if (url.pathname === '/booking/services') return route.fulfill({ status: unavailable ? 503 : 200, headers, json: unavailable ? { error: { code: 'BOOKING_NOT_CONFIGURED' } } : { services: [{ id: service, name: 'Kinesiología deportiva' }] } });
+    if (url.pathname === '/booking/services') return route.fulfill({ status: unavailable ? 503 : 200, headers, json: unavailable ? { error: { code: 'BOOKING_NOT_CONFIGURED' } } : { services: catalog } });
     if (url.pathname === '/booking/requests') {
       sent.push({ body: route.request().postDataJSON(), key: route.request().headers()['idempotency-key'] });
+      if (duplicate) return route.fulfill({ status: 409, headers, json: { error: { code: 'CONTACT_ALREADY_REQUESTED' } } });
       if (failFirst && sent.length === 1) return route.fulfill({ status: 503, headers, json: { error: { code: 'BACKEND_UNAVAILABLE' } } });
       return route.fulfill({ headers, json: { request: { id: service, status: 'received' } } });
     }
@@ -31,6 +32,36 @@ async function fill(page) {
   await page.getByRole('textbox', { name: 'Breve descripción' }).fill('Quisiera una consulta');
   await page.getByRole('checkbox').check();
 }
+test('especialidades directas muestran contacto sin formulario ni envio', async ({ page }) => {
+  const catalog = ['Osteopatía','Nutrición','Psicología'].map((name,i) => ({id:String(i),name,contact_mode:'direct',contact_phone:i===0?'+543834320138':null}));
+  const sent = await setup(page,false,false,null,false,catalog);
+  for (const s of catalog) {
+    await page.getByRole('combobox',{name:'Servicio',exact:true}).selectOption(s.id);
+    await expect(page.getByRole('button',{name:'Reservar turno',exact:true})).toHaveCount(0);
+    await expect(page.getByRole('textbox',{name:'Nombre y apellido',exact:true})).toHaveCount(0);
+    if (s.contact_phone) await expect(page.getByRole('link',{name:s.contact_phone})).toHaveAttribute('href',`tel:${s.contact_phone}`);
+    else await expect(page.getByText('Próximamente publicaremos aquí el número de contacto para este servicio.')).toBeVisible();
+  }
+  expect(sent).toHaveLength(0);
+});
+test('entrenamiento exige plan y envia el identificador del plan mensual', async ({ page }) => {
+  const plan = '00000000-0000-4000-8000-000000000002';
+  const sent = await setup(page,false,false,null,false,[{id:service,name:'Entrenamiento',contact_mode:'group'}, {id:plan,name:'Entrenamiento mensual: 2 veces por semana',parent_id:service,contact_mode:'request'}]);
+  await fill(page);
+  await page.getByRole('button',{name:'Reservar turno',exact:true}).click();
+  expect(sent).toHaveLength(0);
+  await page.getByRole('combobox',{name:'Plan mensual de entrenamiento'}).selectOption(plan);
+  await page.getByRole('button',{name:'Reservar turno',exact:true}).click();
+  await expect(page.getByRole('heading',{name:'Recibimos tu solicitud',exact:true})).toBeVisible();
+  expect(sent[0].body.service_id).toBe(plan);
+});
+test('solicitud repetida informa bloqueo de 24 horas por pantalla', async ({ page }) => {
+  await setup(page, false, false, null, true);
+  await fill(page);
+  await page.getByRole('button', { name: 'Reservar turno', exact: true }).click();
+  await expect(page.locator('#turnos').getByRole('alert')).toContainText('Ya recibimos tu solicitud para este servicio en las últimas 24 horas');
+  await expect(page.getByRole('heading', { name: 'Recibimos tu solicitud', exact: true })).toHaveCount(0);
+});
 test('error de Turnstile muestra codigo sin enviar solicitud y conserva datos', async ({ page }) => {
   const sent = await setup(page, false, false, '110200');
   await fill(page);
