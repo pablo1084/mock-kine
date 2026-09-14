@@ -79,7 +79,8 @@ export function AppointmentsSection({ hidden }) {
                   <input name="full_name" autoComplete="name" required minLength={3} maxLength={160} className="rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse" placeholder="Nombre y apellido" />
                 </label>
                 <label className="grid gap-2 text-sm font-semibold">Teléfono de WhatsApp
-                  <input type="tel" name="phone" autoComplete="tel" required minLength={8} maxLength={40} className="rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse" placeholder="+54 9 ..." />
+                  <input type="tel" name="phone" autoComplete="tel-national" inputMode="tel" aria-describedby="phone-help" required minLength={10} maxLength={40} className="rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse" placeholder="3834320138" />
+                  <span id="phone-help" className="text-xs font-normal text-neutral-500">Código de área y número, sin 0 ni 15. Ejemplo: 3834320138. No hace falta agregar +54 ni +549.</span>
                 </label>
                 <label className="grid gap-2 text-sm font-semibold sm:col-span-2">Servicio
                   <select name="service_id" required defaultValue="" disabled={loading || !services.length || !!servicesError} className="rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse disabled:bg-neutral-100">

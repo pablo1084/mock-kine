@@ -44,7 +44,10 @@ export const ContactChallenge = React.forwardRef(function ContactChallenge({ sit
           widget.current = turnstile.render(container.current, {
             sitekey: siteKey, action: 'booking', cData: requestId, theme: 'light',
             callback: (token) => finish(null, token),
-            'error-callback': () => finish(new Error('No pudimos verificar la solicitud. Volvé a intentar.')),
+            'error-callback': (code) => {
+              const reference = /^\d{6}$/.test(String(code)) ? String(code) : 'WIDGET';
+              finish(new Error(`No pudimos verificar la solicitud. Código Turnstile: ${reference}. Volvé a intentar.`));
+            },
             'expired-callback': () => finish(new Error('La verificación venció. Volvé a intentar.')),
             'timeout-callback': () => finish(new Error('La verificación venció. Volvé a intentar.')),
           });

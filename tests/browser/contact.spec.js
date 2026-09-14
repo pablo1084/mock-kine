@@ -1,11 +1,12 @@
 import { test, expect } from '@playwright/test';
 
 const service = '00000000-0000-4000-8000-000000000001';
-async function setup(page, failFirst = false, unavailable = false) {
+async function setup(page, failFirst = false, unavailable = false, challengeError = null) {
   const sent = [];
   await page.route('https://**/*', async route => {
     const url = new URL(route.request().url());
     if (url.hostname === 'challenges.cloudflare.com') {
+      if (challengeError) return route.fulfill({ contentType: 'application/javascript', body: `window.turnstile={render:(node,opts)=>{setTimeout(()=>opts['error-callback'](${JSON.stringify(challengeError)}),20);return 'widget';},remove:()=>{}};` });
       return route.fulfill({ contentType: 'application/javascript', body: `window.turnstile={render:(node,opts)=>{setTimeout(()=>opts.callback(opts.cData+':test-token'),20);return 'widget';},remove:()=>{}};` });
     }
     if (url.hostname !== 'booking-test.example') return route.abort();
@@ -25,11 +26,19 @@ async function setup(page, failFirst = false, unavailable = false) {
 }
 async function fill(page) {
   await page.getByRole('textbox', { name: 'Nombre y apellido', exact: true }).fill('Paciente Prueba');
-  await page.getByRole('textbox', { name: 'Teléfono de WhatsApp' }).fill('+54 9 383 4123456');
+  await page.getByRole('textbox', { name: 'Teléfono de WhatsApp' }).fill('3834123456');
   await page.getByRole('combobox', { name: 'Servicio', exact: true }).selectOption(service);
   await page.getByRole('textbox', { name: 'Breve descripción' }).fill('Quisiera una consulta');
   await page.getByRole('checkbox').check();
 }
+test('error de Turnstile muestra codigo sin enviar solicitud y conserva datos', async ({ page }) => {
+  const sent = await setup(page, false, false, '110200');
+  await fill(page);
+  await page.getByRole('button', { name: 'Reservar turno', exact: true }).click();
+  await expect(page.locator('#turnos').getByRole('alert')).toContainText('Código Turnstile: 110200');
+  await expect(page.getByRole('textbox', { name: 'Nombre y apellido', exact: true })).toHaveValue('Paciente Prueba');
+  expect(sent).toHaveLength(0);
+});
 test('formulario sin fecha/hora: envia solo los datos pedidos y muestra recepcion', async ({ page }, info) => {
   const sent = await setup(page);
   const section = page.locator('#turnos');

@@ -6,9 +6,15 @@ No se elige fecha/hora, no se consultan cupos, no se crea un turno clínico y no
 
 ## Estado de activación
 
-El código y las pruebas están implementados. **No se configuró Meta, no se desplegaron estas funciones ni se ejecutaron estas migraciones en producción. No se enviaron mensajes reales.** Sin las credenciales/plantillas backend válidas, la API devuelve 503 en lugar de simular éxito. Sin la site key pública de Turnstile el formulario no permite enviar.
+El 14/09/2026 se aplicaron las tres migraciones y se desplegaron `booking` y `contact-notifications` en `oiipswlnxbcgfflqnlid`. Los secretos están en Supabase y el cron de recuperación está programado cada minuto, con credencial en Vault. CORS permite solamente `http://127.0.0.1:5173` y `http://localhost:5173`; todavía no se habilitó el dominio público.
+
+Verificado: catálogo real de siete servicios (200), origen no autorizado (403), worker sin credencial (403) y 54 pruebas del backend. El titular confirmó la aprobación de las plantillas. El token vencido se renovó el 14/09/2026: Meta aceptó la consulta del Phone Number ID (200) y se actualizaron los secretos en Supabase. No se crearon solicitudes ni se enviaron mensajes durante este despliegue. Sigue pendiente la prueba completa desde el navegador con Turnstile real y ambos destinatarios; la consulta de Meta no verifica la entrega de las plantillas.
+
+Sin configuración backend completa, la API devuelve 503. La validación comprueba formato y presencia de valores; no detecta tokens de Meta vencidos. Sin la site key pública de Turnstile el formulario no permite enviar.
 
 ## Formulario y API
+
+El teléfono es exclusivamente argentino. El paciente ingresa código de área y número (10 dígitos, por ejemplo `3834320138`), sin `0`, `15`, `+54` ni `+549`. El backend valida con libphonenumber y normaliza a `+54` más los 10 dígitos nacionales, coincidiendo con el destinatario autorizado en Meta durante la prueba. También acepta entradas argentinas pegadas con prefijo internacional y las normaliza a la misma representación. Rechaza números extranjeros. Esta regla se aplica a solicitudes nuevas; no modifica teléfonos ni notificaciones históricas. En el entorno de prueba de Meta siguen siendo obligatorios los destinatarios autorizados.
 
 - `GET /functions/v1/booking/services`: catálogo activo de Supabase, solo id/slug/name. Incluye las especialidades del sitio; sin horarios.
 - `POST /functions/v1/booking/requests`: guarda y devuelve `{ "request": { "id": "...", "status": "received" } }`.
@@ -48,6 +54,8 @@ RLS activo y sin escritura directa desde roles de API. RPC solo service_role. Le
 Al recibir una solicitud, `booking` inicia el despacho en segundo plano mediante `EdgeRuntime.waitUntil`. La función privada `contact-notifications` recupera pendientes con Supabase Cron cada minuto; no necesita Node local ni GitHub Actions. Cada ejecución procesa hasta dos mensajes en paralelo. Un fallo de un destinatario no impide procesar al otro.
 
 Estados internos de envío:
+
+Los rechazos nuevos guardan en `contact_notifications.error_code` el estado HTTP y los códigos numéricos de Meta, por ejemplo `HTTP_401_META_190_SUB_463`. Se descartan mensajes y detalles libres del proveedor para evitar registrar datos personales o credenciales. Si el proveedor no devuelve JSON o códigos numéricos válidos, queda solamente `HTTP_NNN`. Los registros históricos `PROVIDER_REJECTED` no permiten recuperar retrospectivamente el motivo. Esta mejora no reactiva notificaciones fallidas ni cambia las reglas de reintento.
 
 - `pending`: esperando envío o reintento por 429.
 - `processing`: reclamado por un worker.

@@ -32,9 +32,16 @@ export function createWhatsAppSender(config, fetchImpl = fetch) {
         signal: AbortSignal.timeout(10000), redirect: 'error',
       });
     } catch { return { result: 'unknown', error: 'NETWORK_OR_TIMEOUT' }; }
-    if (response.status === 429) return { result: 'retry', error: 'HTTP_429' };
-    if (response.status >= 500) return { result: 'unknown', error: 'PROVIDER_5XX' };
-    if (!response.ok) return { result: 'failed', error: 'PROVIDER_REJECTED' };
+    if (!response.ok) {
+      // Persistir solo HTTP y codigos numericos; los textos de Meta pueden contener datos personales.
+      let details;
+      try { details = (await response.json())?.error; } catch { /* Conservar el estado HTTP aun sin JSON. */ }
+      const numeric = value => Number.isSafeInteger(value) && value >= 0;
+      let error = `HTTP_${response.status}`;
+      if (numeric(details?.code)) error += `_META_${details.code}`;
+      if (numeric(details?.error_subcode)) error += `_SUB_${details.error_subcode}`;
+      return { result: response.status === 429 ? 'retry' : response.status >= 500 ? 'unknown' : 'failed', error };
+    }
     let data;
     try { data = await response.json(); } catch { return { result: 'unknown', error: 'INVALID_PROVIDER_RESPONSE' }; }
     const id = data?.messages?.[0]?.id;

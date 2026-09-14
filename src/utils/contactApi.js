@@ -6,7 +6,8 @@ const messages = {
   INVALID_INPUT: 'Revisá los datos del formulario e intentá nuevamente.',
   CONSENT_REQUIRED: 'Necesitamos tu autorización para gestionar la solicitud por WhatsApp.',
   SERVICE_NOT_FOUND: 'Ese servicio ya no está disponible. Elegí otro servicio.',
-  VERIFICATION_FAILED: 'No pudimos verificar la solicitud. Volvé a intentar.',
+  VERIFICATION_FAILED: 'No pudimos validar la verificación en el servidor. Código: VERIFICATION_FAILED. Volvé a intentar.',
+  VERIFICATION_UNAVAILABLE: 'El servicio de verificación no responde. Código: VERIFICATION_UNAVAILABLE. Volvé a intentar.',
   RATE_LIMITED: 'Recibimos varios intentos. Esperá unos minutos antes de volver a intentar.',
   BOOKING_NOT_CONFIGURED: 'Las solicitudes online no están disponibles por el momento. Contactanos por los medios del centro.',
 };

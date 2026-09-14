@@ -24,6 +24,24 @@ test('WhatsApp: rechazo, rate limit y resultado ambiguo no se reenvian ciegament
   assert.equal((await createWhatsAppSender(config, async () => { throw new Error('timeout'); })(job)).result, 'unknown');
   assert.equal((await createWhatsAppSender(config, async () => Response.json({}))(job)).result, 'unknown');
 });
+test('WhatsApp: diagnostico numerico llega a persistencia sin datos sensibles', async () => {
+  const finish = [];
+  const send = createWhatsAppSender(config, async () => Response.json({ error: {
+    code: 190, error_subcode: 463, message: config.token, error_data: { details: job.phone },
+  } }, { status: 401 }));
+  await createContactDispatcher({ claim: async () => [job], finish: async args => finish.push(args) }, send)();
+  assert.equal(finish[0].p_error_code, 'HTTP_401_META_190_SUB_463');
+  assert.equal(finish[0].p_result, 'failed');
+  assert.ok(!JSON.stringify(finish).includes(config.token));
+  assert.ok(!JSON.stringify(finish).includes(job.phone));
+  for (const status of [400, 429, 500]) {
+    const result = await createWhatsAppSender(config, async () => new Response('not JSON', { status }))(job);
+    assert.equal(result.error, `HTTP_${status}`);
+    assert.equal(result.result, status === 429 ? 'retry' : status === 500 ? 'unknown' : 'failed');
+  }
+  const unsafe = await createWhatsAppSender(config, async () => Response.json({ error: { code: job.phone, error_subcode: -1 } }, { status: 400 }))(job);
+  assert.equal(unsafe.error, 'HTTP_400');
+});
 test('WhatsApp: fallo independiente por destinatario y worker privado', async () => {
   const finished = [];
   const dispatch = createContactDispatcher({ claim: async () => [job, { ...job, id: 'other', recipient: 'center' }], finish: async args => finished.push(args) },

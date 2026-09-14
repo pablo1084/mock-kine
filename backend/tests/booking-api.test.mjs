@@ -3,12 +3,20 @@ import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { createBookingApi } from '../supabase/functions/_shared/booking-api.mjs';
 import { createBookingBackend, createTurnstileVerifier, createPhoneHasher, bookingConfig } from '../supabase/functions/_shared/booking-backend.mjs';
-import { BookingError } from '../supabase/functions/_shared/booking-validation.mjs';
+import { BookingError, bookingInput } from '../supabase/functions/_shared/booking-validation.mjs';
 
 const origin = 'https://consultorio.example';
 const config = { origins: [origin], supabaseUrl: 'https://project.supabase.co', serviceKey: 'server-only-secret', turnstileSecret: 'test-secret', hashSecret: 'test-secret-at-least-thirty-two-characters' };
 const service = '00000000-0000-4000-8000-000000000001';
 const input = () => ({ service_id: service, full_name: 'Paciente Prueba', phone: '+54 9 383 4123456', description: 'Quisiera consultar', privacy_consent: true, turnstile_token: 'test-token' });
+test('Telefono argentino: area y numero equivalen a formatos internacionales', () => {
+  for (const phone of ['3834320138', '383 432-0138', '+543834320138', '+5493834320138']) {
+    assert.equal(bookingInput({ ...input(), phone }, randomUUID()).rpc.p_phone_normalized, '+543834320138');
+  }
+  for (const phone of ['4320138', '+14155552671', '1234567890']) {
+    assert.throws(() => bookingInput({ ...input(), phone }, randomUUID()), /INVALID_PHONE/);
+  }
+});
 function req(path = '/requests', data = input(), method = 'POST', headers = {}) {
   return new Request(`https://project.supabase.co/functions/v1/booking${path}`, { method,
     headers: { Origin: origin, 'Content-Type': 'application/json', 'Idempotency-Key': randomUUID(), ...headers },
@@ -44,7 +52,7 @@ test('Contacto: validacion, telefono normalizado, idempotencia y respuesta minim
   assert.deepEqual(calls[1], ['verify', 'test-token', 'consultorio.example', key]);
   assert.match(calls[2][2], /^[a-f0-9]{64}$/);
   const args = calls[3][1];
-  assert.equal(args.p_phone_normalized, '+5493834123456'); assert.equal(args.p_description, 'Consulta sin urgencia');
+  assert.equal(args.p_phone_normalized, '+543834123456'); assert.equal(args.p_description, 'Consulta sin urgencia');
   assert.equal(args.p_request_id, key); assert.equal(args.p_privacy_consent, true);
   assert.ok(!('p_starts_at' in args));
 });

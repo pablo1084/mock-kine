@@ -19,10 +19,13 @@ export function bookingInput(body, requestId) {
   const fields = ['service_id', 'full_name', 'phone', 'description', 'privacy_consent', 'turnstile_token'];
   if (!body || typeof body !== 'object' || Array.isArray(body) || Object.keys(body).some(key => !fields.includes(key))) throw new BookingError('INVALID_INPUT');
   const id = validUuid(requestId);
-  const phoneText = text(body.phone, 8, 40);
+  const phoneText = text(body.phone, 1, 40);
   if (!/^[+\d\s().-]+$/.test(phoneText)) throw new BookingError('INVALID_PHONE');
   const phone = parsePhoneNumberFromString(phoneText, { defaultCountry: 'AR', extract: false });
-  if (!phone?.isValid() || phone.ext) throw new BookingError('INVALID_PHONE');
+  if (!phone?.isValid() || phone.ext || phone.country !== 'AR') throw new BookingError('INVALID_PHONE');
+  // El formulario recibe area + numero. Meta usa +54 sin el 9 movil para estos destinatarios argentinos.
+  const national = phone.nationalNumber.replace(/^9(?=\d{10}$)/, '');
+  if (!/^\d{10}$/.test(national)) throw new BookingError('INVALID_PHONE');
   if (body.privacy_consent !== true) throw new BookingError('CONSENT_REQUIRED');
   return {
     token: text(body.turnstile_token, 1, 2048),
@@ -30,7 +33,7 @@ export function bookingInput(body, requestId) {
       p_service_id: validUuid(body.service_id),
       p_full_name: text(body.full_name, 3, 160),
       // Guardar la misma representacion normalizada permite reintentar con otro formato visual.
-      p_phone_normalized: phone.number,
+      p_phone_normalized: `+54${national}`,
       p_description: text(typeof body.description === 'string' ? body.description.replace(/[\r\n\t]+/g, ' ') : body.description, 1, 500),
       p_request_id: id, p_privacy_consent: true,
     },
