@@ -3,8 +3,8 @@ import { Activity, ArrowRight, Dumbbell, FlaskConical, Waves } from 'lucide-reac
 
 const pillars = [
   { id: 'kinesiologia', icon: Activity, title: 'Kinesiología deportiva y rehabilitación', text: 'Lesiones, recuperación funcional y tratamiento personalizado.' },
-  { id: 'laboratorio-ivolution', icon: FlaskConical, title: 'Evaluación funcional y del rendimiento', text: 'Ivolution Lab, fuerza, potencia, perfil de rendimiento y seguimiento.' },
-  { id: 'readaptacion', icon: Dumbbell, title: 'Readaptación y entrenamiento', text: 'Fortalecimiento, reacondicionamiento, progresión y retorno a la actividad o al deporte.' },
+  { id: 'laboratorio-ivolution', icon: FlaskConical, title: 'Evaluación funcional y del rendimiento', text: 'Evaluamos para conocer el punto de partida, orientar desiciones y seguir la evolución.' },
+  { id: 'readaptacion', icon: Dumbbell, title: 'Readaptación y entrenamiento', text: 'El puente entre la rehabilitación y el regreso a la actividad o al deporte.' },
   { id: 'tecnologia-aplicada', icon: Waves, title: 'Tecnología aplicada', text: 'Ondas de choque y MEP ecoguiado.' },
 ];
 

@@ -1,8 +1,7 @@
 import React from 'react';
 import { SiteFooter } from './components/SiteFooter';
 import { SiteHeader } from './components/SiteHeader';
-import { TeamMemberModal } from './components/TeamMemberModal';
-import { allianceItems, contactCards, gallery, ivolutionGallery, navItems, services, sportsKinesiologyStages, teamAreas, teamMembers, technologyServices } from './data/siteContent';
+import { allianceItems, contactCards, gallery, navItems, services, sportsKinesiologyStages, teamAreas, teamMembers, technologyServices } from './data/siteContent';
 import { AboutSection } from './sections/AboutSection';
 import { AlliancesSection } from './sections/AlliancesSection';
 import { AppointmentsSection } from './sections/AppointmentsSection';
@@ -24,23 +23,19 @@ function PageFallback() {
 export default function App() {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [activePage, setActivePage] = React.useState('home');
-  const [selectedTeamMember, setSelectedTeamMember] = React.useState(null);
   const [serviceTargetId, setServiceTargetId] = React.useState(null);
 
   const openHomeSection = () => {
     setActivePage('home');
-    setSelectedTeamMember(null);
   };
 
   const openTeamPage = () => {
     setActivePage('team');
-    setSelectedTeamMember(null);
     window.setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 0);
   };
 
   const openPage = (page, targetId) => {
     setActivePage(page);
-    setSelectedTeamMember(null);
     if (page === 'services') {
       setServiceTargetId(targetId || null);
       return;
@@ -70,7 +65,7 @@ export default function App() {
       <ServicesOverviewSection hidden={!showHome} onOpenServices={(targetId) => openPage('services', targetId)} />
       {activePage === 'services' && (
         <React.Suspense fallback={<PageFallback />}>
-          <ServicesSection targetId={serviceTargetId} onBack={openHomeSection} onRequestAppointment={() => openPage('home', 'turnos')} ivolutionGallery={ivolutionGallery} services={services} stages={sportsKinesiologyStages} technologyServices={technologyServices} />
+          <ServicesSection targetId={serviceTargetId} onBack={openHomeSection} onRequestAppointment={() => openPage('home', 'turnos')} services={services} stages={sportsKinesiologyStages} technologyServices={technologyServices} teamMembers={teamMembers} />
         </React.Suspense>
       )}
       <CenterOverviewSection hidden={!showHome} onOpenCenter={() => openPage('center')} />
@@ -82,10 +77,9 @@ export default function App() {
       <AboutSection hidden={!showHome} onOpenTeamPage={openTeamPage} />
       {activePage === 'team' && (
         <React.Suspense fallback={<PageFallback />}>
-          <TeamPage teamAreas={teamAreas} teamMembers={teamMembers} onBack={openHomeSection} onSelectMember={setSelectedTeamMember} />
+          <TeamPage teamAreas={teamAreas} teamMembers={teamMembers} onBack={openHomeSection} />
         </React.Suspense>
       )}
-      <TeamMemberModal member={selectedTeamMember} onClose={() => setSelectedTeamMember(null)} />
       <ExperiencesSection hidden={!showHome} />
       <NewsSection hidden={!showHome} />
       <AlliancesSection hidden={!showHome} items={allianceItems} />

@@ -19,10 +19,11 @@ const carouselImagePositions = {
   'administracion-2': 'object-[50%_20%]', // Nazarena Oviedo
 };
 
-export function TeamPage({ hidden, teamAreas, teamMembers, onBack, onSelectMember }) {
+const autoAdvanceMs = 6000;
+
+export function TeamPage({ hidden, teamAreas, teamMembers, onBack }) {
   const [activeMemberIndex, setActiveMemberIndex] = React.useState(0);
   const [desktopViewerIndex, setDesktopViewerIndex] = React.useState(null);
-  const didSwipeRef = React.useRef(false);
 
   const showPreviousMember = React.useCallback(() => {
     setActiveMemberIndex((current) => (current - 1 + teamMembers.length) % teamMembers.length);
@@ -41,16 +42,29 @@ export function TeamPage({ hidden, teamAreas, teamMembers, onBack, onSelectMembe
   }, [teamMembers.length]);
 
   React.useEffect(() => {
+    if (hidden || teamMembers.length < 2) return undefined;
+    const timer = window.setTimeout(showNextMember, autoAdvanceMs);
+    return () => window.clearTimeout(timer);
+  }, [hidden, activeMemberIndex, teamMembers.length, showNextMember]);
+
+  React.useEffect(() => {
+    if (desktopViewerIndex === null || teamMembers.length < 2) return undefined;
+    const timer = window.setTimeout(showNextDesktopMember, autoAdvanceMs);
+    return () => window.clearTimeout(timer);
+  }, [desktopViewerIndex, teamMembers.length, showNextDesktopMember]);
+
+  React.useEffect(() => {
     if (hidden) return undefined;
 
     const handleKeyDown = (event) => {
+      if (desktopViewerIndex !== null || !window.matchMedia('(max-width: 1023px)').matches) return;
       if (event.key === 'ArrowLeft') showPreviousMember();
       if (event.key === 'ArrowRight') showNextMember();
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [hidden, showPreviousMember, showNextMember]);
+  }, [hidden, desktopViewerIndex, showPreviousMember, showNextMember]);
 
   React.useEffect(() => {
     if (desktopViewerIndex === null) return undefined;
@@ -96,22 +110,15 @@ export function TeamPage({ hidden, teamAreas, teamMembers, onBack, onSelectMembe
               <ChevronLeft size={25} />
             </button>
 
-            <div className="mx-auto max-w-md" onTouchStart={(event) => { didSwipeRef.current = false; event.currentTarget.dataset.touchX = event.touches[0].clientX; }} onTouchEnd={(event) => {
+            <div className="mx-auto max-w-md" onTouchStart={(event) => { event.currentTarget.dataset.touchX = event.touches[0].clientX; }} onTouchEnd={(event) => {
               const startX = Number(event.currentTarget.dataset.touchX);
               const distance = event.changedTouches[0].clientX - startX;
               if (Math.abs(distance) > 45) {
-                didSwipeRef.current = true;
                 if (distance > 0) showPreviousMember();
                 else showNextMember();
               }
             }}>
-              <TeamMemberCard member={teamMembers[activeMemberIndex]} imagePosition={carouselImagePositions[teamMembers[activeMemberIndex].id]} onSelect={(member) => {
-                if (didSwipeRef.current) {
-                  didSwipeRef.current = false;
-                  return;
-                }
-                onSelectMember(member);
-              }} />
+              <TeamMemberCard member={teamMembers[activeMemberIndex]} imagePosition={carouselImagePositions[teamMembers[activeMemberIndex].id]} showTraining />
             </div>
 
             <button type="button" aria-label="Profesional siguiente" className="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-graphiteDark/75 text-white shadow-lg backdrop-blur transition active:bg-pulse sm:right-0" onClick={showNextMember}>
@@ -119,9 +126,11 @@ export function TeamPage({ hidden, teamAreas, teamMembers, onBack, onSelectMembe
             </button>
           </div>
 
-          <div className="mt-5 flex justify-center gap-1.5">
+          <div className="fixed bottom-20 left-1/2 z-30 flex -translate-x-1/2 items-center rounded-full border border-white/10 bg-graphiteDark/90 px-2 py-1 shadow-lg backdrop-blur" aria-label="Seleccionar profesional">
             {teamMembers.map((member, index) => (
-              <button key={member.id} type="button" aria-label={`Mostrar a ${member.name}`} className={`h-1.5 rounded-full transition-all ${index === activeMemberIndex ? 'w-7 bg-pulse' : 'w-1.5 bg-white/25'}`} onClick={() => setActiveMemberIndex(index)} />
+              <button key={member.id} type="button" aria-label={`Mostrar a ${member.name}`} className="flex h-6 w-5 items-center justify-center" onClick={() => setActiveMemberIndex(index)}>
+                <span className={`h-1.5 rounded-full transition-all ${index === activeMemberIndex ? 'w-4 bg-pulse' : 'w-1.5 bg-pulse/40'}`} />
+              </button>
             ))}
           </div>
         </div>
@@ -159,12 +168,19 @@ export function TeamPage({ hidden, teamAreas, teamMembers, onBack, onSelectMembe
             <ChevronLeft size={28} />
           </button>
 
-          <div className="w-full max-w-md" onClick={(event) => event.stopPropagation()}>
+          <div className={`max-h-[calc(100vh-9rem)] w-full overflow-y-auto ${teamMembers[desktopViewerIndex].highlight ? 'max-w-3xl' : 'max-w-md'}`} onClick={(event) => event.stopPropagation()}>
             <p className="mb-4 text-center text-sm font-semibold uppercase text-pulse">
               {desktopViewerIndex + 1} de {teamMembers.length} · {teamMembers[desktopViewerIndex].area}
             </p>
-            <TeamMemberCard member={teamMembers[desktopViewerIndex]} imagePosition={carouselImagePositions[teamMembers[desktopViewerIndex].id]} onSelect={onSelectMember} />
-            <p className="mt-4 text-center text-sm text-white/60">Hacé clic en la card para ver la presentación completa.</p>
+            <TeamMemberCard member={teamMembers[desktopViewerIndex]} imagePosition={carouselImagePositions[teamMembers[desktopViewerIndex].id]} showTraining />
+          </div>
+
+          <div className="absolute bottom-12 left-1/2 flex -translate-x-1/2 items-center rounded-full border border-white/10 bg-graphiteDark/90 px-2 py-1 shadow-lg" aria-label="Seleccionar profesional" onClick={(event) => event.stopPropagation()}>
+            {teamMembers.map((member, index) => (
+              <button key={member.id} type="button" aria-label={`Mostrar a ${member.name}`} className="flex h-7 w-5 items-center justify-center" onClick={() => setDesktopViewerIndex(index)}>
+                <span className={`h-1.5 rounded-full transition-all ${index === desktopViewerIndex ? 'w-4 bg-pulse' : 'w-1.5 bg-pulse/40'}`} />
+              </button>
+            ))}
           </div>
 
           <button type="button" aria-label="Profesional siguiente" className="absolute right-8 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-pulse" onClick={(event) => { event.stopPropagation(); showNextDesktopMember(); }}>

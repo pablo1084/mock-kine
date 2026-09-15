@@ -48,17 +48,6 @@ export const technologyServices = [
   },
 ];
 
-export const ivolutionGallery = [
-  { id: 'ivolution-1', src: '/assets/ivolution-lab/lab2-optimized.webp', label: 'Ivolution Lab 1' },
-  { id: 'ivolution-2', src: '/assets/ivolution-lab/lab3-optimized.webp', label: 'Ivolution Lab 2' },
-  { id: 'ivolution-3', src: '/assets/ivolution-lab/lab4-optimized.webp', label: 'Ivolution Lab 3' },
-  { id: 'ivolution-4', src: '/assets/ivolution-lab/lab5-optimized.webp', label: 'Ivolution Lab 4' },
-  { id: 'ivolution-5', src: '/assets/ivolution-lab/lab6-optimized.webp', label: 'Ivolution Lab 5' },
-  { id: 'ivolution-6', src: '/assets/ivolution-lab/lab7-optimized.webp', label: 'Ivolution Lab 6' },
-  { id: 'ivolution-7', src: '/assets/ivolution-lab/lab8.jpg', label: 'Ivolution Lab 7' },
-  { id: 'ivolution-8', src: '/assets/ivolution-lab/lab9-optimized.webp', label: 'Ivolution Lab 8' },
-];
-
 export const gallery = [
   {
     id: 'fachada',
@@ -127,9 +116,9 @@ export const teamAreas = ['Dirección', 'Kinesiología', 'Salud integral', 'Entr
 export const teamMembers = [
   {
     id: 'director',
-    name: 'Dr. José Oviedo',
+    name: 'Lic. José Oviedo',
     role: 'Director del centro',
-    title: 'Especialista en Kinesiología Deportiva (UGR)',
+    title: 'Especialista en Kinesiología Deportiva (Universidad Gran Rosario)',
     area: 'Dirección',
     initials: 'JO',
     photo: '/assets/equipo/director-optimized.webp',
@@ -173,6 +162,7 @@ export const teamMembers = [
     imagePosition: 'object-[50%_13%]',
     summary: 'Orienta hábitos alimentarios para potenciar salud, recuperación y rendimiento.',
     bio: 'Trabaja en estrategias nutricionales personalizadas, integradas a los objetivos clínicos, deportivos y de bienestar de cada paciente.',
+    trainingLabel: 'Formación complementaria',
     training: [
       'Formación en antropometría ISAK nivel 1.',
       'Curso de posgrado en suplementación e hidratación deportiva.',

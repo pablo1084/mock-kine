@@ -1,5 +1,5 @@
 import React from 'react';
-import { Apple, ArrowLeft, Brain, ChevronLeft, ChevronRight, Image, Maximize2, ShieldCheck, Target, Waves, X, Zap } from 'lucide-react';
+import { Apple, ArrowLeft, Brain, Maximize2, ShieldCheck, Waves, X, Zap } from 'lucide-react';
 
 const serviceIcons = {
   shield: ShieldCheck,
@@ -7,7 +7,20 @@ const serviceIcons = {
   apple: Apple,
 };
 
-export function ServicesSection({ hidden, targetId, ivolutionGallery, onBack, onRequestAppointment, services, stages, technologyServices }) {
+const complementaryProfessionalIds = {
+  'Osteopatía': 'osteopata',
+  'Psicología': 'psicologo',
+  'Nutrición': 'nutricionista',
+};
+
+const complementaryImages = {
+  'Osteopatía': {
+    src: '/assets/osteopata/osteopata2-web-optimized.webp',
+    alt: 'Pablo Villafañe durante una sesión de osteopatía',
+  },
+};
+
+export function ServicesSection({ hidden, targetId, onBack, onRequestAppointment, services, stages, technologyServices, teamMembers }) {
   React.useEffect(() => {
     if (targetId) {
       document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -16,20 +29,10 @@ export function ServicesSection({ hidden, targetId, ivolutionGallery, onBack, on
     }
   }, [targetId]);
 
-  const ivolutionCarouselRef = React.useRef(null);
   const mepInlineVideoRef = React.useRef(null);
   const mepModalVideoRef = React.useRef(null);
   const [mepVideoOpen, setMepVideoOpen] = React.useState(false);
   const [isTabletUp, setIsTabletUp] = React.useState(false);
-  const [selectedIvolutionIndex, setSelectedIvolutionIndex] = React.useState(null);
-
-  const showPreviousIvolutionImage = React.useCallback(() => {
-    setSelectedIvolutionIndex((current) => (current - 1 + ivolutionGallery.length) % ivolutionGallery.length);
-  }, [ivolutionGallery.length]);
-
-  const showNextIvolutionImage = React.useCallback(() => {
-    setSelectedIvolutionIndex((current) => (current + 1) % ivolutionGallery.length);
-  }, [ivolutionGallery.length]);
 
   React.useEffect(() => {
     const mediaQuery = window.matchMedia('(min-width: 768px)');
@@ -73,29 +76,6 @@ export function ServicesSection({ hidden, targetId, ivolutionGallery, onBack, on
     modalVideo.play().catch(() => {});
   }, [mepVideoOpen]);
 
-  React.useEffect(() => {
-    if (selectedIvolutionIndex === null) return undefined;
-
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape') setSelectedIvolutionIndex(null);
-      if (event.key === 'ArrowLeft') showPreviousIvolutionImage();
-      if (event.key === 'ArrowRight') showNextIvolutionImage();
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedIvolutionIndex, showPreviousIvolutionImage, showNextIvolutionImage]);
-
-  const scrollIvolutionGallery = (direction) => {
-    const carousel = ivolutionCarouselRef.current;
-    if (!carousel) return;
-
-    carousel.scrollBy({
-      left: direction * carousel.clientWidth * 0.72,
-      behavior: 'smooth',
-    });
-  };
-
   return (
     <section className={`${hidden ? 'hidden' : ''} bg-graphite pb-20 pt-32`}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -123,30 +103,25 @@ export function ServicesSection({ hidden, targetId, ivolutionGallery, onBack, on
               <p className="mt-5 text-base leading-8 text-white/72">Un tratamiento personalizado que parte de la evaluación de la lesión, las necesidades y los objetivos de cada persona.</p>
               <p className="mt-4 text-sm leading-7 text-white/68">Integramos recuperación funcional, ejercicio terapéutico y seguimiento de la evolución para acompañar el regreso a las actividades cotidianas y deportivas.</p>
             </div>
-            <div className="grid grid-cols-2 items-center gap-4">
-              {/* Reemplazar estos espacios por las futuras fotos de Kinesiología. */}
-              {['Atención personalizada', 'Recuperación en movimiento'].map((label, index) => (
-                <div key={label} className={`flex aspect-[3/4] flex-col items-center justify-center gap-4 rounded-md border border-dashed border-white/20 bg-white/5 p-4 text-center ${index ? 'mt-10' : ''}`}>
-                  <Image size={28} className="text-pulse/70" aria-hidden="true" />
-                  <p className="text-sm font-medium text-white/65">{label}</p>
-                  <span className="text-xs text-white/40">Próximamente</span>
-                </div>
-              ))}
+            <div className="group mx-auto aspect-[5/4] w-full max-w-[18rem] overflow-hidden rounded-md border border-white/10 bg-graphiteSoft shadow-soft sm:max-w-[24rem] lg:ml-auto lg:mr-0">
+              <img
+                src="/assets/IMG-20260914-WA0057.jpg"
+                alt="Una entrenadora supervisa a dos pacientes mientras realizan ejercicios en el centro"
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full translate-x-[11%] scale-[1.38] object-cover object-[42%_62%] transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.43]"
+                width="4000"
+                height="3000"
+              />
             </div>
           </div>
         </section>
 
         <div id="laboratorio-ivolution" className="mt-14 scroll-mt-28 overflow-hidden rounded-md border border-pulse/25 bg-[#070808] shadow-soft">
-          <div className="border-b border-white/10 px-6 py-6 sm:px-8 lg:px-10">
-            <p className="text-sm font-semibold uppercase text-pulse">02 · Medir para decidir</p>
-            <h3 className="mt-3 text-3xl font-semibold text-white">Evaluación funcional y del rendimiento</h3>
-            <p className="mt-3 max-w-3xl text-sm leading-7 text-white/70">Ivolution Lab es nuestra unidad de evaluación objetiva: un perfil de rendimiento para orientar las decisiones y seguir la evolución.</p>
-          </div>
           <div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
             <div className="p-6 sm:p-8 lg:p-10">
-              <span className="inline-flex items-center gap-2 rounded-md border border-pulse/45 bg-pulse/10 px-3 py-2 text-xs font-semibold uppercase text-pulse">
-                <Zap size={15} /> Laboratorio exclusivo
-              </span>
+              <p className="text-sm font-semibold uppercase text-pulse">02 · Medir para decidir</p>
+
               <div className="mt-7 flex flex-col gap-3 sm:inline-flex sm:flex-row sm:items-end sm:gap-5">
                 <div className="w-full max-w-[17rem] sm:max-w-xs">
                   <img
@@ -159,87 +134,26 @@ export function ServicesSection({ hidden, targetId, ivolutionGallery, onBack, on
                   lab
                 </p>
               </div>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-normal text-white/48">
-                  Lo que se puede medir, se puede mejorar.
-                </p>
-              </div>
-              <h3 className="mt-7 text-4xl font-semibold leading-tight text-white">
+              <h4 className="mt-4 text-4xl font-semibold leading-tight text-white">
                 Evaluación deportiva con tecnología de alto rendimiento.
-              </h3>
+              </h4>
               <p className="mt-5 text-base leading-8 text-white/72">
-                Un laboratorio pensado para medir fuerza, potencia, asimetrías y evolución con datos concretos. La información obtenida permite tomar mejores decisiones en rehabilitación, prevención y rendimiento.
+                Ivolution Lab es nuestra unidad de evaluación objetiva. Medimos fuerza, potencia y asimetrías para construir un perfil de rendimiento que orienta las decisiones y permite seguir la evolución. Estos datos ayudan a planificar la rehabilitación, prevenir lesiones y mejorar el rendimiento.
               </p>
-              <div className="mt-7 grid gap-3 sm:grid-cols-3">
-                {['Fuerza', 'Potencia', 'Asimetrías'].map((item) => (
-                  <div key={item} className="rounded-md border border-pulse/18 bg-white/[0.06] p-4">
-                    <Target className="text-pulse" size={20} />
-                    <span className="mt-3 block text-sm font-semibold text-white">{item}</span>
-                  </div>
-                ))}
-              </div>
-              <p className="mt-6 text-sm font-semibold uppercase text-white/60">
+              <br/>
+              <p className="mt-6 text-base font-semibold uppercase leading-7 text-white/70 sm:text-lg">
                 Representación regional del laboratorio en el NOA.
               </p>
             </div>
-            <div className="relative min-h-80 overflow-hidden bg-[#101112]">
+            <div className="group mx-auto aspect-[2/3] w-full max-w-[12.5rem] overflow-hidden rounded-md border border-white/10 bg-graphiteSoft shadow-soft sm:max-w-[21rem] lg:my-auto">
               <img
                 src="/assets/ivolution-lab/lab1-optimized.webp"
                 alt="Evaluación deportiva en Ivolution Lab"
-                className="absolute inset-0 h-full w-full object-cover object-[center_30%]"
+                className="h-full w-full object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.045]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#070808]/72 via-[#070808]/12 to-transparent" />
-            </div>
-          </div>
-
-          <div className="border-t border-white/10 p-4 sm:p-6 lg:p-8">
-            <div className="mb-5">
-              <p className="text-xs font-semibold uppercase text-pulse">Galería Ivolution Lab</p>
-            </div>
-            <div className="relative">
-              <button type="button" aria-label="Ver imagen anterior" onClick={() => scrollIvolutionGallery(-1)} className="absolute left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-[#070808]/75 text-pulse shadow-lg backdrop-blur transition active:bg-pulse active:text-[#070808] lg:hidden">
-                <ChevronLeft size={24} />
-              </button>
-              <div ref={ivolutionCarouselRef} className="scrollbar-none flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth pb-2 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0">
-                {ivolutionGallery.map((item, index) => (
-                  <button key={item.id} type="button" aria-label={`Ampliar ${item.label}`} onClick={() => setSelectedIvolutionIndex(index)} className="group relative aspect-square min-w-[58%] max-w-[220px] shrink-0 snap-center overflow-hidden rounded-md border border-white/10 bg-black sm:min-w-[34%] sm:max-w-[240px] lg:aspect-[4/3] lg:min-w-0 lg:max-w-none lg:bg-white/[0.055]">
-                    {item.src ? (
-                      <img src={item.src} alt={item.label} className="h-full w-full object-contain transition duration-500 group-hover:scale-105 lg:object-cover" />
-                    ) : (
-                      <div className="flex h-full flex-col items-center justify-center gap-3 px-4 text-center">
-                        <Image className="text-pulse" size={28} />
-                        <div>
-                          <span className="text-sm font-semibold text-white">{item.label}</span>
-                          <p className="mt-1 text-xs leading-5 text-white/48">Próxima imagen</p>
-                        </div>
-                      </div>
-                    )}
-                  </button>
-                ))}
-              </div>
-              <button type="button" aria-label="Ver imagen siguiente" onClick={() => scrollIvolutionGallery(1)} className="absolute right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-[#070808]/75 text-pulse shadow-lg backdrop-blur transition active:bg-pulse active:text-[#070808] lg:hidden">
-                <ChevronRight size={24} />
-              </button>
             </div>
           </div>
         </div>
-
-        {selectedIvolutionIndex !== null && (
-          <div className="fixed inset-0 z-[80] flex items-center justify-center bg-graphiteDark/95 p-4 backdrop-blur" onClick={() => setSelectedIvolutionIndex(null)}>
-            <button type="button" aria-label="Cerrar imagen" className="absolute right-4 top-4 rounded-md border border-white/20 p-2 text-white transition hover:border-pulse hover:text-pulse sm:right-8 sm:top-8" onClick={() => setSelectedIvolutionIndex(null)}>
-              <X size={22} />
-            </button>
-            <button type="button" aria-label="Imagen anterior" className="absolute left-3 z-10 rounded-full bg-white/10 p-3 text-white transition hover:bg-pulse hover:text-[#070808] sm:left-8" onClick={(event) => { event.stopPropagation(); showPreviousIvolutionImage(); }}>
-              <ChevronLeft size={28} />
-            </button>
-            <figure className="flex max-h-[85vh] w-full max-w-5xl flex-col items-center p-5 sm:p-8" onClick={(event) => event.stopPropagation()}>
-              <img src={ivolutionGallery[selectedIvolutionIndex].src} alt={ivolutionGallery[selectedIvolutionIndex].label} className="max-h-[70vh] max-w-full rounded-md border border-white/30 object-contain" />
-            </figure>
-            <button type="button" aria-label="Imagen siguiente" className="absolute right-3 z-10 rounded-full bg-white/10 p-3 text-white transition hover:bg-pulse hover:text-[#070808] sm:right-8" onClick={(event) => { event.stopPropagation(); showNextIvolutionImage(); }}>
-              <ChevronRight size={28} />
-            </button>
-          </div>
-        )}
 
         <section id="readaptacion" aria-labelledby="readaptacion-title" className="mt-14 scroll-mt-28 rounded-md border border-white/10 bg-graphiteDark p-6 sm:p-8 lg:p-10">
           <p className="text-sm font-semibold uppercase text-pulse">03 · Volver a la actividad</p>
@@ -256,43 +170,36 @@ export function ServicesSection({ hidden, targetId, ivolutionGallery, onBack, on
           </div>
         </section>
 
-        <section id="tecnologia-aplicada" aria-labelledby="tecnologia-title" className="mt-14 scroll-mt-28">
+        <section id="tecnologia-aplicada" aria-labelledby="tecnologia-title" className="mt-14 scroll-mt-28 rounded-md border border-white/10 bg-graphiteDark p-6 sm:p-8 lg:p-10">
           <p className="text-sm font-semibold uppercase text-pulse">04 · Herramientas al servicio del tratamiento</p>
           <h3 id="tecnologia-title" className="mt-3 text-3xl font-semibold text-white">Tecnología aplicada</h3>
           <p className="mt-5 max-w-3xl text-base leading-8 text-white/72">Ondas de choque y MEP ecoguiado se integran al plan de tratamiento según la evaluación y las necesidades de cada paciente.</p>
-        <div className="mt-8 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
-          <div id="ondas-de-choque" className="scroll-mt-28 rounded-md border border-white/10 bg-white p-6 text-ink shadow-sm">
-            <span className="text-sm font-semibold uppercase text-pulse">Tecnología terapéutica</span>
-            <h3 className="mt-3 flex items-center gap-3 text-3xl font-semibold text-graphite"><Waves className="shrink-0 text-pulse" size={26} /> Ondas de choque</h3>
-            <p className="mt-4 text-sm leading-7 text-neutral-600">
-              {technologyServices.find((service) => service.title === 'Ondas de choque')?.text}
-            </p>
-            <div className="mt-6 grid grid-cols-[1.1fr_0.9fr] items-center gap-3 sm:gap-4">
-              <img src="/assets/ondas-aplicacion-optimized.webp" alt="Aplicación de ondas de choque en la rodilla" width="941" height="1672" className="h-auto w-full rounded-md" loading="lazy" decoding="async" />
-              <img src="/assets/ondas-tratamiento.webp" alt="Tratamiento con ondas de choque en consultorio" width="1080" height="1350" className="h-auto w-full rounded-md" loading="lazy" decoding="async" />
+          <div className="relative mt-8 grid gap-x-16 gap-y-6 border-t border-white/10 pt-8 lg:grid-cols-2">
+            <span aria-hidden="true" className="pointer-events-none absolute bottom-0 left-1/2 top-8 hidden border-l border-white/10 lg:block" />
+            <div id="ondas-de-choque" className="order-1 scroll-mt-28">
+              <span className="text-sm font-semibold uppercase text-pulse">Tecnología terapéutica</span>
+              <h4 className="mt-3 flex items-center gap-3 text-3xl font-semibold text-white"><Waves className="shrink-0 text-pulse" size={26} /> Ondas de choque</h4>
+              <p className="mt-4 text-sm leading-7 text-white/70">
+                {technologyServices.find((service) => service.title === 'Ondas de choque')?.text}
+              </p>
             </div>
-          </div>
-
-          <div className="overflow-hidden rounded-md border border-white/10 bg-[#070808] shadow-soft">
-            <div className="p-5 sm:p-6">
-              <span className="text-xs font-semibold uppercase text-pulse">Aplicación en consultorio</span>
-              <p className="mt-2 text-2xl font-semibold text-white">MEP ecoguiado de precisión</p>
-              <p className="mt-2 max-w-md text-sm leading-6 text-white/72">
+            <div className="order-3 border-t border-white/10 pt-8 lg:order-2 lg:border-0 lg:pt-0">
+              <span className="text-sm font-semibold uppercase text-pulse">Aplicación en consultorio</span>
+              <h4 className="mt-3 text-3xl font-semibold text-white">MEP ecoguiado de precisión</h4>
+              <p className="mt-4 text-sm leading-7 text-white/70">
                 Procedimiento guiado por ecografía para trabajar con precisión sobre tejidos específicos.
               </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {['Ecografía', 'Precisión', 'Tratamiento focalizado'].map((item) => (
-                  <span key={item} className="rounded-md border border-white/12 bg-white/10 px-3 py-1 text-xs font-semibold text-white/78">
-                    {item}
-                  </span>
-                ))}
+            </div>
+            <div className="order-2 lg:order-3">
+              <div className="group mx-auto w-full max-w-[21rem] overflow-hidden rounded-md border border-white/10">
+                <img src="/assets/ondas-choque.jpg" alt="Aplicación de ondas de choque en la rodilla de un paciente" width="946" height="1200" className="h-auto w-full transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.045]" loading="lazy" decoding="async" />
               </div>
             </div>
-            <div className="px-5 pb-5 sm:px-6 sm:pb-6">
-              <div className="relative aspect-video overflow-hidden rounded-md border border-white/12 bg-black shadow-[0_18px_45px_rgba(0,0,0,0.34)] ring-1 ring-white/5">
+            <div className="order-4">
+              <div className="relative mx-auto aspect-[9/16] w-full max-w-[15rem] overflow-hidden rounded-md border border-white/12 bg-black shadow-[0_18px_45px_rgba(0,0,0,0.34)] ring-1 ring-white/5">
                 <video
                   ref={mepInlineVideoRef}
-                  className="absolute inset-0 h-full w-full scale-[1.03] object-cover transition duration-500 hover:scale-[1.045]"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out motion-safe:hover:scale-[1.025]"
                   src="/assets/mep-ecoguiado.mp4"
                   controls
                   controlsList={isTabletUp ? 'nofullscreen nodownload' : 'nodownload'}
@@ -302,17 +209,24 @@ export function ServicesSection({ hidden, targetId, ivolutionGallery, onBack, on
                   onLoadedMetadata={(event) => { event.currentTarget.volume = 0.5; }}
                 />
               </div>
-              <button
-                type="button"
-                className="mt-4 hidden items-center justify-center gap-2 rounded-md border border-white/12 bg-white/8 px-4 py-2 text-sm font-semibold text-white transition hover:border-pulse hover:text-pulse md:inline-flex"
-                onClick={openMepVideo}
-              >
-                Ver ampliado <Maximize2 size={16} />
-              </button>
+              <div className="mt-4 hidden justify-center md:flex">
+                <button
+                  type="button"
+                  className="inline-flex items-center justify-center gap-2 rounded-md border border-white/12 bg-white/8 px-4 py-2 text-sm font-semibold text-white transition hover:border-pulse hover:text-pulse"
+                  onClick={openMepVideo}
+                >
+                  Ver ampliado <Maximize2 size={16} />
+                </button>
+              </div>
+              <div className="mx-auto mt-4 flex max-w-[21rem] flex-wrap justify-center gap-2">
+                {['Ecografía', 'Precisión', 'Tratamiento focalizado'].map((item) => (
+                  <span key={item} className="rounded-md border border-white/12 bg-white/10 px-3 py-1 text-xs font-semibold text-white/78">
+                    {item}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-
         </section>
 
         {mepVideoOpen && (
@@ -348,56 +262,51 @@ export function ServicesSection({ hidden, targetId, ivolutionGallery, onBack, on
           </div>
         )}
 
-        <div className="mt-12">
+        <section aria-labelledby="complementary-areas-title" className="mt-14 overflow-hidden rounded-md border border-white/15 bg-[#e9e7e3] p-5 shadow-soft sm:p-8 lg:p-10">
           <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
-              <p className="text-sm font-semibold uppercase text-pulse">Áreas complementarias</p>
-              <h3 className="mt-3 max-w-3xl text-3xl font-semibold text-white">Salud integral alrededor del movimiento.</h3>
+              <p className="text-sm font-semibold uppercase tracking-wide text-pulse">Áreas complementarias</p>
+              <h3 id="complementary-areas-title" className="mt-3 max-w-3xl text-3xl font-semibold text-graphite">Salud integral alrededor del movimiento.</h3>
             </div>
-            <p className="max-w-md text-sm leading-7 text-white/68">
+            <p className="max-w-md text-sm leading-7 text-neutral-600">
               Profesionales y recursos que acompañan el proceso clínico, deportivo y de bienestar.
             </p>
           </div>
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-3">
             {services.filter((service) => service.icon !== 'activity').map(({ icon, title, text }) => {
               const Icon = serviceIcons[icon];
+              const professional = teamMembers.find((member) => member.id === complementaryProfessionalIds[title]);
+              const image = complementaryImages[title];
 
               return (
-                <article key={title} className="rounded-md border border-white/10 bg-white p-6 text-ink shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
-                  <Icon className="text-pulse" size={30} />
-                  <h4 className="mt-5 text-xl font-semibold text-graphite">{title}</h4>
-                  <p className="mt-3 text-sm leading-7 text-neutral-600">{text}</p>
-                  {title === 'Osteopatía' && (
-                    <a href="#osteopatia" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-pulse underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-pulse">
-                      Conocer el abordaje <ChevronRight size={16} />
-                    </a>
-                  )}
+                <article key={title} className="flex h-full flex-col rounded-md border border-black/5 bg-white p-5 text-ink shadow-sm sm:p-6">
+                  <div className="flex items-center gap-3">
+                    <Icon className="shrink-0 text-pulse" size={30} />
+                    <h4 className="text-xl font-semibold text-graphite">{title}</h4>
+                  </div>
+                  <p className="mt-4 text-sm leading-7 text-neutral-600">{text}</p>
+                  <div className="mt-6 border-l-2 border-pulse pl-4">
+                    <p className="font-semibold text-graphite">{professional.name}</p>
+                    <p className="mt-1 text-sm text-neutral-600">{title} · Equipo de salud integral</p>
+                  </div>
+                  <div className="group mt-6 aspect-[2/3] w-full overflow-hidden rounded-md">
+                    {image ? (
+                      <img
+                        src={image.src}
+                        alt={image.alt}
+                        className="h-full w-full object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.045]"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center rounded-md border-2 border-dashed border-[#c7c3bc] bg-[#f5f3ef] px-4 text-center text-sm text-neutral-500">
+                        Espacio para imagen de {title.toLowerCase()}
+                      </div>
+                    )}
+                  </div>
                 </article>
               );
             })}
-          </div>
-        </div>
-
-        <section id="osteopatia" aria-labelledby="osteopatia-title" className="mt-10 scroll-mt-28 overflow-hidden rounded-md border border-white/10 bg-graphiteDark p-6 sm:p-8 lg:p-10">
-          <div className="grid items-center gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-pulse">Atención personalizada</p>
-              <h3 id="osteopatia-title" className="mt-3 text-3xl font-semibold text-white sm:text-4xl">Osteopatía</h3>
-              <p className="mt-5 text-base leading-8 text-white/72">
-                Una mirada integral sobre la movilidad, la postura y la función corporal, con un abordaje adaptado a cada persona.
-              </p>
-              <p className="mt-4 text-sm leading-7 text-white/68">
-                La evaluación y el trabajo manual se integran al acompañamiento del equipo para atender las necesidades y los objetivos de cada consulta.
-              </p>
-              <div className="mt-7 border-l-2 border-pulse pl-4">
-                <p className="font-semibold text-white">Pablo Villafañe</p>
-                <p className="mt-1 text-sm text-white/60">Osteopatía · Equipo de salud integral</p>
-              </div>
-            </div>
-            <div className="grid grid-cols-[1.15fr_0.85fr] items-center gap-3 sm:gap-5">
-              <img src="/assets/osteopata/osteopata2-web-optimized.webp" alt="Pablo Villafañe durante una sesión de trabajo manual en la zona cervical" className="h-auto w-full rounded-md" loading="lazy" decoding="async" />
-              <img src="/assets/osteopata/osteopata5-web-optimized.webp" alt="Trabajo de movilidad de la pierna durante una consulta de osteopatía" className="mt-10 h-auto w-full rounded-md sm:mt-16" loading="lazy" decoding="async" />
-            </div>
           </div>
         </section>
 
