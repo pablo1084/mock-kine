@@ -196,6 +196,13 @@ export function ServicesSection({ hidden, targetId, onBack, onRequestAppointment
               </div>
             </div>
             <div className="order-4">
+              <div className="mx-auto mb-4 flex max-w-[21rem] flex-wrap justify-center gap-2">
+                {['Ecografía', 'Precisión', 'Tratamiento focalizado'].map((item) => (
+                  <span key={item} className="rounded-md border border-white/12 bg-white/10 px-3 py-1 text-xs font-semibold text-white/78">
+                    {item}
+                  </span>
+                ))}
+              </div>
               <div className="relative mx-auto aspect-[9/16] w-full max-w-[15rem] overflow-hidden rounded-md border border-white/12 bg-black shadow-[0_18px_45px_rgba(0,0,0,0.34)] ring-1 ring-white/5">
                 <video
                   ref={mepInlineVideoRef}
@@ -217,13 +224,6 @@ export function ServicesSection({ hidden, targetId, onBack, onRequestAppointment
                 >
                   Ver ampliado <Maximize2 size={16} />
                 </button>
-              </div>
-              <div className="mx-auto mt-4 flex max-w-[21rem] flex-wrap justify-center gap-2">
-                {['Ecografía', 'Precisión', 'Tratamiento focalizado'].map((item) => (
-                  <span key={item} className="rounded-md border border-white/12 bg-white/10 px-3 py-1 text-xs font-semibold text-white/78">
-                    {item}
-                  </span>
-                ))}
               </div>
             </div>
           </div>
