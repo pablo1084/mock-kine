@@ -45,7 +45,7 @@ export function createBookingApi({ config, backend, verifyTurnstile, hashPhone, 
         await consume('read');
         const data = await backend.services();
         if (!Array.isArray(data)) throw new BookingError('BACKEND_UNAVAILABLE', 503);
-        return reply(200, { services: data.map(row => pick(row, ['id', 'slug', 'name', 'contact_mode', 'contact_phone', 'parent_id', 'display_order'])) });
+        return reply(200, { services: data.map(row => pick(row, ['id', 'slug', 'name', 'contact_mode', 'contact_phone', 'parent_id', 'display_order', 'price_ars'])) });
       }
       if (url.search) throw new BookingError('INVALID_INPUT');
       emit('booking_request_received');
@@ -55,7 +55,6 @@ export function createBookingApi({ config, backend, verifyTurnstile, hashPhone, 
       emit('turnstile_verified');
       await consume('phone', await hashPhone(rpc.p_phone_normalized));
       const result = await backend.create(rpc);
-      // PostgREST puede devolver un objeto compuesto o una lista de una fila.
       const row = Array.isArray(result) && result.length === 1 ? result[0] : result;
       if (!row?.id || row.status !== 'received') throw new BookingError('BACKEND_UNAVAILABLE', 503);
       emit('contact_request_recorded', { contact_id: row.id });
