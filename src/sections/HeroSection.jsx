@@ -3,9 +3,27 @@ import { ArrowRight, CheckCircle2 } from 'lucide-react';
 
 const highlights = ['Evaluación personalizada', 'Tecnología aplicada', 'Equipo interdisciplinario'];
 
+// Cambiar a 'original' para comparar el hero anterior sin perder su configuración.
+const heroVariant = 'vertical';
+const heroImages = {
+  original: {
+    src: '/assets/hero1.png',
+    alt: 'Un profesional guía un ejercicio de movilidad en la pista del centro José Oviedo',
+    width: 1468,
+    height: 1071,
+  },
+  vertical: {
+    src: '/assets/hero2.jpg',
+    alt: 'José Oviedo atiende a un paciente en el centro de kinesiología',
+    width: 738,
+    height: 1600,
+  },
+};
+
 export function HeroSection({ hidden }) {
+  const heroImage = heroImages[heroVariant];
   return (
-    <section id="inicio" className={`${hidden ? 'hidden' : ''} relative isolate overflow-hidden bg-[#15181b] pt-24 text-white`}>
+    <section id="inicio" className={`${hidden ? 'hidden' : ''} hero--${heroVariant} relative isolate overflow-hidden bg-[#15181b] pt-24 text-white`}>
       <div className="pointer-events-none absolute -left-20 top-1/3 h-72 w-72 rounded-full bg-pulse/10 blur-[110px]" />
       <div className="hero-layout relative mx-auto grid max-w-7xl items-end gap-8 px-4 pb-6 pt-8 sm:gap-10 sm:px-6 sm:pb-8 lg:static lg:grid-cols-2 lg:items-center lg:gap-0 lg:px-8 lg:py-10">
         <div className="hero-content relative z-10 min-w-0 sm:pt-2 lg:py-6 lg:pr-6">
@@ -37,11 +55,11 @@ export function HeroSection({ hidden }) {
         </div>
         <div className="hero-photo relative -mx-4 aspect-[4/5] overflow-hidden sm:-mx-6 lg:mx-0">
           <img
-            src="/assets/hero1.png"
-            alt="Un profesional guía un ejercicio de movilidad en la pista del centro José Oviedo"
+            src={heroImage.src}
+            alt={heroImage.alt}
             className="hero-image h-full w-full object-cover object-bottom"
-            width="1468"
-            height="1071"
+            width={heroImage.width}
+            height={heroImage.height}
             fetchPriority="high"
           />
           <div className="hero-image-texture" />

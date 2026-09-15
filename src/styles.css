@@ -164,6 +164,78 @@ img {
   mix-blend-mode: soft-light;
 }
 
+/* Variante de prueba: retrato clínico. Las reglas del hero original quedan intactas. */
+.hero--vertical {
+  background: radial-gradient(ellipse at 72% 45%, #303033 0%, #15181b 65%);
+}
+
+.hero--vertical .hero-image {
+  filter: contrast(1.11) saturate(1.08) brightness(0.88);
+}
+
+.hero--vertical .hero-photo-fade {
+  background:
+    linear-gradient(90deg, #15181b 0%, rgba(21, 24, 27, 0.98) 24%, rgba(21, 24, 27, 0.78) 43%, rgba(21, 24, 27, 0.12) 68%, rgba(21, 24, 27, 0.18) 100%),
+    linear-gradient(0deg, #15181b 0%, transparent 15%, transparent 84%, #15181b 100%);
+}
+
+.hero--vertical .hero-image-texture {
+  opacity: 0.38;
+}
+
+@media (min-width: 1024px) {
+  .hero--vertical .hero-photo {
+    inset: 0 0 0 auto;
+    width: 54vw;
+  }
+
+  .hero--vertical .hero-photo .hero-image {
+    position: absolute;
+    right: 0;
+    width: min(54vw, 780px);
+    height: 100%;
+    object-position: center 40%;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%);
+    mask-image: linear-gradient(90deg, transparent, #000 14%);
+  }
+
+  .hero--vertical .hero-photo-fade {
+    background: none;
+  }
+
+  .hero--vertical .hero-image-texture {
+    display: none;
+  }
+
+  .hero--vertical .hero-content {
+    max-width: 690px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .hero--vertical .hero-photo .hero-image {
+    object-position: center 46%;
+  }
+
+  .hero--vertical .hero-photo-fade {
+    background:
+      linear-gradient(0deg, #15181b 0%, rgba(21, 24, 27, 0.88) 24%, rgba(21, 24, 27, 0.43) 52%, rgba(21, 24, 27, 0.42) 100%),
+      linear-gradient(90deg, rgba(21, 24, 27, 0.55), transparent 68%);
+  }
+}
+
+@media (max-width: 639px) {
+  .hero--vertical .hero-photo .hero-image {
+    object-position: center 48%;
+  }
+
+  .hero--vertical .hero-photo-fade {
+    background:
+      linear-gradient(0deg, #15181b 0%, rgba(21, 24, 27, 0.94) 24%, rgba(21, 24, 27, 0.52) 55%, rgba(21, 24, 27, 0.5) 100%),
+      linear-gradient(90deg, rgba(21, 24, 27, 0.58), transparent 75%);
+  }
+}
+
 @keyframes alliances-scroll {
   from {
     transform: translateX(0);
