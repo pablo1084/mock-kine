@@ -37,7 +37,6 @@ export function createBookingBackend(config, fetchImpl = fetch) {
         signal: AbortSignal.timeout(10000), redirect: 'error',
       });
     } catch { throw new BookingError('BACKEND_UNAVAILABLE', 503); }
-    // PostgREST responde 204 a una RPC returns void. No es un fallo de persistencia.
     if (allowEmpty && response.ok && response.status === 204) return null;
     let data;
     try { data = await response.json(); } catch { throw new BookingError('BACKEND_UNAVAILABLE', 503); }
@@ -51,7 +50,7 @@ export function createBookingBackend(config, fetchImpl = fetch) {
   return {
     claim: (id = null) => call('rpc/claim_contact_notifications', { p_contact_id: id }),
     finish: (args) => call('rpc/finish_contact_notification', args, true),
-    services: () => call('services?select=id,slug,name,contact_mode,contact_phone,parent_id,display_order&active=eq.true&order=display_order.asc,name.asc&limit=100'),
+    services: () => call('services?select=id,slug,name,contact_mode,contact_phone,parent_id,display_order,price_ars&active=eq.true&order=display_order.asc,name.asc&limit=100'),
     create: (args) => call('rpc/create_contact_request', args),
     consume: async (scope, subject = 'global') => {
       const rows = await call('rpc/consume_booking_rate_limit', { p_scope: scope, p_subject: subject });
