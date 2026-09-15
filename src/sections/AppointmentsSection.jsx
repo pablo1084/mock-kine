@@ -3,6 +3,8 @@ import { CheckCircle2, MessageCircle } from 'lucide-react';
 import { ContactChallenge } from '../components/ContactChallenge';
 import { getContactServices, submitContactRequest } from '../utils/contactApi';
 
+const formatPrice = value => new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(value);
+
 export function AppointmentsSection({ hidden }) {
   const [services, setServices] = React.useState([]);
   const [servicesError, setServicesError] = React.useState('');
@@ -13,9 +15,12 @@ export function AppointmentsSection({ hidden }) {
   const [serviceId, setServiceId] = React.useState('');
   const [planId, setPlanId] = React.useState('');
   const selectedService = services.find(service => service.id === serviceId);
+  const selectedPlan = services.find(service => service.id === planId);
   const directContact = selectedService?.contact_mode === 'direct';
   const groupedService = selectedService?.contact_mode === 'group';
   const plans = services.filter(service => service.parent_id === serviceId);
+  const pricedSelection = groupedService ? selectedPlan : selectedService;
+  const displayedPrice = Number.isInteger(pricedSelection?.price_ars) ? pricedSelection.price_ars : null;
   const challenge = React.useRef(null);
   const attempt = React.useRef(null);
   const busy = React.useRef(false);
@@ -103,6 +108,12 @@ export function AppointmentsSection({ hidden }) {
                     {plans.map(plan => <option key={plan.id} value={plan.id}>{plan.name}</option>)}
                   </select>
                 </label>}
+                {!directContact && displayedPrice !== null && (
+                  <div role="status" className="sm:col-span-2 flex items-center justify-between gap-4 rounded-md border border-pulse/25 bg-orange-50 px-4 py-2.5 text-sm">
+                    <span className="text-neutral-600">Valor {groupedService ? 'del plan mensual' : 'de la sesión'}</span>
+                    <strong className="whitespace-nowrap text-base text-graphite">{formatPrice(displayedPrice)}</strong>
+                  </div>
+                )}
               </div>
               {servicesError && <p role="alert" className="mt-3 text-sm text-red-700">{servicesError} <button type="button" onClick={() => setReload(n => n + 1)} className="font-semibold underline">Reintentar</button></p>}
               {!loading && !servicesError && !services.length && <p role="status" className="mt-3 text-sm text-neutral-600">No hay servicios disponibles por el momento.</p>}
