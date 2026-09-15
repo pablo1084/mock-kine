@@ -189,6 +189,13 @@ export function ServicesSection({ hidden, targetId, onBack, onRequestAppointment
               <p className="mt-4 text-sm leading-7 text-white/70">
                 Procedimiento guiado por ecografía para trabajar con precisión sobre tejidos específicos.
               </p>
+              <div className="mt-3 flex flex-wrap justify-start gap-2">
+                {['Ecografía', 'Precisión', 'Tratamiento focalizado'].map((item) => (
+                  <span key={item} className="rounded-md border border-white/12 bg-white/10 px-3 py-1 text-xs font-semibold text-white/78">
+                    {item}
+                  </span>
+                ))}
+              </div>
             </div>
             <div className="order-2 lg:order-3">
               <div className="group mx-auto w-full max-w-[21rem] overflow-hidden rounded-md border border-white/10">
@@ -196,13 +203,6 @@ export function ServicesSection({ hidden, targetId, onBack, onRequestAppointment
               </div>
             </div>
             <div className="order-4">
-              <div className="mx-auto mb-4 flex max-w-[21rem] flex-wrap justify-center gap-2">
-                {['Ecografía', 'Precisión', 'Tratamiento focalizado'].map((item) => (
-                  <span key={item} className="rounded-md border border-white/12 bg-white/10 px-3 py-1 text-xs font-semibold text-white/78">
-                    {item}
-                  </span>
-                ))}
-              </div>
               <div className="relative mx-auto aspect-[9/16] w-full max-w-[15rem] overflow-hidden rounded-md border border-white/12 bg-black shadow-[0_18px_45px_rgba(0,0,0,0.34)] ring-1 ring-white/5">
                 <video
                   ref={mepInlineVideoRef}
