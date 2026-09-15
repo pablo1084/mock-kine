@@ -129,11 +129,6 @@ export function ServicesSection({ hidden, targetId, onBack, onRequestAppointment
                 <p className="text-sm font-semibold uppercase text-pulse">Recovery</p>
                 <h4 className="mt-3 text-2xl font-semibold text-white sm:text-3xl">Recuperación y descarga</h4>
                 <p className="mt-4 text-sm leading-7 text-white/70">Estrategias de recuperación para complementar el entrenamiento y la readaptación. La compresión neumática secuencial se utiliza como herramienta de recuperación, favoreciendo el retorno venoso y proporcionando una sensación de descarga en miembros inferiores.</p>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {['Compresión neumática', 'Recuperación', 'Descarga'].map((item) => (
-                    <span key={item} className="rounded-md border border-white/12 bg-white/10 px-3 py-1 text-xs font-semibold text-white/78">{item}</span>
-                  ))}
-                </div>
               </div>
               <div className="group aspect-[4/3] w-full overflow-hidden border-t border-white/10 lg:aspect-[5/4] lg:border-l lg:border-t-0">
                 <img src="/assets/recovery.jpg" alt="Sesión de recuperación con sistema de compresión neumática en miembros inferiores" className="h-full w-full object-cover object-center transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.035]" loading="lazy" decoding="async" />
