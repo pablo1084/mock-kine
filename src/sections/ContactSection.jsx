@@ -62,11 +62,11 @@ export function ContactSection({ contactCards, hidden }) {
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-sm">
-        <img src="/assets/centro/fachada-optimized.webp" alt="Carteles luminosos de la fachada del centro José Oviedo Kinesiología" className="h-96 w-full object-cover object-[center_20%]" loading="lazy" decoding="async" />
+        <img src="/assets/centro/fachada-web.webp" alt="Fachada del centro José Oviedo Kinesiología" className="h-96 w-full object-cover object-[center_25%]" loading="lazy" decoding="async" width="1200" height="1600" />
         <div className="p-7">
-          <h3 className="text-2xl font-bold text-graphite">Conocé nuestro centro</h3>
+          <h3 className="text-2xl font-bold text-graphite">Visitanos</h3>
           <p className="mt-4 leading-7 text-neutral-600">
-            Contamos con instalaciones modernas y un ambiente preparado para brindar una atención personalizada, enfocada en la recuperación, la prevención de lesiones y el bienestar de cada paciente.
+            Te esperamos en Núñez del Prado 992, Catamarca. Acercate para conocer nuestros espacios amplios y modernos para recibir orientación sobre tu consulta.
           </p>
           <a
             href="https://www.google.com/maps/place/Jose+Oviedo/@-28.4655158,-65.7743581,324m/data=!3m1!1e3!4m6!3m5!1s0x942428bf3c67d161:0x9aac28ab8d1dd802!8m2!3d-28.4652554!4d-65.7729641!16s%2Fg%2F11bbrhdlmb?entry=ttu&g_ep=EgoyMDI2MDcyNi4wIKXMDSoASAFQAw%3D%3D"

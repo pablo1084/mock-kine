@@ -50,63 +50,46 @@ export const technologyServices = [
 
 export const gallery = [
   {
-    id: 'fachada',
-    title: 'Fachada e ingreso',
-    tag: 'Nuestro centro',
-    initials: 'FI',
-    src: '/assets/centro/fachada-optimized.webp',
-    imagePosition: 'object-[center_20%]',
-    summary: 'El acceso principal a un espacio preparado para acompañarte desde el primer momento.',
-    text: 'La fachada y el ingreso identifican nuestro centro y dan la bienvenida a un espacio pensado para brindar atención profesional, comodidad y una experiencia cercana desde la llegada.',
-  },
-  {
     id: 'recepcion',
     title: 'Recepción y bienvenida',
     tag: 'Atención',
-    initials: 'RB',
     src: '/assets/centro/recepcion-optimized.webp',
-imageFit: 'contain',
     summary: 'Un primer contacto claro y ordenado para orientar turnos, consultas y llegada al centro.',
-    text: 'La recepción acompaña la experiencia desde el ingreso, con información precisa, coordinación de turnos y una atención cercana para que cada paciente se sienta ubicado desde el primer momento.',
   },
   {
     id: 'boxes',
     title: 'Boxes de atención',
     tag: 'Tratamiento',
-    initials: 'BA',
-    src: '/assets/centro/boxes1-optimized.webp',
-    detailSrc: '/assets/centro/boxes2-optimized.webp',
+    src: '/assets/centro/box1-optimized.webp',
     summary: 'Espacios preparados para evaluación, seguimiento y tratamiento personalizado.',
-    text: 'Los boxes permiten trabajar de forma privada y cómoda, favoreciendo una evaluación detallada y una intervención adaptada a la condición, evolución y objetivos de cada persona.',
   },
   {
     id: 'gimnasio',
     title: 'Gimnasio de rehabilitación',
     tag: 'Movimiento',
-    initials: 'GR',
-    src: '/assets/centro/gimnasio1-optimized.webp',
-    detailSrc: '/assets/centro/gimnasio2.webp',
+    src: '/assets/centro/gimnasio.jpeg',
     summary: 'Área para fuerza, movilidad, control de cargas y readaptación funcional.',
-    text: 'El gimnasio integra ejercicio terapéutico, entrenamiento supervisado y progresiones medibles para acompañar la recuperación y la vuelta segura a la actividad.',
   },
   {
     id: 'laboratorio',
     title: 'Laboratorio de evaluación',
     tag: 'Evaluación',
-    initials: 'LE',
     src: '/assets/centro/laboratorio1-optimized.webp',
     summary: 'Tecnología aplicada para medir, comparar y seguir la evolución del proceso.',
-    text: 'El laboratorio permite obtener datos objetivos sobre fuerza, potencia, asimetrías y evolución, aportando información valiosa para tomar decisiones clínicas y deportivas.',
   },
   {
     id: 'consultorios',
     title: 'Consultorios',
     tag: 'Atención profesional',
-    initials: 'CO',
-    src: '/assets/centro/consultorio-optimized.webp',
-    detailSrc: '/assets/centro/consultorio2-optimized.webp',
+    src: '/assets/centro/consul-dire.jpeg',
     summary: 'Espacios privados y confortables para consultas, evaluaciones y seguimiento profesional.',
-    text: 'Los consultorios ofrecen un entorno cómodo y privado para realizar entrevistas, evaluaciones y controles, favoreciendo una atención cercana y personalizada en cada especialidad.',
+  },
+  {
+    id: 'coworking',
+    title: 'Coworking',
+    tag: 'Trabajo colaborativo',
+    src: '/assets/centro/coworking-optimized.webp',
+    summary: 'Un espacio compartido para planificación, intercambio profesional y trabajo interdisciplinario.',
   },
 ];
 
@@ -176,10 +159,11 @@ export const teamMembers = [
 ];
 
 export const allianceItems = [
-  { id: 'ucse', title: 'UCSE', src: '/assets/alianzas/ucse-optimized.webp' },
-  { id: 'esitef', title: 'ESITEF', src: '/assets/alianzas/esitef-optimized.webp' },
-  { id: 'casla', title: 'CASLA', src: '/assets/alianzas/casla-optimized.webp' },
-  { id: 'cam', title: 'CAM', src: '/assets/alianzas/cam-optimized.webp' },
+  { id: 'ucse', title: 'UCSE', logoSrc: '/assets/alianzas/ucse-logo-optimized.webp', detailSrc: '/assets/alianzas/ucse-optimized.webp' },
+  { id: 'esitef', title: 'ESITEF', logoSrc: '/assets/alianzas/esitef-logo-optimized.webp', detailSrc: '/assets/alianzas/esitef-optimized.webp' },
+  { id: 'casla', title: 'CASLA', logoSrc: '/assets/alianzas/casla-logo-optimized.webp', detailSrc: '/assets/alianzas/casla-optimized.webp' },
+  { id: 'cam', title: 'CAM', logoSrc: '/assets/alianzas/cam-logo-optimized.webp', detailSrc: '/assets/alianzas/cam-optimized.webp' },
+  { id: 'akd', title: 'AKD', logoSrc: '/assets/alianzas/akd-logo-optimized.webp', detailSrc: '/assets/alianzas/akd-logo-optimized.webp' },
 ];
 
 export const contactCards = [

@@ -33,7 +33,7 @@ El POST lleva `Idempotency-Key: <UUID>` y este JSON:
 }
 ```
 
-Nombre 3–160 caracteres; teléfono validado y normalizado a E.164, con AR por defecto; descripción obligatoria de hasta 500 caracteres. Saltos de línea de la descripción se convierten en espacios para las plantillas. No se aceptan fechas, horarios, emails, estados ni destinatarios arbitrarios del cliente. Se mantienen JSON máximo 8 KiB, validación, CORS exacto, cuotas persistentes globales y por teléfono, HMAC y logs sin datos personales.
+Nombre 3–160 caracteres; teléfono validado y normalizado a E.164, con AR por defecto; descripción obligatoria de hasta 120 caracteres. Saltos de línea de la descripción se convierten en espacios para las plantillas. No se aceptan fechas, horarios, emails, estados ni destinatarios arbitrarios del cliente. Se mantienen JSON máximo 8 KiB, validación, CORS exacto, cuotas persistentes globales y por teléfono, HMAC y logs sin datos personales.
 
 El widget usa `action: booking` y `cData` igual al UUID. Cada intento obtiene otro token; para reintentar los mismos datos el formulario conserva la clave en memoria. Cambiar los datos genera otra clave. La clave no persiste al recargar/cerrar la página. No se guardan datos del formulario en localStorage.
 

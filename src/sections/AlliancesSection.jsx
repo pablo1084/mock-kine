@@ -28,12 +28,12 @@ export function AlliancesSection({ hidden, items }) {
   return (
     <section id="alianzas-estrategicas" className={`${hidden ? 'hidden' : ''} border-y border-white/10 bg-graphiteSoft py-20`}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <p className="text-sm font-semibold uppercase text-pulse">Alianzas estratégicas</p>
+        <p className="text-sm font-semibold uppercase text-pulse">Alianzas</p>
         <h2 className="mt-3 max-w-3xl text-4xl font-semibold tracking-normal text-white">
-          Crecemos junto a instituciones que comparten nuestro compromiso con la salud y el deporte.
+          Alianzas que amplían nuestra experiencia
         </h2>
         <p className="mt-5 max-w-2xl text-base leading-8 text-white/72">
-          Construimos vínculos que nos permiten conectar experiencia, formación y trabajo interdisciplinario para ofrecer un acompañamiento cada vez más completo.
+          Trabajamos con instituciones y profesionales vinculados al deporte, la formación y el alto rendimiento.
         </p>
 
         <div className="alliances-marquee scrollbar-none mt-10 overflow-x-auto overflow-y-hidden touch-pan-x">
@@ -50,7 +50,7 @@ export function AlliancesSection({ hidden, items }) {
                     tabIndex={group === 1 ? -1 : undefined}
                   >
                     <div className="flex h-52 items-center justify-center p-1 sm:h-60 lg:h-72 lg:p-2">
-                      <img src={item.src} alt={item.title} className="max-h-full max-w-full rounded-md border border-white/30 p-1 object-contain transition duration-500 group-hover:scale-105 group-hover:border-pulse" loading="lazy" decoding="async" />
+                      <img src={item.logoSrc} alt={`Logo de ${item.title}`} className={`max-h-full max-w-full rounded-md border border-white/30 p-1 object-contain transition duration-500 group-hover:scale-105 group-hover:border-pulse ${item.id === 'akd' ? 'bg-white' : ''}`} loading="lazy" decoding="async" />
                     </div>
                     <div className="px-3 pb-3 pt-2 text-center">
                       <span className="text-lg font-semibold text-white">{item.title}</span>
@@ -74,7 +74,7 @@ export function AlliancesSection({ hidden, items }) {
           </button>
 
           <figure className="flex max-h-[85vh] w-full max-w-5xl flex-col items-center bg-transparent p-5 sm:p-8" onClick={(event) => event.stopPropagation()}>
-            <img src={items[selectedIndex].src} alt={items[selectedIndex].title} className="max-h-[68vh] max-w-full rounded-md border border-white/40 p-1 object-contain" decoding="async" />
+            <img src={items[selectedIndex].detailSrc} alt={`Alianza con ${items[selectedIndex].title}`} className={`max-h-[68vh] max-w-full rounded-md border border-white/40 p-1 object-contain ${items[selectedIndex].id === 'akd' ? 'bg-white' : ''}`} decoding="async" />
             <figcaption className="mt-5 text-xl font-semibold text-white">{items[selectedIndex].title}</figcaption>
           </figure>
 

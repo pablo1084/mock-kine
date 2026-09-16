@@ -18,6 +18,10 @@ const complementaryImages = {
     src: '/assets/osteopata/osteopata2-web-optimized.webp',
     alt: 'Pablo Villafañe durante una sesión de osteopatía',
   },
+  'Psicología': {
+    src: '/assets/equipo/psico1-optimized.webp',
+    alt: 'Ezequiel Vera trabajando en el consultorio de psicología',
+  },
 };
 
 export function ServicesSection({ hidden, targetId, onBack, onRequestAppointment, services, stages, technologyServices, teamMembers }) {
@@ -85,7 +89,7 @@ export function ServicesSection({ hidden, targetId, onBack, onRequestAppointment
               <p className="mt-4 text-sm leading-7 text-white/68">Integramos recuperación funcional, ejercicio terapéutico y seguimiento de la evolución para acompañar el regreso a las actividades cotidianas y deportivas.</p>
             </div>
             <div className="group mx-auto aspect-[5/4] w-full max-w-[18rem] overflow-hidden rounded-md border border-white/10 bg-graphiteSoft shadow-soft sm:max-w-[24rem] lg:ml-auto lg:mr-0">
-              <img src="/assets/IMG-20260914-WA0057.jpg" alt="Una entrenadora supervisa a dos pacientes mientras realizan ejercicios en el centro" loading="lazy" decoding="async" className="h-full w-full translate-x-[11%] scale-[1.38] object-cover object-[42%_62%] transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.43]" width="4000" height="3000" />
+              <img src="/assets/IMG-20260914-WA0057-optimized.webp" alt="Una entrenadora supervisa a dos pacientes mientras realizan ejercicios en el centro" loading="lazy" decoding="async" className="h-full w-full translate-x-[11%] scale-[1.38] object-cover object-[42%_62%] transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.43]" width="1600" height="1200" />
             </div>
           </div>
         </section>
@@ -131,7 +135,7 @@ export function ServicesSection({ hidden, targetId, onBack, onRequestAppointment
                 <p className="mt-4 text-sm leading-7 text-white/70">Estrategias de recuperación para complementar el entrenamiento y la readaptación. La compresión neumática secuencial se utiliza como herramienta de recuperación, favoreciendo el retorno venoso y proporcionando una sensación de descarga en miembros inferiores.</p>
               </div>
               <div className="group aspect-[4/3] w-full overflow-hidden border-t border-white/10 lg:aspect-[5/4] lg:border-l lg:border-t-0">
-                <img src="/assets/recovery.jpg" alt="Sesión de recuperación con sistema de compresión neumática en miembros inferiores" className="h-full w-full object-cover object-center transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.035]" loading="lazy" decoding="async" />
+                <img src="/assets/recovery-web.webp" alt="Sesión de recuperación con sistema de compresión neumática en miembros inferiores" className="h-full w-full object-cover object-center transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.035]" loading="lazy" decoding="async" />
               </div>
             </div>
           </div>
@@ -160,7 +164,7 @@ export function ServicesSection({ hidden, targetId, onBack, onRequestAppointment
             </div>
             <div className="order-2 lg:order-3">
               <div className="group mx-auto w-full max-w-[21rem] overflow-hidden rounded-md border border-white/10">
-                <img src="/assets/ondas-choque.jpg" alt="Aplicación de ondas de choque en la rodilla de un paciente" width="946" height="1200" className="h-auto w-full transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.045]" loading="lazy" decoding="async" />
+                <img src="/assets/ondas-choque-optimized.webp" alt="Aplicación de ondas de choque en la rodilla de un paciente" width="946" height="1200" className="h-auto w-full transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.045]" loading="lazy" decoding="async" />
               </div>
             </div>
             <div className="order-4">

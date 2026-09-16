@@ -86,14 +86,14 @@ export function AppointmentsSection({ hidden }) {
         ) : (
           <form className="rounded-md border border-white/10 bg-white p-4 text-ink shadow-soft sm:p-6" onSubmit={submit} autoComplete="on" aria-busy={sending}>
             <fieldset disabled={sending}>
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid items-start gap-4 sm:grid-cols-2">
                 {!directContact && <>
                 <label className="grid gap-2 text-sm font-semibold">Nombre y apellido
                   <input name="full_name" autoComplete="name" required minLength={3} maxLength={160} className="rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse" placeholder="Nombre y apellido" />
                 </label>
                 <label className="grid gap-2 text-sm font-semibold">Teléfono de WhatsApp
                   <input type="tel" name="phone" autoComplete="tel-national" inputMode="tel" aria-describedby="phone-help" required minLength={10} maxLength={40} className="rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse" placeholder="3834320138" />
-                  <span id="phone-help" className="text-xs font-normal text-neutral-500">Código de área y número, sin 0 ni 15. Ejemplo: 3834320138. No hace falta agregar +54 ni +549.</span>
+                  <span id="phone-help" className="text-xs font-normal text-neutral-500">Código de área y número, sin 0 ni 15. Ejemplo: 3834123456.</span>
                 </label>
                 </>}
                 <label className="grid gap-2 text-sm font-semibold sm:col-span-2">Servicio
@@ -122,14 +122,16 @@ export function AppointmentsSection({ hidden }) {
                 {selectedService.contact_phone ? <p>Teléfono: <a className="font-semibold text-pulse underline" href={`tel:${selectedService.contact_phone}`}>{selectedService.contact_phone}</a></p>
                   : <p className="mt-2">Próximamente publicaremos aquí el número de contacto para este servicio.</p>}
               </div> : <>
-              <label className="mt-5 grid gap-2 text-sm font-semibold">Breve descripción
-                <textarea name="description" required maxLength={500} className="min-h-28 rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse" placeholder="Contanos brevemente qué necesitás." />
+              <label className="mt-5 grid gap-2 text-sm font-semibold">Descripción
+                <textarea name="description" required maxLength={120} aria-describedby="description-help" className="min-h-28 rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse" placeholder="Contanos brevemente qué necesitás." />
+                <span id="description-help" className="text-xs font-normal text-neutral-500">Máximo 120 caracteres.</span>
               </label>
               <p className="mt-3 text-xs leading-5 text-neutral-500">Si contás con obra social, consultanos previamente para verificar cobertura y requisitos de la prestación.</p>
               <label className="mt-5 flex items-start gap-3 text-sm leading-6 text-neutral-600">
                 <input type="checkbox" name="privacyConsent" required className="mt-1 h-4 w-4 shrink-0 accent-pulse" />
-                <span>Acepto el uso de mis datos para gestionar esta solicitud y recibir el aviso y contacto por WhatsApp, según la{' '}
-                  <a href="/politica-de-privacidad.html" target="_blank" rel="noopener noreferrer" className="font-semibold text-pulse underline-offset-2 hover:underline">política de privacidad</a>.
+                <span>Leí la{' '}
+                  <a href="/politica-de-privacidad.html" target="_blank" rel="noopener noreferrer" className="font-semibold text-pulse underline-offset-2 hover:underline">política de privacidad</a>{' '}
+                  y autorizo el uso de mis datos para gestionar esta solicitud y recibir el aviso y contacto por WhatsApp.
                 </span>
               </label>
               </>}

@@ -9,9 +9,9 @@ const pillars = [
 ];
 
 const pillarImages = {
-  kinesiologia: '/assets/centro/gimnasio2.webp',
+  kinesiologia: '/assets/centro/gimnasio2-optimized.webp',
   readaptacion: '/assets/readaptacion-entrenamiento.webp',
-  'tecnologia-aplicada': '/assets/ondas-tratamiento.webp',
+  'tecnologia-aplicada': '/assets/ondas-aplicacion-optimized.webp',
 };
 
 export function ServicePillars({ onOpenServices }) {

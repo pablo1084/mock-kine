@@ -117,19 +117,6 @@ img {
   }
 }
 
-@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
-  .experience-card .experience-tab {
-    opacity: 0;
-    transition: opacity 180ms ease, color 180ms ease, border-color 180ms ease;
-  }
-
-  .experience-card:hover .experience-tab,
-  .experience-card:focus-within .experience-tab,
-  .experience-card details[open] .experience-tab {
-    opacity: 1;
-  }
-}
-
 @media (min-width: 1024px) {
   .hero-layout {
     min-height: clamp(560px, calc(53vw - 6rem), 780px);
@@ -164,7 +151,7 @@ img {
   mix-blend-mode: soft-light;
 }
 
-/* Variante de prueba: retrato clínico. Las reglas del hero original quedan intactas. */
+/* Portada con retrato clínico. */
 .hero--vertical {
   background: radial-gradient(ellipse at 72% 45%, #303033 0%, #15181b 65%);
 }

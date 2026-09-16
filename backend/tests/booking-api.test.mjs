@@ -71,7 +71,7 @@ test('Contacto: CORS, preflight, metodos y consentimiento', async () => {
 test('Contacto: entradas invalidas no llegan a Turnstile ni PostgreSQL', async () => {
   for (const change of [{ starts_at: '2026-09-14T12:00:00Z' }, { email: 'a@example.com' }, { status: 'confirmed' },
     { phone_normalized: '+12345' }, { full_name: 'x' }, { phone: '12345678' }, { phone: 'llamar al +5493834123456' },
-    { description: '' }, { description: 'a'.repeat(501) }, { description: 'a\u0000b' }, { privacy_consent: 'true' },
+    { description: '' }, { description: 'a'.repeat(121) }, { description: 'a\u0000b' }, { privacy_consent: 'true' },
     { service_id: 'invalid' }, { turnstile_token: '' }]) {
     const { handler, calls } = harness();
     assert.equal((await handler(req('/requests', { ...input(), ...change }))).status, 400);

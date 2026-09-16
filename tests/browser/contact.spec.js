@@ -29,7 +29,7 @@ async function fill(page) {
   await page.getByRole('textbox', { name: 'Nombre y apellido', exact: true }).fill('Paciente Prueba');
   await page.getByRole('textbox', { name: 'Teléfono de WhatsApp' }).fill('3834123456');
   await page.getByRole('combobox', { name: 'Servicio', exact: true }).selectOption(service);
-  await page.getByRole('textbox', { name: 'Breve descripción' }).fill('Quisiera una consulta');
+  await page.getByRole('textbox', { name: 'Descripción' }).fill('Quisiera una consulta');
   await page.getByRole('checkbox').check();
 }
 test('especialidades directas muestran contacto sin formulario ni envio', async ({ page }) => {
@@ -73,6 +73,10 @@ test('error de Turnstile muestra codigo sin enviar solicitud y conserva datos', 
 test('formulario sin fecha/hora: envia solo los datos pedidos y muestra recepcion', async ({ page }, info) => {
   const sent = await setup(page);
   const section = page.locator('#turnos');
+  await expect(section.getByRole('textbox', { name: 'Descripción' })).toHaveAttribute('maxlength', '120');
+  await expect(section.getByText('Máximo 120 caracteres.')).toBeVisible();
+  await expect(section.getByRole('checkbox')).toHaveAttribute('required', '');
+  await expect(section.getByRole('link', { name: 'política de privacidad' })).toHaveAttribute('href', '/politica-de-privacidad.html');
   await expect(section.locator('input[type=date],input[type=time]')).toHaveCount(0);
   await expect(section.getByText('Horarios disponibles')).toHaveCount(0);
   await fill(page);
