@@ -5,9 +5,9 @@ import { getContactServices, submitContactRequest } from '../utils/contactApi';
 
 const formatPrice = value => new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(value);
 const directContactProfessionals = {
-  osteopatia: 'Villafañe',
+  osteopatia: 'Pablo Villafañez',
   nutricion: 'Viviana Ali',
-  psicologia: 'Vera',
+  psicologia: 'Ezequiel Vera',
 };
 
 export function AppointmentsSection({ hidden }) {
