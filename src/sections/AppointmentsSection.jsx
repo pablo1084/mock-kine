@@ -19,6 +19,7 @@ export function AppointmentsSection({ hidden }) {
   const [error, setError] = React.useState('');
   const [serviceId, setServiceId] = React.useState('');
   const [planId, setPlanId] = React.useState('');
+  const [coverage, setCoverage] = React.useState('');
   const selectedService = services.find(service => service.id === serviceId);
   const selectedPlan = services.find(service => service.id === planId);
   const directContact = selectedService?.contact_mode === 'direct';
@@ -51,8 +52,18 @@ export function AppointmentsSection({ hidden }) {
     if (busy.current || directContact) return;
     if (groupedService && !planId) { setError('Elegí la frecuencia de entrenamiento.'); return; }
     const form = new FormData(event.currentTarget);
+    const availability = form.getAll('availability');
+    if (!availability.length) { setError('Elegí al menos una franja de disponibilidad horaria.'); return; }
+    const healthInsurance = form.get('health_insurance')?.trim();
+    if (coverage === 'Obra social' && !healthInsurance) { setError('Indicá cuál es tu obra social.'); return; }
+    const details = [
+      `Indicación médica: ${form.get('medical_order')}`,
+      `Atención: ${coverage}${healthInsurance ? ` (${healthInsurance})` : ''}`,
+      `Disponibilidad: ${availability.join(', ')}`,
+      `Consulta: ${form.get('description').trim()}`,
+    ].join(' | ');
     const data = { full_name: form.get('full_name').trim(), phone: form.get('phone').trim(), service_id: groupedService ? planId : serviceId,
-      description: form.get('description').trim(), privacy_consent: form.get('privacyConsent') === 'on' };
+      description: details, privacy_consent: form.get('privacyConsent') === 'on' };
     const fingerprint = JSON.stringify(data);
     if (attempt.current?.fingerprint !== fingerprint) attempt.current = { fingerprint, id: crypto.randomUUID() };
     busy.current = true; setError(''); setPhase('verifying');
@@ -131,7 +142,31 @@ export function AppointmentsSection({ hidden }) {
                 <textarea name="description" required maxLength={120} aria-describedby="description-help" className="min-h-28 rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse" placeholder="Contanos brevemente qué necesitás." />
                 <span id="description-help" className="text-xs font-normal text-neutral-500">Máximo 120 caracteres.</span>
               </label>
-              <p className="mt-3 text-xs leading-5 text-neutral-500">Si contás con obra social, consultanos previamente para verificar cobertura y requisitos de la prestación.</p>
+              <div className="mt-5 grid gap-5 rounded-md border border-line bg-neutral-50 p-4">
+                <fieldset>
+                  <legend className="text-sm font-semibold">¿Tenés indicación médica?</legend>
+                  <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
+                    {['Sí', 'No'].map(option => <label key={option} className="flex items-center gap-2 text-sm text-neutral-700"><input type="radio" name="medical_order" value={option} required className="h-4 w-4 accent-pulse" />{option}</label>)}
+                  </div>
+                </fieldset>
+                <fieldset>
+                  <legend className="text-sm font-semibold">¿La atención es por obra social o particular?</legend>
+                  <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
+                    {['Obra social', 'Particular'].map(option => <label key={option} className="flex items-center gap-2 text-sm text-neutral-700"><input type="radio" name="coverage" value={option} required checked={coverage === option} onChange={event => { setCoverage(event.target.value); setError(''); }} className="h-4 w-4 accent-pulse" />{option}</label>)}
+                  </div>
+                  {coverage === 'Obra social' && <label className="mt-3 grid gap-2 text-sm font-semibold">¿Cuál obra social?
+                    <input name="health_insurance" required maxLength={80} className="rounded-md border border-line bg-white px-3 py-3 font-normal outline-none focus:border-pulse" placeholder="Nombre de la obra social" />
+                  </label>}
+                </fieldset>
+                <fieldset>
+                  <legend className="text-sm font-semibold">¿Qué disponibilidad horaria tenés?</legend>
+                  <p className="mt-1 text-xs text-neutral-500">Podés elegir más de una opción.</p>
+                  <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
+                    {['Mañana', 'Siesta', 'Tarde'].map(option => <label key={option} className="flex items-center gap-2 text-sm text-neutral-700"><input type="checkbox" name="availability" value={option} onChange={() => setError('')} className="h-4 w-4 accent-pulse" />{option}</label>)}
+                  </div>
+                </fieldset>
+              </div>
+              <p className="mt-3 text-xs leading-5 text-neutral-500">La cobertura y sus requisitos serán confirmados por el centro antes de coordinar la atención.</p>
               <label className="mt-5 flex items-start gap-3 text-sm leading-6 text-neutral-600">
                 <input type="checkbox" name="privacyConsent" required className="mt-1 h-4 w-4 shrink-0 accent-pulse" />
                 <span>Leí la{' '}

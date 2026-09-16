@@ -1,6 +1,6 @@
 alter table public.contact_requests
   drop constraint contact_requests_description_check,
-  add constraint contact_requests_description_check check (length(description) between 1 and 120);
+  add constraint contact_requests_description_check check (length(description) between 1 and 400);
 
 create or replace function public.create_contact_request(p_request_id uuid, p_service_id uuid, p_full_name text,
   p_phone_normalized text, p_description text, p_privacy_consent boolean)
@@ -18,7 +18,7 @@ begin
   if p_request_id is null or p_service_id is null or p_privacy_consent is distinct from true
     or length(trim(coalesce(p_full_name, ''))) not between 3 and 160
     or coalesce(p_phone_normalized, '') !~ '^\+[1-9][0-9]{7,14}$'
-    or length(trim(coalesce(p_description, ''))) not between 1 and 120
+    or length(trim(coalesce(p_description, ''))) not between 1 and 400
     or p_full_name ~ '[[:cntrl:]]' or p_description ~ '[[:cntrl:]]' then
     raise exception 'INVALID_INPUT' using errcode = '22023';
   end if;

@@ -34,7 +34,7 @@ export function bookingInput(body, requestId) {
       p_full_name: text(body.full_name, 3, 160),
       // Guardar la misma representacion normalizada permite reintentar con otro formato visual.
       p_phone_normalized: `+54${national}`,
-      p_description: text(typeof body.description === 'string' ? body.description.replace(/[\r\n\t]+/g, ' ') : body.description, 1, 120),
+      p_description: text(typeof body.description === 'string' ? body.description.replace(/[\r\n\t]+/g, ' ') : body.description, 1, 400),
       p_request_id: id, p_privacy_consent: true,
     },
   };

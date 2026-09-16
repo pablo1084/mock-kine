@@ -25,8 +25,8 @@ test('Politica 24h: desactivada en pruebas, bloqueo transaccional y ACL', async 
   await make(randomUUID(), '+543834320138', other);
   await db.exec("update public.contact_requests set created_at=now()-interval '24 hours 1 second'");
   await make(); // releases after rolling 24h
-  await make(randomUUID(), '+543834123450', service, 'a'.repeat(120));
-  await assert.rejects(make(randomUUID(), '+543834123451', service, 'a'.repeat(121)), /INVALID_INPUT/);
+  await make(randomUUID(), '+543834123450', service, 'a'.repeat(400));
+  await assert.rejects(make(randomUUID(), '+543834123451', service, 'a'.repeat(401)), /INVALID_INPUT/);
   for (const role of ['anon', 'authenticated', 'service_role']) {
     assert.equal((await db.query("select has_table_privilege($1,'public.contact_request_policy','UPDATE') ok", [role])).rows[0].ok, false);
   }

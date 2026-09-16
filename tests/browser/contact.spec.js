@@ -30,7 +30,10 @@ async function fill(page) {
   await page.getByRole('textbox', { name: 'Teléfono de WhatsApp' }).fill('3834123456');
   await page.getByRole('combobox', { name: 'Servicio', exact: true }).selectOption(service);
   await page.getByRole('textbox', { name: 'Descripción' }).fill('Quisiera una consulta');
-  await page.getByRole('checkbox').check();
+  await page.getByRole('radio', { name: 'Sí', exact: true }).check();
+  await page.getByRole('radio', { name: 'Particular', exact: true }).check();
+  await page.getByRole('checkbox', { name: 'Mañana', exact: true }).check();
+  await page.getByRole('checkbox', { name: /Leí la política/ }).check();
 }
 test('especialidades directas muestran contacto sin formulario ni envio', async ({ page }) => {
   const catalog = ['Osteopatía','Nutrición','Psicología'].map((name,i) => ({id:String(i),name,contact_mode:'direct',contact_phone:i===0?'+543834320138':null}));
@@ -75,7 +78,7 @@ test('formulario sin fecha/hora: envia solo los datos pedidos y muestra recepcio
   const section = page.locator('#turnos');
   await expect(section.getByRole('textbox', { name: 'Descripción' })).toHaveAttribute('maxlength', '120');
   await expect(section.getByText('Máximo 120 caracteres.')).toBeVisible();
-  await expect(section.getByRole('checkbox')).toHaveAttribute('required', '');
+  await expect(section.getByRole('checkbox', { name: /Leí la política/ })).toHaveAttribute('required', '');
   await expect(section.getByRole('link', { name: 'política de privacidad' })).toHaveAttribute('href', '/politica-de-privacidad.html');
   await expect(section.locator('input[type=date],input[type=time]')).toHaveCount(0);
   await expect(section.getByText('Horarios disponibles')).toHaveCount(0);
@@ -86,6 +89,7 @@ test('formulario sin fecha/hora: envia solo los datos pedidos y muestra recepcio
   expect(sent).toHaveLength(1);
   expect(Object.keys(sent[0].body).sort()).toEqual(['description', 'full_name', 'phone', 'privacy_consent', 'service_id', 'turnstile_token'].sort());
   expect(sent[0].body.turnstile_token).toBe(sent[0].key + ':test-token');
+  expect(sent[0].body.description).toContain('Indicación médica: Sí | Atención: Particular | Disponibilidad: Mañana');
   await expect(section.getByRole('button', { name: 'Reservar turno', exact: true })).toHaveCount(0);
 });
 test('error preserva datos y reintento conserva clave de idempotencia', async ({ page }) => {
