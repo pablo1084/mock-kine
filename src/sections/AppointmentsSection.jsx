@@ -4,6 +4,11 @@ import { ContactChallenge } from '../components/ContactChallenge';
 import { getContactServices, submitContactRequest } from '../utils/contactApi';
 
 const formatPrice = value => new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(value);
+const directContactProfessionals = {
+  osteopatia: 'Villafañe',
+  nutricion: 'Viviana Ali',
+  psicologia: 'Vera',
+};
 
 export function AppointmentsSection({ hidden }) {
   const [services, setServices] = React.useState([]);
@@ -119,7 +124,7 @@ export function AppointmentsSection({ hidden }) {
               {!loading && !servicesError && !services.length && <p role="status" className="mt-3 text-sm text-neutral-600">No hay servicios disponibles por el momento.</p>}
               {directContact ? <div role="status" className="mt-5 rounded-md border border-line bg-neutral-50 p-5 text-sm leading-7">
                 <p>Para {selectedService.name}, comunicate directamente con el profesional para coordinar tu atención.</p>
-                {selectedService.contact_phone ? <p>Teléfono: <a className="font-semibold text-pulse underline" href={`tel:${selectedService.contact_phone}`}>{selectedService.contact_phone}</a></p>
+                {selectedService.contact_phone ? <p><span className="font-semibold">Profesional:</span> {directContactProfessionals[selectedService.slug] || 'Profesional del servicio'}<br /><span className="font-semibold">Teléfono:</span> <a className="font-semibold text-pulse underline" href={`tel:${selectedService.contact_phone}`}>{selectedService.contact_phone}</a></p>
                   : <p className="mt-2">Próximamente publicaremos aquí el número de contacto para este servicio.</p>}
               </div> : <>
               <label className="mt-5 grid gap-2 text-sm font-semibold">Descripción
