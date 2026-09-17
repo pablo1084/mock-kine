@@ -55,7 +55,6 @@ img {
     object-position: 62% 72%;
   }
 }
-
 @media (max-width: 639px) {
   .hero-layout {
     display: flex;
@@ -282,36 +281,3 @@ img {
   }
 }
 
-@keyframes alliances-scroll {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.alliances-track {
-  animation: alliances-scroll 28s linear infinite;
-  -webkit-animation: alliances-scroll 28s linear infinite;
-  will-change: transform;
-}
-
-.alliances-group {
-  gap: 1rem;
-  padding-right: 1rem;
-}
-
-@media (max-width: 1024px) {
-  .alliances-group {
-    gap: 0;
-    padding-right: 0;
-  }
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .alliances-marquee:hover .alliances-track {
-    animation-play-state: paused;
-  }
-}

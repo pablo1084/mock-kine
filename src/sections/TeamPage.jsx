@@ -19,8 +19,6 @@ const carouselImagePositions = {
   'administracion-2': 'object-[50%_20%]', // Nazarena Oviedo
 };
 
-const autoAdvanceMs = 6000;
-
 export function TeamPage({ hidden, teamAreas, teamMembers, onBack }) {
   const [activeMemberIndex, setActiveMemberIndex] = React.useState(0);
   const [desktopViewerIndex, setDesktopViewerIndex] = React.useState(null);
@@ -40,18 +38,6 @@ export function TeamPage({ hidden, teamAreas, teamMembers, onBack }) {
   const showNextDesktopMember = React.useCallback(() => {
     setDesktopViewerIndex((current) => (current + 1) % teamMembers.length);
   }, [teamMembers.length]);
-
-  React.useEffect(() => {
-    if (hidden || teamMembers.length < 2) return undefined;
-    const timer = window.setTimeout(showNextMember, autoAdvanceMs);
-    return () => window.clearTimeout(timer);
-  }, [hidden, activeMemberIndex, teamMembers.length, showNextMember]);
-
-  React.useEffect(() => {
-    if (desktopViewerIndex === null || teamMembers.length < 2) return undefined;
-    const timer = window.setTimeout(showNextDesktopMember, autoAdvanceMs);
-    return () => window.clearTimeout(timer);
-  }, [desktopViewerIndex, teamMembers.length, showNextDesktopMember]);
 
   React.useEffect(() => {
     if (hidden) return undefined;

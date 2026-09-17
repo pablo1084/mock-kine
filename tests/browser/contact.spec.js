@@ -43,7 +43,11 @@ test('especialidades directas muestran contacto sin formulario ni envio', async 
     await page.getByRole('combobox',{name:'Servicio',exact:true}).selectOption(s.id);
     await expect(page.getByRole('button',{name:'Reservar turno',exact:true})).toHaveCount(0);
     await expect(page.getByRole('textbox',{name:'Nombre y apellido',exact:true})).toHaveCount(0);
-    if (s.contact_phone) await expect(page.getByRole('link',{name:s.contact_phone})).toHaveAttribute('href',`tel:${s.contact_phone}`);
+    if (s.contact_phone) {
+      const whatsapp = page.getByRole('link', { name: `Contactar por WhatsApp al ${s.contact_phone}` });
+      await expect(whatsapp).toHaveAttribute('href', `https://wa.me/${s.contact_phone.replace(/\D/g, '')}`);
+      await expect(whatsapp).toHaveAttribute('target', '_blank');
+    }
     else await expect(page.getByText('Próximamente publicaremos aquí el número de contacto para este servicio.')).toBeVisible();
   }
   expect(sent).toHaveLength(0);

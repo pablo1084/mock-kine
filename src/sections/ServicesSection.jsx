@@ -128,14 +128,14 @@ export function ServicesSection({ hidden, targetId, onBack, onRequestAppointment
           </div>
 
           <div id="recovery" className="mt-10 overflow-hidden rounded-md border border-white/10 bg-white/5">
-            <div className="grid items-center gap-0 lg:grid-cols-[0.9fr_1.1fr]">
-              <div className="p-6 sm:p-8">
+            <div className="grid items-center gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_21rem]">
+              <div>
                 <p className="text-sm font-semibold uppercase text-pulse">Recovery</p>
                 <h4 className="mt-3 text-2xl font-semibold text-white sm:text-3xl">Recuperación y descarga</h4>
                 <p className="mt-4 text-sm leading-7 text-white/70">Estrategias de recuperación para complementar el entrenamiento y la readaptación. La compresión neumática secuencial se utiliza como herramienta de recuperación, favoreciendo el retorno venoso y proporcionando una sensación de descarga en miembros inferiores.</p>
               </div>
-              <div className="group aspect-[4/3] w-full overflow-hidden border-t border-white/10 lg:aspect-[5/4] lg:border-l lg:border-t-0">
-                <img src="/assets/recovery-web.webp" alt="Sesión de recuperación con sistema de compresión neumática en miembros inferiores" className="h-full w-full object-cover object-center transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.035]" loading="lazy" decoding="async" />
+              <div className="group mx-auto w-full max-w-[21rem] overflow-hidden rounded-md border border-white/10">
+                <img src="/assets/recovery.png" alt="Sesión de recuperación con sistema de compresión neumática en miembros inferiores" width="1086" height="1448" className="h-auto w-full transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.035]" loading="lazy" decoding="async" />
               </div>
             </div>
           </div>

@@ -15,7 +15,8 @@ const experiences = [
     sport: 'Pádel',
     role: 'Número 1° del mundo en pádel',
     image: '/assets/experiencias/tapia.webp',
-    position: 'center 65%',
+    position: 'center 44%',
+    imageClass: 'scale-[1.25] motion-safe:group-hover:scale-[1.28]',
   },
   {
     id: 'llanos',
@@ -43,7 +44,7 @@ export function ExperiencesSection({ hidden }) {
         <p className="mt-3 font-body text-base leading-7 text-white/70">Deportistas que confían en nuestro equipo para recuperar, preparar y volver a competir.</p>
 
         <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-7 sm:gap-6 lg:grid-cols-4">
-          {experiences.map(({ id, name, sport, role, image, position }) => (
+          {experiences.map(({ id, name, sport, role, image, position, imageClass = 'motion-safe:group-hover:scale-[1.025]' }) => (
             <article key={id} aria-labelledby={`experiencia-${id}`} className="experience-card group min-w-0 self-start">
               <div className="aspect-[3/4] overflow-hidden rounded-md bg-graphite">
                 <img
@@ -52,7 +53,7 @@ export function ExperiencesSection({ hidden }) {
                   loading="lazy"
                   decoding="async"
                   style={{ objectPosition: position }}
-                  className="h-full w-full object-cover transition-transform duration-700 motion-safe:group-hover:scale-[1.025]"
+                  className={`h-full w-full object-cover transition-transform duration-700 ${imageClass}`}
                 />
               </div>
               <div className="pt-3">
