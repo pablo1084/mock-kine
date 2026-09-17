@@ -8,7 +8,7 @@ import { BookingError, bookingInput } from '../supabase/functions/_shared/bookin
 const origin = 'https://consultorio.example';
 const config = { origins: [origin], supabaseUrl: 'https://project.supabase.co', serviceKey: 'server-only-secret', turnstileSecret: 'test-secret', hashSecret: 'test-secret-at-least-thirty-two-characters' };
 const service = '00000000-0000-4000-8000-000000000001';
-const input = () => ({ service_id: service, full_name: 'Paciente Prueba', phone: '+54 9 383 4123456', description: 'Quisiera consultar', privacy_consent: true, turnstile_token: 'test-token' });
+const input = () => ({ service_id: service, full_name: 'Paciente Prueba', phone: '+54 9 383 4123456', description: 'Quisiera consultar', coverage: 'Particular', health_insurance: '', privacy_consent: true, turnstile_token: 'test-token' });
 test('Telefono argentino: area y numero equivalen a formatos internacionales', () => {
   for (const phone of ['3834320138', '383 432-0138', '+543834320138', '+5493834320138']) {
     assert.equal(bookingInput({ ...input(), phone }, randomUUID()).rpc.p_phone_normalized, '+543834320138');
@@ -72,6 +72,7 @@ test('Contacto: entradas invalidas no llegan a Turnstile ni PostgreSQL', async (
   for (const change of [{ starts_at: '2026-09-14T12:00:00Z' }, { email: 'a@example.com' }, { status: 'confirmed' },
     { phone_normalized: '+12345' }, { full_name: 'x' }, { phone: '12345678' }, { phone: 'llamar al +5493834123456' },
     { description: '' }, { description: 'a'.repeat(401) }, { description: 'a\u0000b' }, { privacy_consent: 'true' },
+    { coverage: 'Prepaga' }, { coverage: 'Obra social', health_insurance: '' }, { coverage: 'Particular', health_insurance: 'OSDE' },
     { service_id: 'invalid' }, { turnstile_token: '' }]) {
     const { handler, calls } = harness();
     assert.equal((await handler(req('/requests', { ...input(), ...change }))).status, 400);

@@ -22,6 +22,7 @@ export function AppointmentsSection({ hidden }) {
   const [coverage, setCoverage] = React.useState('');
   const selectedService = services.find(service => service.id === serviceId);
   const selectedPlan = services.find(service => service.id === planId);
+  const acceptsHealthInsurance = selectedService?.slug === 'kinesiologia';
   const directContact = selectedService?.contact_mode === 'direct';
   const groupedService = selectedService?.contact_mode === 'group';
   const plans = services.filter(service => service.parent_id === serviceId);
@@ -54,16 +55,19 @@ export function AppointmentsSection({ hidden }) {
     const form = new FormData(event.currentTarget);
     const availability = form.getAll('availability');
     if (!availability.length) { setError('Elegí al menos una franja de disponibilidad horaria.'); return; }
-    const healthInsurance = form.get('health_insurance')?.trim();
-    if (coverage === 'Obra social' && !healthInsurance) { setError('Indicá cuál es tu obra social.'); return; }
+    const effectiveCoverage = acceptsHealthInsurance ? coverage : 'Particular';
+    const healthInsurance = acceptsHealthInsurance ? (form.get('health_insurance')?.trim() || '') : '';
+    if (acceptsHealthInsurance && !effectiveCoverage) { setError('Indicá si la atención es por obra social o particular.'); return; }
+    if (effectiveCoverage === 'Obra social' && !healthInsurance) { setError('Indicá cuál es tu obra social.'); return; }
     const details = [
       `Indicación médica: ${form.get('medical_order')}`,
-      `Atención: ${coverage}${healthInsurance ? ` (${healthInsurance})` : ''}`,
+      `Atención: ${effectiveCoverage}${healthInsurance ? ` (${healthInsurance})` : ''}`,
       `Disponibilidad: ${availability.join(', ')}`,
       `Consulta: ${form.get('description').trim()}`,
     ].join(' | ');
     const data = { full_name: form.get('full_name').trim(), phone: form.get('phone').trim(), service_id: groupedService ? planId : serviceId,
-      description: details, privacy_consent: form.get('privacyConsent') === 'on' };
+      description: details, coverage: effectiveCoverage, health_insurance: healthInsurance,
+      privacy_consent: form.get('privacyConsent') === 'on' };
     const fingerprint = JSON.stringify(data);
     if (attempt.current?.fingerprint !== fingerprint) attempt.current = { fingerprint, id: crypto.randomUUID() };
     busy.current = true; setError(''); setPhase('verifying');
@@ -113,7 +117,7 @@ export function AppointmentsSection({ hidden }) {
                 </label>
                 </>}
                 <label className="grid gap-2 text-sm font-semibold sm:col-span-2">Servicio
-                  <select name="service_id" required value={serviceId} onChange={event => { setServiceId(event.target.value); setPlanId(''); setError(''); }} disabled={loading || !services.length || !!servicesError} className="rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse disabled:bg-neutral-100">
+                  <select name="service_id" required value={serviceId} onChange={event => { const nextService = services.find(service => service.id === event.target.value); setServiceId(event.target.value); setPlanId(''); setCoverage(nextService?.slug === 'kinesiologia' ? '' : 'Particular'); setError(''); }} disabled={loading || !services.length || !!servicesError} className="rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse disabled:bg-neutral-100">
                     <option value="" disabled>{loading ? 'Cargando servicios…' : 'Seleccioná un servicio'}</option>
                     {services.filter(service => !service.parent_id).map(service => <option key={service.id} value={service.id}>{service.name}</option>)}
                   </select>
@@ -149,7 +153,7 @@ export function AppointmentsSection({ hidden }) {
                     {['Sí', 'No'].map(option => <label key={option} className="flex items-center gap-2 text-sm text-neutral-700"><input type="radio" name="medical_order" value={option} required className="h-4 w-4 accent-pulse" />{option}</label>)}
                   </div>
                 </fieldset>
-                <fieldset>
+                {acceptsHealthInsurance ? <fieldset>
                   <legend className="text-sm font-semibold">¿La atención es por obra social o particular?</legend>
                   <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
                     {['Obra social', 'Particular'].map(option => <label key={option} className="flex items-center gap-2 text-sm text-neutral-700"><input type="radio" name="coverage" value={option} required checked={coverage === option} onChange={event => { setCoverage(event.target.value); setError(''); }} className="h-4 w-4 accent-pulse" />{option}</label>)}
@@ -157,7 +161,9 @@ export function AppointmentsSection({ hidden }) {
                   {coverage === 'Obra social' && <label className="mt-3 grid gap-2 text-sm font-semibold">¿Cuál obra social?
                     <input name="health_insurance" required maxLength={80} className="rounded-md border border-line bg-white px-3 py-3 font-normal outline-none focus:border-pulse" placeholder="Nombre de la obra social" />
                   </label>}
-                </fieldset>
+                </fieldset> : selectedService && <div role="status" className="rounded-md border border-pulse/25 bg-orange-50 px-4 py-3 text-sm text-neutral-700">
+                  Recordá que este servicio se brinda únicamente de forma particular.
+                </div>}
                 <fieldset>
                   <legend className="text-sm font-semibold">¿Qué disponibilidad horaria tenés?</legend>
                   <p className="mt-1 text-xs text-neutral-500">Podés elegir más de una opción.</p>
@@ -166,7 +172,7 @@ export function AppointmentsSection({ hidden }) {
                   </div>
                 </fieldset>
               </div>
-              <p className="mt-3 text-xs leading-5 text-neutral-500">La cobertura y sus requisitos serán confirmados por el centro antes de coordinar la atención.</p>
+              {acceptsHealthInsurance && <p className="mt-3 text-xs leading-5 text-neutral-500">La cobertura y sus requisitos serán confirmados por el centro antes de coordinar la atención.</p>}
               <label className="mt-5 flex items-start gap-3 text-sm leading-6 text-neutral-600">
                 <input type="checkbox" name="privacyConsent" required className="mt-1 h-4 w-4 shrink-0 accent-pulse" />
                 <span>Leí la{' '}

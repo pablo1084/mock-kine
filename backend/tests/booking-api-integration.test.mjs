@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
 import { PGlite } from '@electric-sql/pglite';
 import { bootstrap, migration, rateMigration, contactMigration, fixture, service } from './helpers/booking-db.mjs';
 import { createBookingApi } from '../supabase/functions/_shared/booking-api.mjs';
@@ -9,7 +10,9 @@ import { createContactDispatcher } from '../supabase/functions/_shared/contact-w
 
 test('Contacto HTTP → PostgreSQL → dos WhatsApp, sin agenda; retries y ACL', async t => {
   const db = new PGlite(); t.after(() => db.close());
-  await db.exec(bootstrap + migration + rateMigration + contactMigration + fixture);
+  const duplicatePolicy = await readFile(new URL('../supabase/migrations/20260914160000_contact_duplicate_policy.sql', import.meta.url), 'utf8');
+  const coverageRules = await readFile(new URL('../supabase/migrations/20260917110000_service_coverage_rules.sql', import.meta.url), 'utf8');
+  await db.exec(bootstrap + migration + rateMigration + contactMigration + fixture + duplicatePolicy + coverageRules);
   await db.exec('set role service_role');
   const config = { origins: ['https://consultorio.example'], supabaseUrl: 'https://project.supabase.co', serviceKey: 'server-test-key', hashSecret: 'test-secret-with-at-least-thirty-two-chars' };
   const rest = async (url, options) => {
@@ -29,7 +32,7 @@ test('Contacto HTTP → PostgreSQL → dos WhatsApp, sin agenda; retries y ACL',
   const key = randomUUID();
   const request = (id = key, description = 'Consulta inicial', phone = '+54 9 383 4123456') => new Request(`${config.supabaseUrl}/functions/v1/booking/requests`, {
     method: 'POST', headers: { Origin: config.origins[0], 'Content-Type': 'application/json', 'Idempotency-Key': id },
-    body: JSON.stringify({ service_id: service, full_name: 'Paciente Prueba', phone, description, privacy_consent: true, turnstile_token: 'test' }),
+    body: JSON.stringify({ service_id: service, full_name: 'Paciente Prueba', phone, description, coverage: 'Particular', health_insurance: '', privacy_consent: true, turnstile_token: 'test' }),
   });
   const response = await handler(request()); assert.equal(response.status, 200);
   const first = await response.json(); assert.equal(first.request.status, 'received');
@@ -45,6 +48,10 @@ test('Contacto HTTP → PostgreSQL → dos WhatsApp, sin agenda; retries y ACL',
   for (const table of ['appointments', 'integration_outbox', 'patients']) assert.equal((await db.query(`select count(*)::int n from public.${table}`)).rows[0].n, 0);
   assert.equal((await db.query('select count(*)::int n from public.contact_requests')).rows[0].n, 1);
   assert.equal((await db.query("select count(*)::int n from public.contact_notifications where status='accepted'")).rows[0].n, 2);
+  await assert.rejects(db.query(
+    'select * from public.create_contact_request($1,$2,$3,$4,$5,$6,$7,$8)',
+    [randomUUID(), service, 'Paciente Prueba', '+543834123456', 'Consulta', true, 'Obra social', 'OSDE'],
+  ), /INVALID_INPUT/);
   for (const role of ['anon', 'authenticated', 'service_role']) {
     for (const table of ['contact_requests', 'contact_notifications']) {
       for (const permission of ['INSERT', 'UPDATE', 'DELETE', 'TRUNCATE']) assert.equal((await db.query('select has_table_privilege($1,$2,$3) as ok', [role, `public.${table}`, permission])).rows[0].ok, false);

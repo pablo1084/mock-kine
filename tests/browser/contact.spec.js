@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 const service = '00000000-0000-4000-8000-000000000001';
-async function setup(page, failFirst = false, unavailable = false, challengeError = null, duplicate = false, catalog = [{ id: service, name: 'Kinesiología deportiva' }]) {
+async function setup(page, failFirst = false, unavailable = false, challengeError = null, duplicate = false, catalog = [{ id: service, name: 'Kinesiología deportiva', slug: 'kinesiologia' }]) {
   const sent = [];
   await page.route('https://**/*', async route => {
     const url = new URL(route.request().url());
@@ -31,7 +31,8 @@ async function fill(page) {
   await page.getByRole('combobox', { name: 'Servicio', exact: true }).selectOption(service);
   await page.getByRole('textbox', { name: 'Descripción' }).fill('Quisiera una consulta');
   await page.getByRole('radio', { name: 'Sí', exact: true }).check();
-  await page.getByRole('radio', { name: 'Particular', exact: true }).check();
+  const particular = page.getByRole('radio', { name: 'Particular', exact: true });
+  if (await particular.count()) await particular.check();
   await page.getByRole('checkbox', { name: 'Mañana', exact: true }).check();
   await page.getByRole('checkbox', { name: /Leí la política/ }).check();
 }
@@ -57,6 +58,20 @@ test('entrenamiento exige plan y envia el identificador del plan mensual', async
   await page.getByRole('button',{name:'Reservar turno',exact:true}).click();
   await expect(page.getByRole('heading',{name:'Recibimos tu solicitud',exact:true})).toBeVisible();
   expect(sent[0].body.service_id).toBe(plan);
+});
+test('solo kinesiología permite elegir obra social', async ({ page }) => {
+  const particularService = '00000000-0000-4000-8000-000000000003';
+  await setup(page, false, false, null, false, [
+    { id: service, name: 'Kinesiología', slug: 'kinesiologia' },
+    { id: particularService, name: 'Recovery', slug: 'recovery' },
+  ]);
+  const selector = page.getByRole('combobox', { name: 'Servicio', exact: true });
+  await selector.selectOption(particularService);
+  await expect(page.getByText('Recordá que este servicio se brinda únicamente de forma particular.')).toBeVisible();
+  await expect(page.getByRole('radio', { name: 'Obra social', exact: true })).toHaveCount(0);
+  await selector.selectOption(service);
+  await expect(page.getByRole('radio', { name: 'Obra social', exact: true })).toBeVisible();
+  await expect(page.getByRole('radio', { name: 'Particular', exact: true })).toBeVisible();
 });
 test('solicitud repetida informa bloqueo de 24 horas por pantalla', async ({ page }) => {
   await setup(page, false, false, null, true);
@@ -87,7 +102,7 @@ test('formulario sin fecha/hora: envia solo los datos pedidos y muestra recepcio
   await page.getByRole('button', { name: 'Reservar turno', exact: true }).click();
   await expect(section.getByRole('heading', { name: 'Recibimos tu solicitud' })).toBeVisible();
   expect(sent).toHaveLength(1);
-  expect(Object.keys(sent[0].body).sort()).toEqual(['description', 'full_name', 'phone', 'privacy_consent', 'service_id', 'turnstile_token'].sort());
+  expect(Object.keys(sent[0].body).sort()).toEqual(['coverage', 'description', 'full_name', 'health_insurance', 'phone', 'privacy_consent', 'service_id', 'turnstile_token'].sort());
   expect(sent[0].body.turnstile_token).toBe(sent[0].key + ':test-token');
   expect(sent[0].body.description).toContain('Indicación médica: Sí | Atención: Particular | Disponibilidad: Mañana');
   await expect(section.getByRole('button', { name: 'Reservar turno', exact: true })).toHaveCount(0);

@@ -16,7 +16,7 @@ function text(value, min, max, optional = false) {
   return value;
 }
 export function bookingInput(body, requestId) {
-  const fields = ['service_id', 'full_name', 'phone', 'description', 'privacy_consent', 'turnstile_token'];
+  const fields = ['service_id', 'full_name', 'phone', 'description', 'coverage', 'health_insurance', 'privacy_consent', 'turnstile_token'];
   if (!body || typeof body !== 'object' || Array.isArray(body) || Object.keys(body).some(key => !fields.includes(key))) throw new BookingError('INVALID_INPUT');
   const id = validUuid(requestId);
   const phoneText = text(body.phone, 1, 40);
@@ -27,6 +27,10 @@ export function bookingInput(body, requestId) {
   const national = phone.nationalNumber.replace(/^9(?=\d{10}$)/, '');
   if (!/^\d{10}$/.test(national)) throw new BookingError('INVALID_PHONE');
   if (body.privacy_consent !== true) throw new BookingError('CONSENT_REQUIRED');
+  if (!['Obra social', 'Particular'].includes(body.coverage)) throw new BookingError('INVALID_INPUT');
+  const healthInsurance = text(body.health_insurance, 0, 80, true);
+  if (body.coverage === 'Obra social' && !healthInsurance) throw new BookingError('INVALID_INPUT');
+  if (body.coverage === 'Particular' && healthInsurance) throw new BookingError('INVALID_INPUT');
   return {
     token: text(body.turnstile_token, 1, 2048),
     rpc: {
@@ -35,6 +39,8 @@ export function bookingInput(body, requestId) {
       // Guardar la misma representacion normalizada permite reintentar con otro formato visual.
       p_phone_normalized: `+54${national}`,
       p_description: text(typeof body.description === 'string' ? body.description.replace(/[\r\n\t]+/g, ' ') : body.description, 1, 400),
+      p_coverage: body.coverage,
+      p_health_insurance: healthInsurance,
       p_request_id: id, p_privacy_consent: true,
     },
   };
