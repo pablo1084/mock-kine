@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="theme-color" content="#15181b" />
+    <script>
+      (() => {
+        const saved = localStorage.getItem('mock-kine-theme');
+        const theme = ['system', 'light', 'dark'].includes(saved) ? saved : 'system';
+        const dark = theme === 'dark' || (theme === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.classList.toggle('dark', dark);
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+        document.querySelector('meta[name="theme-color"]').content = dark ? '#15181b' : '#f3f1ed';
+      })();
+    </script>
     <meta
       name="description"
       content="Centro de kinesiología deportiva, rehabilitación y entrenamiento en Catamarca. Evaluación personalizada, tecnología aplicada y acompañamiento profesional para volver a moverte con confianza."

@@ -85,7 +85,7 @@ export function AppointmentsSection({ hidden }) {
   }
 
   return (
-    <section id="turnos" className={`${hidden ? 'hidden' : ''} bg-graphiteDark py-20 text-white`}>
+    <section id="turnos" className={`${hidden ? 'hidden' : ''} border-t border-white/10 bg-graphiteDark py-20 text-white`}>
       <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
         <div>
           <p className="text-sm font-semibold uppercase tracking-wider text-pulse">Turnos Online</p>
@@ -105,26 +105,26 @@ export function AppointmentsSection({ hidden }) {
             <p className="mt-3 leading-7 text-neutral-600">El centro se comunicará con vos a la brevedad para coordinar tu atención.</p>
           </div>
         ) : (
-          <form className="rounded-md border border-white/10 bg-white p-4 text-ink shadow-soft sm:p-6" onSubmit={submit} autoComplete="on" aria-busy={sending}>
+          <form className="appointment-form rounded-md border border-white/10 bg-white p-4 text-ink shadow-soft sm:p-6" onSubmit={submit} autoComplete="on" aria-busy={sending}>
             <fieldset disabled={sending}>
               <div className="grid items-start gap-4 sm:grid-cols-2">
                 {!directContact && <>
                 <label className="grid gap-2 text-sm font-semibold">Nombre y apellido
-                  <input name="full_name" autoComplete="name" required minLength={3} maxLength={160} className="rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse" placeholder="Nombre y apellido" />
+                  <input name="full_name" autoComplete="name" required minLength={3} maxLength={160} className="appointment-control rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse" placeholder="Nombre y apellido" />
                 </label>
                 <label className="grid gap-2 text-sm font-semibold">Teléfono de WhatsApp
-                  <input type="tel" name="phone" autoComplete="tel-national" inputMode="tel" aria-describedby="phone-help" required minLength={10} maxLength={40} className="rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse" placeholder="3834320138" />
+                  <input type="tel" name="phone" autoComplete="tel-national" inputMode="tel" aria-describedby="phone-help" required minLength={10} maxLength={40} className="appointment-control rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse" placeholder="3834320138" />
                   <span id="phone-help" className="text-xs font-normal text-neutral-500">Código de área y número, sin 0 ni 15. Ejemplo: 3834123456.</span>
                 </label>
                 </>}
                 <label className="grid gap-2 text-sm font-semibold sm:col-span-2">Servicio
-                  <select name="service_id" required value={serviceId} onChange={event => { const nextService = services.find(service => service.id === event.target.value); setServiceId(event.target.value); setPlanId(''); setCoverage(nextService?.slug === 'kinesiologia' ? '' : 'Particular'); setError(''); }} disabled={loading || !services.length || !!servicesError} className="rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse disabled:bg-neutral-100">
+                  <select name="service_id" required value={serviceId} onChange={event => { const nextService = services.find(service => service.id === event.target.value); setServiceId(event.target.value); setPlanId(''); setCoverage(nextService?.slug === 'kinesiologia' ? '' : 'Particular'); setError(''); }} disabled={loading || !services.length || !!servicesError} className="appointment-control rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse disabled:bg-neutral-100">
                     <option value="" disabled>{loading ? 'Cargando servicios…' : 'Seleccioná un servicio'}</option>
                     {services.filter(service => !service.parent_id).map(service => <option key={service.id} value={service.id}>{service.name}</option>)}
                   </select>
                 </label>
                 {groupedService && <label className="grid gap-2 text-sm font-semibold sm:col-span-2">Plan mensual de entrenamiento
-                  <select required value={planId} onChange={event => { setPlanId(event.target.value); setError(''); }} className="rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse">
+                  <select required value={planId} onChange={event => { setPlanId(event.target.value); setError(''); }} className="appointment-control rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse">
                     <option value="" disabled>Seleccioná la frecuencia</option>
                     {plans.map(plan => <option key={plan.id} value={plan.id}>{plan.name}</option>)}
                   </select>
@@ -144,7 +144,7 @@ export function AppointmentsSection({ hidden }) {
                   : <p className="mt-2">Próximamente publicaremos aquí el número de contacto para este servicio.</p>}
               </div> : <>
               <label className="mt-5 grid gap-2 text-sm font-semibold">Descripción
-                <textarea name="description" required maxLength={120} aria-describedby="description-help" className="min-h-28 rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse" placeholder="Contanos brevemente qué necesitás." />
+                <textarea name="description" required maxLength={120} aria-describedby="description-help" className="appointment-control min-h-28 rounded-md border border-line px-3 py-3 font-normal outline-none focus:border-pulse" placeholder="Contanos brevemente qué necesitás." />
                 <span id="description-help" className="text-xs font-normal text-neutral-500">Máximo 120 caracteres.</span>
               </label>
               <div className="mt-5 grid gap-5 rounded-md border border-line bg-neutral-50 p-4">
@@ -160,7 +160,7 @@ export function AppointmentsSection({ hidden }) {
                     {['Obra social', 'Particular'].map(option => <label key={option} className="flex items-center gap-2 text-sm text-neutral-700"><input type="radio" name="coverage" value={option} required checked={coverage === option} onChange={event => { setCoverage(event.target.value); setError(''); }} className="h-4 w-4 accent-pulse" />{option}</label>)}
                   </div>
                   {coverage === 'Obra social' && <label className="mt-3 grid gap-2 text-sm font-semibold">¿Cuál obra social?
-                    <input name="health_insurance" required maxLength={80} className="rounded-md border border-line bg-white px-3 py-3 font-normal outline-none focus:border-pulse" placeholder="Nombre de la obra social" />
+                    <input name="health_insurance" required maxLength={80} className="appointment-control rounded-md border border-line bg-white px-3 py-3 font-normal outline-none focus:border-pulse" placeholder="Nombre de la obra social" />
                   </label>}
                 </fieldset> : selectedService && <div role="status" className="rounded-md border border-pulse/25 bg-orange-50 px-4 py-3 text-sm text-neutral-700">
                   Recordá que este servicio se brinda únicamente de forma particular.
@@ -187,7 +187,7 @@ export function AppointmentsSection({ hidden }) {
             <ContactChallenge ref={challenge} siteKey={siteKey} />
             {!siteKey && <p role="status" className="mt-3 text-sm text-neutral-600">Las solicitudes online no están disponibles por el momento. Contactanos por los medios del centro.</p>}
             {error && <p role="alert" className="mt-3 text-sm text-red-700">{error}</p>}
-            <button type="submit" disabled={sending || loading || !services.length || !!servicesError || !siteKey} className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-md bg-graphite px-5 py-3 text-sm font-semibold text-white transition hover:bg-pulse disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto">
+            <button type="submit" disabled={sending || loading || !services.length || !!servicesError || !siteKey} className="theme-dark appointment-submit mt-5 inline-flex w-full items-center justify-center gap-2 rounded-md bg-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-pulse disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto">
               {phase === 'verifying' ? 'Verificando…' : phase === 'sending' ? 'Enviando…' : 'Reservar turno'} <MessageCircle size={17} />
             </button>
             </>}

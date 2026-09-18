@@ -9,7 +9,129 @@ html {
 body {
   margin: 0;
   min-width: 320px;
+  background: #f3f1ed;
+  color: #1f2427;
+}
+
+.dark body {
   background: #2f3438;
+  color: white;
+}
+
+.dark .site-header {
+  background-color: rgb(21 24 27 / 0.40) !important;
+}
+
+/* The existing dark palette remains canonical; these semantic mappings produce
+   the light hierarchy without disturbing photographic and video treatments. */
+html:not(.dark) .theme-light-adaptive :where(.bg-graphite):not(.theme-dark, .theme-dark *) { background-color: #ddd9d1 !important; }
+html:not(.dark) .theme-light-adaptive :where(.bg-graphiteSoft):not(.theme-dark, .theme-dark *) { background-color: #ddd9d1 !important; }
+html:not(.dark) .theme-light-adaptive :where(.bg-graphiteDark):not(.theme-dark, .theme-dark *) { background-color: #ddd9d1 !important; }
+html:not(.dark) .theme-light-adaptive :where([class*="bg-graphiteDark/"]):not(.theme-dark, .theme-dark *) { background-color: rgb(243 241 237 / 0.94) !important; }
+html:not(.dark) .theme-light-adaptive :where([class~="text-white"]):not(.theme-dark, .theme-dark *, .bg-pulse) { color: #1f2427 !important; }
+html:not(.dark) .theme-light-adaptive :where([class*="text-white/"]):not(.theme-dark, .theme-dark *) { color: rgb(31 36 39 / 0.72) !important; }
+html:not(.dark) .theme-light-adaptive :where([class*="border-white/"]):not(.theme-dark, .theme-dark *) { border-color: rgb(31 36 39 / 0.14) !important; }
+html:not(.dark) .theme-light-adaptive :where([class*="bg-white/"]):not(.theme-dark, .theme-dark *) { background-color: rgb(255 255 255 / 0.58) !important; }
+html:not(.dark) .theme-light-adaptive :where([class~="text-pulse"]):not(.theme-dark, .theme-dark *) { color: #c2410c !important; }
+html:not(.dark) .theme-light-adaptive :where(.bg-pulse, .bg-pulse *) { color: white !important; }
+
+.appointment-form {
+  color-scheme: light;
+}
+
+.appointment-control {
+  background-color: white;
+  color: #1f2427;
+  caret-color: #1f2427;
+}
+
+.appointment-control::placeholder {
+  color: #737373;
+  opacity: 1;
+}
+
+.appointment-control:disabled {
+  color: #737373;
+  -webkit-text-fill-color: #737373;
+  opacity: 1;
+}
+
+.appointment-control option {
+  background-color: white;
+  color: #1f2427;
+}
+
+.theme-light-adaptive .appointment-submit {
+  background-color: #1f2427 !important;
+  color: white !important;
+  -webkit-text-fill-color: white;
+}
+
+.theme-light-adaptive .appointment-submit:hover:not(:disabled) {
+  background-color: #f05a28 !important;
+}
+
+/* Services follows the light contrast established by "Áreas complementarias":
+   neutral canvas, pale panels and crisp white cards. */
+html:not(.dark) .services-page {
+  background-color: #ddd9d1 !important;
+}
+
+html:not(.dark) .services-page #kinesiologia,
+html:not(.dark) .services-page #readaptacion,
+html:not(.dark) .services-page #tecnologia-aplicada {
+  background-color: #eeece8 !important;
+  border-color: rgb(31 36 39 / 0.12) !important;
+  box-shadow: 0 18px 50px rgb(31 36 39 / 0.08);
+}
+
+html:not(.dark) .services-page #readaptacion :where(article, #recovery),
+html:not(.dark) .services-page > div > div:last-child {
+  background-color: white !important;
+  border-color: rgb(31 36 39 / 0.1) !important;
+}
+
+html:not(.dark) .services-page #tecnologia-aplicada :where([class*="bg-white/"]) {
+  background-color: white !important;
+}
+
+html:not(.dark) .services-page :where(#kinesiologia, #readaptacion, #tecnologia-aplicada) :where([class*="border-white/"]) {
+  border-color: rgb(31 36 39 / 0.12) !important;
+}
+
+html:not(.dark) .theme-light-adaptive .center-tour-button:hover {
+  border-color: #f05a28 !important;
+  color: #c2410c !important;
+}
+
+html:not(.dark) .theme-light-adaptive .maps-button:hover {
+  background-color: #f05a28 !important;
+  color: white !important;
+  -webkit-text-fill-color: white;
+}
+
+.theme-light-adaptive,
+.theme-light-adaptive section,
+.theme-light-adaptive header,
+.theme-light-adaptive footer,
+.theme-light-adaptive article,
+.theme-light-adaptive form,
+.theme-light-adaptive nav {
+  transition-property: color, background-color, border-color;
+  transition-duration: 180ms;
+  transition-timing-function: ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-light-adaptive,
+  .theme-light-adaptive section,
+  .theme-light-adaptive header,
+  .theme-light-adaptive footer,
+  .theme-light-adaptive article,
+  .theme-light-adaptive form,
+  .theme-light-adaptive nav {
+    transition-duration: 0.01ms;
+  }
 }
 
 img {

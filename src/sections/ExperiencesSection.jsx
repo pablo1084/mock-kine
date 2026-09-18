@@ -40,7 +40,8 @@ export function ExperiencesSection({ hidden }) {
   return (
     <section id="experiencias" aria-labelledby="experiencias-title" className={`${hidden ? 'hidden' : ''} scroll-mt-24 bg-graphiteDark py-16 sm:py-20`}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h2 id="experiencias-title" className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">Experiencias que respaldan nuestro trabajo</h2>
+        <p className="text-sm font-semibold uppercase tracking-wider text-pulse">Experiencias</p>
+        <h2 id="experiencias-title" className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">Experiencias que respaldan nuestro trabajo</h2>
         <p className="mt-3 font-body text-base leading-7 text-white/70">Deportistas que confían en nuestro equipo para recuperar, preparar y volver a competir.</p>
 
         <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-7 sm:gap-6 lg:grid-cols-4">

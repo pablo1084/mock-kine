@@ -145,7 +145,7 @@ export function TeamPage({ hidden, teamAreas, teamMembers, onBack }) {
       </div>
 
       {desktopViewerIndex !== null && (
-        <div className="fixed inset-0 z-[60] hidden items-center justify-center bg-graphiteDark/95 p-6 backdrop-blur lg:flex" onClick={() => setDesktopViewerIndex(null)}>
+        <div className="theme-dark fixed inset-0 z-[60] hidden items-center justify-center bg-graphiteDark/95 p-6 backdrop-blur lg:flex" onClick={() => setDesktopViewerIndex(null)}>
           <button type="button" aria-label="Cerrar visor del equipo" className="absolute right-8 top-8 rounded-md border border-white/20 p-2 text-white transition hover:border-pulse hover:text-pulse" onClick={() => setDesktopViewerIndex(null)}>
             <X size={22} />
           </button>

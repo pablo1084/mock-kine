@@ -72,7 +72,7 @@ export function ContactSection({ contactCards, hidden }) {
             href="https://www.google.com/maps/place/Jose+Oviedo/@-28.4655158,-65.7743581,324m/data=!3m1!1e3!4m6!3m5!1s0x942428bf3c67d161:0x9aac28ab8d1dd802!8m2!3d-28.4652554!4d-65.7729641!16s%2Fg%2F11bbrhdlmb?entry=ttu&g_ep=EgoyMDI2MDcyNi4wIKXMDSoASAFQAw%3D%3D"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-8 inline-flex items-center rounded-lg border border-pulse px-6 py-3 font-semibold text-pulse transition hover:bg-pulse hover:text-white"
+            className="maps-button mt-8 inline-flex items-center rounded-lg border border-pulse px-6 py-3 font-semibold text-pulse transition hover:bg-pulse hover:text-white"
           >
             Ver en Google Maps
           </a>

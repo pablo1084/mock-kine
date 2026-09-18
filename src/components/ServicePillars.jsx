@@ -18,7 +18,7 @@ export function ServicePillars({ onOpenServices }) {
   return (
     <div className="mt-10 grid gap-4 md:grid-cols-2">
       {pillars.map(({ id, icon: Icon, title, text }, index) => (
-        <a key={id} href={`#${id}`} onClick={onOpenServices ? (event) => { event.preventDefault(); onOpenServices(id); } : undefined} className="group relative isolate flex flex-col overflow-hidden rounded-md border border-white/10 bg-graphiteDark p-6 transition hover:-translate-y-1 hover:border-pulse/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-pulse sm:p-8">
+        <a key={id} href={`#${id}`} onClick={onOpenServices ? (event) => { event.preventDefault(); onOpenServices(id); } : undefined} className="theme-dark group relative isolate flex flex-col overflow-hidden rounded-md border border-white/10 bg-graphiteDark p-6 transition hover:-translate-y-1 hover:border-pulse/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-pulse sm:p-8">
           {pillarImages[id] && (
             <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10" style={id === 'kinesiologia' ? { containerType: 'size' } : undefined}>
               <img

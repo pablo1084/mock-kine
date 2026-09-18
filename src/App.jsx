@@ -11,6 +11,7 @@ import { HeroSection } from './sections/HeroSection';
 import { ExperiencesSection } from './sections/ExperiencesSection';
 import { NewsSection } from './sections/NewsSection';
 import { ServicesOverviewSection } from './sections/ServicesOverviewSection';
+import { useTheme } from './hooks/useTheme';
 
 const CenterSection = React.lazy(() => import('./sections/CenterSection').then((module) => ({ default: module.CenterSection })));
 const ServicesSection = React.lazy(() => import('./sections/ServicesSection').then((module) => ({ default: module.ServicesSection })));
@@ -24,6 +25,7 @@ export default function App() {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [activePage, setActivePage] = React.useState('home');
   const [serviceTargetId, setServiceTargetId] = React.useState(null);
+  const { theme, setTheme } = useTheme();
 
   const openHomeSection = () => {
     setActivePage('home');
@@ -52,26 +54,28 @@ export default function App() {
   const showHome = activePage === 'home';
 
   return (
-    <main className="min-h-screen bg-graphite text-white font-sans">
+    <main className="theme-light-adaptive min-h-screen bg-[#ddd9d1] text-white dark:bg-graphite font-sans">
       <SiteHeader
         menuOpen={menuOpen}
         navItems={navItems}
         onCloseMenu={() => setMenuOpen(false)}
         onHomeSection={openHomeSection}
         onOpenMenu={() => setMenuOpen(true)}
+        theme={theme}
+        onThemeChange={setTheme}
       />
 
       <HeroSection hidden={!showHome} />
       <ServicesOverviewSection hidden={!showHome} onOpenServices={(targetId) => openPage('services', targetId)} />
       {activePage === 'services' && (
         <React.Suspense fallback={<PageFallback />}>
-          <ServicesSection targetId={serviceTargetId} onBack={openHomeSection} onRequestAppointment={() => openPage('home', 'turnos')} services={services} stages={sportsKinesiologyStages} technologyServices={technologyServices} teamMembers={teamMembers} />
+          <ServicesSection targetId={serviceTargetId} onBack={() => openPage('home', 'servicios')} onRequestAppointment={() => openPage('home', 'turnos')} services={services} stages={sportsKinesiologyStages} technologyServices={technologyServices} teamMembers={teamMembers} />
         </React.Suspense>
       )}
       <CenterOverviewSection hidden={!showHome} onOpenCenter={() => openPage('center')} />
       {activePage === 'center' && (
         <React.Suspense fallback={<PageFallback />}>
-          <CenterSection onBack={openHomeSection} gallery={gallery} />
+          <CenterSection onBack={() => openPage('home', 'nuestro-centro')} gallery={gallery} />
         </React.Suspense>
       )}
       <AboutSection hidden={!showHome} onOpenTeamPage={openTeamPage} />

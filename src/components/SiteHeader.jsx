@@ -1,11 +1,30 @@
 ﻿import React from 'react';
-import { CalendarCheck, Menu, X } from 'lucide-react';
+import { CalendarCheck, Menu, Monitor, Moon, Sun, X } from 'lucide-react';
 import { slug } from '../utils/slug';
 
 const primaryItems = ['Servicios', 'Nuestro centro', 'Quienes somos'];
 const labelFor = (item) => item === 'Quienes somos' ? 'Quiénes somos' : item;
 
-export function SiteHeader({ menuOpen, navItems, onCloseMenu, onHomeSection, onOpenMenu }) {
+const themeOptions = [
+  { value: 'system', label: 'Sistema', Icon: Monitor },
+  { value: 'light', label: 'Claro', Icon: Sun },
+  { value: 'dark', label: 'Oscuro', Icon: Moon },
+];
+
+function ThemeSelector({ theme, onThemeChange, compact = false }) {
+  return (
+    <div className={`flex items-center rounded-md border border-white/15 bg-white/5 p-1 ${compact ? 'w-full justify-between' : ''}`} role="group" aria-label="Seleccionar tema">
+      {themeOptions.map(({ value, label, Icon }) => (
+        <button key={value} type="button" aria-label={`Usar tema ${label.toLowerCase()}`} aria-pressed={theme === value} title={label} className={`flex min-h-9 items-center justify-center gap-2 rounded px-2 text-xs font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-pulse ${compact ? 'flex-1' : ''} ${theme === value ? 'bg-pulse text-white shadow-sm' : 'text-white/65 hover:bg-white/10 hover:text-white'}`} onClick={() => onThemeChange(value)}>
+          <Icon size={16} aria-hidden="true" />
+          {compact && <span>{label}</span>}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+export function SiteHeader({ menuOpen, navItems, onCloseMenu, onHomeSection, onOpenMenu, theme, onThemeChange }) {
   const headerRef = React.useRef(null);
   const toggleRef = React.useRef(null);
 
@@ -40,7 +59,7 @@ export function SiteHeader({ menuOpen, navItems, onCloseMenu, onHomeSection, onO
   };
 
   return (
-    <header ref={headerRef} className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-graphiteDark/78 text-white backdrop-blur-xl">
+    <header ref={headerRef} className="site-header theme-dark fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-graphiteDark/60 text-white shadow-lg shadow-black/10 backdrop-blur-xl">
       <div className="relative mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:gap-6 sm:px-6 lg:px-8">
         <a href="#inicio" aria-label="José Oviedo, inicio" className="shrink-0 rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-pulse" onClick={navigate}>
           <img src="/assets/navbar-logo-optimized.webp" alt="José Oviedo kinesiología deportiva" className="h-10 w-auto max-w-[120px] object-contain sm:h-12 sm:max-w-[170px]" />
@@ -54,6 +73,7 @@ export function SiteHeader({ menuOpen, navItems, onCloseMenu, onHomeSection, onO
               </a>
             ))}
           </nav>
+          <div className="hidden md:block"><ThemeSelector theme={theme} onThemeChange={onThemeChange} /></div>
           <a href="#turnos" onClick={navigate} className="hidden min-h-11 items-center gap-2 rounded-md bg-pulse px-3 py-2 text-sm font-semibold text-white transition hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-pulse sm:inline-flex sm:px-4">
             Reservar <CalendarCheck size={16} className="hidden sm:block" />
           </a>
@@ -65,6 +85,7 @@ export function SiteHeader({ menuOpen, navItems, onCloseMenu, onHomeSection, onO
 
         {menuOpen && (
           <nav id="additional-navigation" aria-label="Más secciones" className="absolute right-4 top-[calc(100%+0.75rem)] max-h-[calc(100dvh-6rem)] w-[min(20rem,calc(100vw-2rem))] overflow-y-auto overscroll-contain rounded-md border border-white/10 bg-graphiteDark p-3 shadow-2xl sm:right-6 lg:right-8">
+            <div className="mb-2 md:hidden"><ThemeSelector theme={theme} onThemeChange={onThemeChange} compact /></div>
             <p className="px-3 pb-3 pt-2 text-xs font-semibold uppercase tracking-wider text-white/40">Explorá el centro</p>
             {navItems.map((item) => (
               <a key={item} href={`#${slug(item)}`} className={`${primaryItems.includes(item) ? 'lg:hidden' : ''} block rounded-md px-3 py-3 text-sm text-white/80 transition hover:bg-white/5 hover:text-pulse focus-visible:outline focus-visible:outline-2 focus-visible:outline-pulse`} onClick={navigate}>

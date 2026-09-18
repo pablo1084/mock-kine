@@ -3,7 +3,7 @@ import { ArrowRight } from 'lucide-react';
 
 export function CenterOverviewSection({ hidden, onOpenCenter }) {
   return (
-    <section id="nuestro-centro" className={`${hidden ? 'hidden' : ''} bg-graphite py-20`}>
+    <section id="nuestro-centro" className={`${hidden ? 'hidden' : ''} border-t border-white/10 bg-graphite py-20`}>
       <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:px-8">
         <button type="button" className="group relative min-h-96 overflow-hidden rounded-md border border-white/10" onClick={onOpenCenter}>
           <img src="/assets/centro/interior-optimized.webp" alt="Vista del interior del centro José Oviedo Kinesiología" className="absolute inset-0 h-full w-full object-cover object-center transition duration-700 group-hover:scale-105" loading="lazy" decoding="async" />
@@ -15,7 +15,7 @@ export function CenterOverviewSection({ hidden, onOpenCenter }) {
           <p className="mt-5 text-base leading-8 text-white/70">
             Boxes, consultorios, gimnasio y laboratorio integrados para acompañar cada etapa del proceso.
           </p>
-          <button type="button" className="mt-7 inline-flex items-center gap-2 rounded-md border border-white/20 px-5 py-3 text-sm font-semibold text-white transition hover:border-pulse hover:text-pulse" onClick={onOpenCenter}>
+          <button type="button" className="center-tour-button mt-7 inline-flex items-center gap-2 rounded-md border border-white/20 px-5 py-3 text-sm font-semibold text-white transition hover:border-pulse hover:text-pulse" onClick={onOpenCenter}>
             Recorrer el centro <ArrowRight size={17} />
           </button>
         </div>

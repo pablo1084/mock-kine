@@ -5,10 +5,10 @@ const highlights = ['Evaluación personalizada', 'Tecnología aplicada', 'Equipo
 
 const heroVariants = {
   actual: { src: '/assets/hero2-optimized.webp', alt: 'José Oviedo atiende a un paciente en el centro de kinesiología', width: 738, height: 1600, desktop: 'center 40%', tablet: 'center 46%', mobile: 'center 48%', filter: 'contrast(1.11) saturate(1.08) brightness(0.88)' },
-  opcion2: { src: '/assets/hero.jpeg', alt: 'Vista panorámica del gimnasio del centro de kinesiología', width: 1600, height: 995, desktop: '62% center', tablet: '62% center', mobile: '64% center', filter: 'contrast(1.08) saturate(0.88) brightness(0.78)' },
-  opcion3: { src: '/assets/hero2.png', alt: 'Vista del área de entrenamiento y readaptación del centro', width: 1200, height: 1600, desktop: 'center 54%', tablet: 'center 55%', mobile: 'center 56%', filter: 'contrast(1.08) saturate(0.88) brightness(0.8)' },
-  opcion4: { src: '/assets/hero3.jpeg', alt: 'José Oviedo durante una consulta de kinesiología', width: 4000, height: 3000, desktop: '58% center', tablet: '57% center', mobile: '56% center', shift: '5%', filter: 'contrast(1.08) saturate(0.9) brightness(0.78)' },
-  opcion5: { src: '/assets/hero4.jpeg', alt: 'José Oviedo atendiendo a una paciente en el consultorio', width: 4000, height: 3000, desktop: '62% center', tablet: '61% center', mobile: '60% center', shift: '5%', filter: 'contrast(1.1) saturate(0.9) brightness(0.8)' },
+  opcion2: { src: '/assets/hero-optimized.webp', alt: 'Vista panorámica del gimnasio del centro de kinesiología', width: 1600, height: 995, desktop: '62% center', tablet: '62% center', mobile: '64% center', filter: 'contrast(1.08) saturate(0.88) brightness(0.78)' },
+  opcion3: { src: '/assets/hero2-optimized.webp', alt: 'Vista del área de entrenamiento y readaptación del centro', width: 1200, height: 1600, desktop: 'center 54%', tablet: 'center 55%', mobile: 'center 56%', filter: 'contrast(1.08) saturate(0.88) brightness(0.8)' },
+  opcion4: { src: '/assets/hero3-optimized.webp', alt: 'José Oviedo durante una consulta de kinesiología', width: 4000, height: 3000, desktop: '58% center', tablet: '57% center', mobile: '56% center', shift: '5%', filter: 'contrast(1.08) saturate(0.9) brightness(0.78)' },
+  opcion5: { src: '/assets/hero4-optimized.webp', alt: 'José Oviedo atendiendo a una paciente en el consultorio', width: 4000, height: 3000, desktop: '62% center', tablet: '61% center', mobile: '60% center', shift: '5%', filter: 'contrast(1.1) saturate(0.9) brightness(0.8)' },
 };
 
 function getHeroVariant() {
@@ -28,7 +28,7 @@ export function HeroSection({ hidden }) {
   };
 
   return (
-    <section id="inicio" data-hero-variant={heroImage.key} className={`${hidden ? 'hidden' : ''} hero--vertical relative isolate overflow-hidden bg-[#15181b] pt-24 text-white`}>
+    <section id="inicio" data-hero-variant={heroImage.key} className={`${hidden ? 'hidden' : ''} theme-dark hero--vertical relative isolate overflow-hidden bg-[#15181b] pt-24 text-white`}>
       <div className="pointer-events-none absolute -left-20 top-1/3 h-72 w-72 rounded-full bg-pulse/10 blur-[110px]" />
       <div className="hero-layout relative mx-auto grid max-w-7xl items-end gap-8 px-4 pb-6 pt-8 sm:gap-10 sm:px-6 sm:pb-8 lg:static lg:grid-cols-2 lg:items-center lg:gap-0 lg:px-8 lg:py-10">
         <div className="hero-content relative z-10 min-w-0 sm:pt-2 lg:py-6 lg:pr-6">

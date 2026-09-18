@@ -21,6 +21,7 @@ const complementaryImages = {
   'Psicología': {
     src: '/assets/equipo/psico1-optimized.webp',
     alt: 'Ezequiel Vera trabajando en el consultorio de psicología',
+    objectPosition: '58% center',
   },
 };
 
@@ -67,7 +68,7 @@ export function ServicesSection({ hidden, targetId, onBack, onRequestAppointment
   }, [mepVideoOpen]);
 
   return (
-    <section className={`${hidden ? 'hidden' : ''} bg-graphite pb-20 pt-32`}>
+    <section className={`${hidden ? 'hidden' : ''} services-page bg-graphite pb-20 pt-32`}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <button type="button" className="mb-10 inline-flex items-center gap-2 text-sm font-semibold text-white/70 transition hover:text-pulse" onClick={onBack}>
           <ArrowLeft size={17} /> Volver al inicio
@@ -94,7 +95,7 @@ export function ServicesSection({ hidden, targetId, onBack, onRequestAppointment
           </div>
         </section>
 
-        <div id="laboratorio-ivolution" className="mt-14 scroll-mt-28 overflow-hidden rounded-md border border-pulse/25 bg-[#070808] shadow-soft">
+        <div id="laboratorio-ivolution" className="mt-14 scroll-mt-28 overflow-hidden rounded-md border border-black/10 bg-[#eeece8] shadow-soft dark:border-pulse/25 dark:bg-[#070808]">
           <div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
             <div className="p-6 sm:p-8 lg:p-10">
               <p className="text-sm font-semibold uppercase text-pulse">02 · Medir para decidir</p>
@@ -135,7 +136,7 @@ export function ServicesSection({ hidden, targetId, onBack, onRequestAppointment
                 <p className="mt-4 text-sm leading-7 text-white/70">Estrategias de recuperación para complementar el entrenamiento y la readaptación. La compresión neumática secuencial se utiliza como herramienta de recuperación, favoreciendo el retorno venoso y proporcionando una sensación de descarga en miembros inferiores.</p>
               </div>
               <div className="group mx-auto w-full max-w-[21rem] overflow-hidden rounded-md border border-white/10">
-                <img src="/assets/recovery.png" alt="Sesión de recuperación con sistema de compresión neumática en miembros inferiores" width="1086" height="1448" className="h-auto w-full transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.035]" loading="lazy" decoding="async" />
+                <img src="/assets/recovery-optimized.webp" alt="Sesión de recuperación con sistema de compresión neumática en miembros inferiores" width="1086" height="1448" className="h-auto w-full transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.035]" loading="lazy" decoding="async" />
               </div>
             </div>
           </div>
@@ -179,7 +180,7 @@ export function ServicesSection({ hidden, targetId, onBack, onRequestAppointment
         </section>
 
         {mepVideoOpen && (
-          <div className="fixed inset-0 z-[70] hidden items-center justify-center bg-graphiteDark/92 px-4 py-8 backdrop-blur md:flex" onClick={closeMepVideo}>
+          <div className="theme-dark fixed inset-0 z-[70] hidden items-center justify-center bg-graphiteDark/92 px-4 py-8 backdrop-blur md:flex" onClick={closeMepVideo}>
             <div className="w-full max-w-3xl rounded-md border border-white/10 bg-[#070808] p-3 shadow-soft" onClick={(event) => event.stopPropagation()}>
               <div className="mb-3 flex items-center justify-between gap-4 px-1">
                 <div><p className="text-xs font-semibold uppercase text-pulse">MEP ecoguiado</p><p className="text-sm text-white/68">Vista ampliada</p></div>
@@ -210,7 +211,7 @@ export function ServicesSection({ hidden, targetId, onBack, onRequestAppointment
                   <div className="mt-6 border-l-2 border-pulse pl-4"><p className="font-semibold text-graphite">{professional.name}</p><p className="mt-1 text-sm text-neutral-600">{title} · Equipo de salud integral</p></div>
                   <div className="group mt-6 aspect-[2/3] w-full overflow-hidden rounded-md">
                     {image ? (
-                      <img src={image.src} alt={image.alt} className="h-full w-full object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.045]" loading="lazy" decoding="async" />
+                      <img src={image.src} alt={image.alt} style={{ objectPosition: image.objectPosition || 'center' }} className="h-full w-full object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.045]" loading="lazy" decoding="async" />
                     ) : (
                       <div className="flex h-full w-full items-center justify-center rounded-md border-2 border-dashed border-[#c7c3bc] bg-[#f5f3ef] px-4 text-center text-sm text-neutral-500">Espacio para imagen de {title.toLowerCase()}</div>
                     )}

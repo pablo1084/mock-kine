@@ -53,7 +53,7 @@ export const gallery = [
     id: 'recepcion',
     title: 'Recepción y bienvenida',
     tag: 'Atención',
-    src: '/assets/centro/recepcion1.jpeg',
+    src: '/assets/centro/recepcion1-optimized.webp',
     summary: 'Un primer contacto claro y ordenado para orientar turnos, consultas y llegada al centro.',
   },
   {
@@ -67,7 +67,7 @@ export const gallery = [
     id: 'gimnasio',
     title: 'Gimnasio de rehabilitación',
     tag: 'Movimiento',
-    src: '/assets/centro/mancuernas.jpeg',
+    src: '/assets/centro/mancuernas-optimized.webp',
     summary: 'Área para fuerza, movilidad, control de cargas y readaptación funcional.',
   },
   {
@@ -159,11 +159,11 @@ export const teamMembers = [
 ];
 
 export const allianceItems = [
-  { id: 'ucse', title: 'UCSE', logoSrc: '/assets/alianzas/ucse.jpg' },
-  { id: 'esitef', title: 'ESITEF', logoSrc: '/assets/alianzas/esitef.jpg' },
-  { id: 'casla', title: 'CASLA', logoSrc: '/assets/alianzas/images.jpg' },
-  { id: 'cam', title: 'CAM', logoSrc: '/assets/alianzas/montmartre.jpg' },
-  { id: 'akd', title: 'AKD', logoSrc: '/assets/alianzas/akd.png' },
+  { id: 'akd', title: 'AKD', logoSrc: '/assets/alianzas/akd-optimized.webp' },
+  { id: 'ucse', title: 'UCSE', logoSrc: '/assets/alianzas/ucse-optimized.webp' },
+  { id: 'esitef', title: 'ESITEF', logoSrc: '/assets/alianzas/esitef-optimized.webp' },
+  { id: 'casla', title: 'CASLA', logoSrc: '/assets/alianzas/images-optimized.webp' },
+  { id: 'cam', title: 'CAM', logoSrc: '/assets/alianzas/montmartre-optimized.webp' },
 ];
 
 export const contactCards = [

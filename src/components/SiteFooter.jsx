@@ -15,7 +15,7 @@ export function SiteFooter({ hidden }) {
     return () => { active = false; };
   }, [hidden]);
   return (
-    <footer className={`${hidden ? 'hidden' : ''} bg-graphiteDark text-white`}>
+    <footer className={`${hidden ? 'hidden' : ''} theme-dark bg-graphiteDark text-white`}>
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
         <div>
           <img
