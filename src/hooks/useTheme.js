@@ -6,7 +6,7 @@ const systemQuery = () => window.matchMedia('(prefers-color-scheme: dark)');
 
 function savedTheme() {
   const value = window.localStorage.getItem(THEME_STORAGE_KEY);
-  return themeOptions.includes(value) ? value : 'system';
+  return themeOptions.includes(value) ? value : 'dark';
 }
 
 function applyTheme(theme) {

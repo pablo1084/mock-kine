@@ -4,11 +4,11 @@ async function openThemeControls(page, isMobile) {
   if (isMobile) await page.getByRole('button', { name: 'Más opciones de navegación' }).click();
 }
 
-test('tema system, selección manual y persistencia', async ({ page, isMobile }) => {
+test('tema oscuro inicial, system, selección manual y persistencia', async ({ page, isMobile }) => {
   await page.emulateMedia({ colorScheme: 'light' });
   await page.goto('/');
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'system');
-  await expect(page.locator('html')).not.toHaveClass(/dark/);
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expect(page.locator('html')).toHaveClass(/dark/);
 
   await openThemeControls(page, isMobile);
   await page.getByRole('button', { name: 'Usar tema oscuro' }).click();

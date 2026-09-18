@@ -8,7 +8,7 @@
     <script>
       (() => {
         const saved = localStorage.getItem('mock-kine-theme');
-        const theme = ['system', 'light', 'dark'].includes(saved) ? saved : 'system';
+        const theme = ['system', 'light', 'dark'].includes(saved) ? saved : 'dark';
         const dark = theme === 'dark' || (theme === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
         document.documentElement.classList.toggle('dark', dark);
         document.documentElement.dataset.theme = theme;
