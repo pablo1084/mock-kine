@@ -99,9 +99,9 @@ export function ServicesSection({ hidden, targetId, onBack, onRequestAppointment
           <div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
             <div className="p-6 sm:p-8 lg:p-10">
               <p className="text-sm font-semibold uppercase text-pulse">02 · Medir para decidir</p>
-              <div className="mt-7 flex flex-col gap-3 sm:inline-flex sm:flex-row sm:items-end sm:gap-5">
-                <div className="w-full max-w-[17rem] sm:max-w-xs"><img src="/assets/ivolution-lab/ivolution-logo.webp" alt="Ivolution" className="h-auto w-full" /></div>
-                <p className="font-lab text-5xl font-semibold leading-none tracking-normal text-pulse drop-shadow-[4px_5px_0_rgba(0,0,0,0.35)] sm:relative sm:bottom-[20px] sm:text-6xl">lab</p>
+              <div className="ivolution-brand mt-7">
+                <div className="ivolution-brand-logo"><img src="/assets/ivolution-lab/ivolution-logo.webp" alt="Ivolution" className="h-auto w-full" /></div>
+                <p className="ivolution-brand-label font-lab font-semibold leading-none tracking-normal text-pulse drop-shadow-[4px_5px_0_rgba(0,0,0,0.35)]">lab</p>
               </div>
               <h4 className="mt-4 text-4xl font-semibold leading-tight text-white">Evaluación deportiva con tecnología de alto rendimiento.</h4>
               <p className="mt-5 text-base leading-8 text-white/72">Ivolution Lab es nuestra unidad de evaluación objetiva. Medimos fuerza, potencia y asimetrías para construir un perfil de rendimiento que orienta las decisiones y permite seguir la evolución. Estos datos ayudan a planificar la rehabilitación, prevenir lesiones y mejorar el rendimiento.</p>

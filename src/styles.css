@@ -110,6 +110,43 @@ html:not(.dark) .theme-light-adaptive .maps-button:hover {
   -webkit-text-fill-color: white;
 }
 
+.ivolution-brand {
+  display: flex !important;
+  flex-flow: row nowrap !important;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 28rem;
+  container-type: inline-size;
+}
+
+.ivolution-brand-logo {
+  flex: 1 1 0;
+  width: 0;
+  min-width: 0;
+  max-width: 20rem;
+}
+
+.ivolution-brand-logo img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+.ivolution-brand-label {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  font-size: 12cqi;
+  transform: translateY(0.20em);
+}
+
+@media (min-width: 640px) {
+  .ivolution-brand {
+    gap: 1.25rem;
+  }
+
+}
+
 .theme-light-adaptive,
 .theme-light-adaptive section,
 .theme-light-adaptive header,
@@ -402,4 +439,3 @@ img {
     padding-bottom: 0;
   }
 }
-
